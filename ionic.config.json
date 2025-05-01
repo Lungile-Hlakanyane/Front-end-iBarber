@@ -1,0 +1,7 @@
+{
+  "name": "iBarber",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
