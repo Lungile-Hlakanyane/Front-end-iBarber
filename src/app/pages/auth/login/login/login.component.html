@@ -1,0 +1,43 @@
+<ion-content class="auth-page">
+  <!-- Header Section -->
+  <div class="header">
+    <ion-icon name="globe-outline" class="icon"></ion-icon>
+    <h2 style="color:#fff;">iBarber</h2>
+    <p>
+      With iBarber, clients can discover skilled barbers, book sharp fades and clean cuts, and stay fresh with the latest grooming trends.
+    </p>
+    
+    <div class="dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div class="form-section">
+    <h3>Welcome to <strong>iBarber</strong></h3>
+    <p>Join the iBarber community to connect with top barbers or get discovered as one. Use the form below to login or create account.</p>
+
+    <ion-item lines="none" class="input-item">
+      <ion-input placeholder="Your email" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="input-item">
+      <ion-input placeholder="Your password" type="password"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" class="create-btn" (click)="navigate('/home')">Login</ion-button>
+
+    <div class="guest">
+      Or continue as a <span class="guest-link">guest</span>
+    </div>
+
+    <div class="social-login">
+      <ion-button expand="block" class="create-btn" (click)="navigate('/register')">
+        <ion-icon></ion-icon>
+        Create Account
+      </ion-button>
+    </div>  
+
+  </div>
+
+</ion-content>

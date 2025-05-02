@@ -1,0 +1,37 @@
+<ion-content class="feed-page">
+  <div class="heading-title" style="padding: 15px; display: flex; justify-content: space-between;">
+    <div style="display:flex; gap:10px;">
+     <div style="font-size: 25px; cursor: pointer;" (click)="openMenuModal()">
+       <ion-icon name="menu-outline"></ion-icon>
+     </div>
+      <div>
+       <h1>iBarber</h1>
+      </div>
+    </div>
+  <div class="options" style="display: flex; gap: 10px;">
+    <ion-icon name="search-outline" style="font-size: 24px;"></ion-icon>
+    <ion-icon name="notifications-outline" style="font-size: 24px;"></ion-icon>
+    <ion-icon name="person-outline" style="font-size: 24px;"></ion-icon>
+  </div>
+ </div>
+
+  <div class="feed-wrapper">
+    <ion-card *ngFor="let post of posts" class="post-card">
+      <div class="post-header">
+        <img [src]="post.profileImage" class="avatar" />
+        <div class="info">
+          <h3>{{ post.barberName }}</h3>
+          <p>{{ post.timestamp }}</p>
+        </div>
+      </div>
+
+      <img [src]="post.imageUrl" class="post-image" />
+
+      <div class="post-body">
+        <p>{{ post.caption }}</p>
+        <ion-icon name="heart-outline"></ion-icon>
+        <ion-icon name="chatbubble-outline"></ion-icon>
+      </div>
+    </ion-card>
+  </div>
+</ion-content>

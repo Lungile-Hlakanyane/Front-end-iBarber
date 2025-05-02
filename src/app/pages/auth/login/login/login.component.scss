@@ -1,0 +1,93 @@
+.auth-page {
+    --background: #000; // black background for contrast
+    color: #fff;
+  
+    .header {
+      background-color: #000;
+      text-align: center;
+      padding: 40px 20px 20px;
+  
+      .icon {
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+  
+      h2 {
+        font-size: 20px;
+        margin: 0 0 10px;
+      }
+  
+      p {
+        font-size: 14px;
+        color: #ccc;
+      }
+  
+      .dots {
+        margin-top: 20px;
+        span {
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          margin: 0 3px;
+          background: #fff;
+          border-radius: 50%;
+          opacity: 0.5;
+  
+          &:nth-child(2) {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  
+    .form-section {
+      background: #fff;
+      color: #000;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      padding: 30px 20px;
+  
+      h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+  
+      p {
+        font-size: 14px;
+        color: #444;
+        margin-bottom: 20px;
+      }
+  
+      .input-item {
+        background: #f3f3f3;
+        border-radius: 10px;
+        margin-bottom: 15px;
+  
+        ion-input {
+          padding: 10px;
+        }
+      }
+  
+      .create-btn {
+        --background: #000;
+        --color: #fff;
+        border-radius: 12px;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+  
+      .guest {
+        text-align: center;
+        font-size: 14px;
+        margin-top: 20px;
+        color: #555;
+  
+        .guest-link {
+          color: #000;
+          font-weight: 600;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  

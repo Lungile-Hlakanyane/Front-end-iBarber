@@ -1,0 +1,30 @@
+<ion-content class="auth-page">
+  <!-- Header Section -->
+  <div class="header">
+    <ion-icon name="shield-checkmark-outline" class="icon"></ion-icon>
+    <h2>Verify Your Identity</h2>
+    <p>Enter the 6-digit code sent to your registered email</p>
+  </div>
+
+  <!-- OTP Form Section -->
+  <div class="form-section">
+    <h3>Enter OTP</h3>
+    <p>Please enter the code to continue.</p>
+
+    <div class="otp-inputs">
+      <ion-input type="text" maxlength="1"></ion-input>
+      <ion-input type="text" maxlength="1"></ion-input>
+      <ion-input type="text" maxlength="1"></ion-input>
+      <ion-input type="text" maxlength="1"></ion-input>
+      <ion-input type="text" maxlength="1"></ion-input>
+      <ion-input type="text" maxlength="1"></ion-input>
+    </div>
+
+    <ion-button expand="block" class="verify-btn" (click)="navigate('/login')">Verify</ion-button>
+
+    <div class="resend">
+      Didn’t receive the code? <span class="resend-link">Resend</span>
+    </div>
+    
+  </div>
+</ion-content>

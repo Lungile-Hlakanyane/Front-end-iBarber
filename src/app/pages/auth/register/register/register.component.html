@@ -1,0 +1,42 @@
+<ion-content class="auth-page">
+  <!-- Header Section -->
+  <div class="header">
+    <ion-icon name="cut-outline" class="icon"></ion-icon>
+    <h2>Join the iBarber Family</h2>
+    <p>
+      Sign up to get fresh fades, book barbers, or showcase your barbering skills to the world.
+    </p>
+  </div>
+
+  <!-- Form Section -->
+  <div class="form-section">
+    <h3>Create Your Account</h3>
+    <p>Fill in your details to get started with iBarber.</p>
+
+    <ion-item lines="none" class="input-item">
+      <ion-input placeholder="Username" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="input-item">
+      <ion-input placeholder="Email" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="input-item">
+      <ion-input placeholder="Password" type="password"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="input-item">
+      <ion-select placeholder="Select Role">
+        <ion-select-option value="barber">Barber</ion-select-option>
+        <ion-select-option value="client">Client</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="block" class="create-btn" (click)="navigate('/otp')">Register</ion-button>
+
+    <div class="guest">
+      Already have an account? <span class="guest-link" (click)="navigate('/login')">Login</span>
+    </div>
+    
+  </div>
+</ion-content>
