@@ -11,12 +11,14 @@ import { FeedComponent } from './pages/feed/feed/feed.component';
 import { BottomNavigationComponent } from './reuseable-components/bottom-navigation/bottom-navigation.component';
 import { SideMenuComponent } from './reuseable-components/side-menu/side-menu.component';
 import { ProfileComponent } from './pages/profile/profile/profile.component';
+import { PersonalInfoModalComponent } from './reuseable-components/personal-infor-modal/personal-info-modal/personal-info-modal.component';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
     LoginComponent, RegisterComponent, OtpComponent,
-    FeedComponent, BottomNavigationComponent, SideMenuComponent, ProfileComponent
+    FeedComponent, BottomNavigationComponent, SideMenuComponent, ProfileComponent, 
+    PersonalInfoModalComponent
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
