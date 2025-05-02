@@ -1,3 +1,55 @@
-<p>
-  profile works!
-</p>
+<ion-content class="ion-padding profile-page">
+
+  <div class="bck-btn-container">
+    <p style="font-size:30px;" (click)="navigate('/home')"><ion-icon name="chevron-back-outline"></ion-icon></p>
+  </div>
+
+  <div class="profile-header">
+    <img class="avatar" src="../../../../assets/profile-pic-image.jpg" alt="Profile Image" />
+    <h2 class="name">Lungile Hlakanyane</h2>
+    <p class="email">lungilehlakasgmail.com</p>
+  </div>
+
+  <div class="stats-card">
+    <div class="stats">
+      <div class="stat-item">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <p style="font-size:13px;">12</p>
+        <small>Appointments</small>
+      </div>
+      <div class="stat-item">
+        <ion-icon name="cut-outline"></ion-icon>
+        <p style="font-size:13px;">Fade</p>
+        <small>Preferred Style</small>
+      </div>
+      <div class="stat-item">
+        <ion-icon name="time-outline"></ion-icon>
+        <p style="font-size:13px;">12 Apr 2025</p>
+        <small>Last Visit</small>
+      </div>
+    </div>
+  </div>
+  
+  <ion-list lines="none" class="menu-list">
+    <ion-item button>
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-label>Personal</ion-label>
+    </ion-item>
+
+    <ion-item button>
+      <ion-icon name="settings-outline" slot="start"></ion-icon>
+      <ion-label>General</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="openNotificationSettings()">
+      <ion-icon name="notifications-outline" slot="start"></ion-icon>
+      <ion-label>Notification</ion-label>
+    </ion-item>
+
+    <ion-item button>
+      <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+      <ion-label>Help</ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

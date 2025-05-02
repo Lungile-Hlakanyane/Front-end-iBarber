@@ -5,6 +5,7 @@ import { RegisterComponent } from './pages/auth/register/register/register.compo
 import { OtpComponent } from './pages/auth/otp/otp/otp.component';
 import { FeedComponent } from './pages/feed/feed/feed.component';
 import { BottomNavigationComponent } from './reuseable-components/bottom-navigation/bottom-navigation.component';
+import { ProfileComponent } from './pages/profile/profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -18,6 +19,7 @@ const routes: Routes = [
     children: [
       { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
       { path: 'feed', component:FeedComponent},
+      { path: 'profile', component:ProfileComponent},
     ]
   }
 ];

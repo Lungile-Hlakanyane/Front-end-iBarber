@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +15,7 @@ export class ProfileComponent  implements OnInit {
 
   constructor(
     private router: Router,
+    private actionSheetController: ActionSheetController,
   ) { }
 
   ngOnInit() {}
@@ -21,5 +23,28 @@ export class ProfileComponent  implements OnInit {
   navigate(link:string){
     this.router.navigate([link]); 
   }
+
+  async openNotificationSettings() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Notification Settings',
+      cssClass: 'notification-action-sheet',
+      buttons: [
+        {
+          text: 'Turn on Notifications',
+          role: 'toggle',
+          handler: () => {
+            console.log('Notifications toggled');
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+  
+
 
 }

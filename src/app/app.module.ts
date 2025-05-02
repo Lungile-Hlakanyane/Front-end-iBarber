@@ -10,12 +10,13 @@ import { OtpComponent } from './pages/auth/otp/otp/otp.component';
 import { FeedComponent } from './pages/feed/feed/feed.component';
 import { BottomNavigationComponent } from './reuseable-components/bottom-navigation/bottom-navigation.component';
 import { SideMenuComponent } from './reuseable-components/side-menu/side-menu.component';
+import { ProfileComponent } from './pages/profile/profile/profile.component';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
     LoginComponent, RegisterComponent, OtpComponent,
-    FeedComponent, BottomNavigationComponent, SideMenuComponent
+    FeedComponent, BottomNavigationComponent, SideMenuComponent, ProfileComponent
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
