@@ -17,26 +17,31 @@
     <h3>Welcome to <strong>iBarber</strong></h3>
     <p>Join the iBarber community to connect with top barbers or get discovered as one. Use the form below to login or create account.</p>
 
-    <ion-item lines="none" class="input-item">
-      <ion-input placeholder="Your email" type="text"></ion-input>
-    </ion-item>
-
-    <ion-item lines="none" class="input-item">
-      <ion-input placeholder="Your password" type="password"></ion-input>
-    </ion-item>
-
-    <ion-button expand="block" class="create-btn" (click)="navigate('/home')">Login</ion-button>
-
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <ion-item lines="none" class="input-item">
+        <ion-input formControlName="email" placeholder="Your email" type="email"></ion-input>
+      </ion-item>
+      <div *ngIf="email.invalid && email.touched" class="error">Valid email is required</div>
+    
+      <ion-item lines="none" class="input-item">
+        <ion-input formControlName="password" placeholder="Your password" type="password"></ion-input>
+      </ion-item>
+      <div *ngIf="password.invalid && password.touched" class="error">Password is required</div>
+    
+      <ion-button expand="block" class="create-btn" type="submit" [disabled]="loginForm.invalid">Login</ion-button>
+    </form>
+    
     <div class="guest">
       Or continue as a <span class="guest-link" (click)="navigate('/feed')">guest</span>
     </div>
-
+    
     <div class="social-login">
       <ion-button expand="block" class="create-btn" (click)="navigate('/register')">
         <ion-icon></ion-icon>
         Create Account
       </ion-button>
-    </div>  
+    </div>
+    
 
   </div>
 

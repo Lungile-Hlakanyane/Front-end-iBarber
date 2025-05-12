@@ -13,8 +13,16 @@ import { FormsModule } from '@angular/forms';
 })
 export class BottomNavigationComponent  implements OnInit {
 
+  role: string = '';
+
   constructor(private router:Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const storedRole = localStorage.getItem('userRole');
+    if (storedRole) {
+      this.role = storedRole;
+    }
+  }
+  
 
 }

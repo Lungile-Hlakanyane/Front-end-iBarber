@@ -1,0 +1,68 @@
+.barber-bookings-page {
+    --background: #f4f5f8;
+  
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 10px 0 20px 10px;
+      color: #222;
+    }
+  
+    .booking-card {
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  
+      ion-card-header {
+        padding-bottom: 0;
+  
+        ion-card-title {
+          font-size: 20px;
+          font-weight: 600;
+          color: #007f5f;
+        }
+  
+        ion-card-subtitle {
+          font-size: 14px;
+          color: #555;
+        }
+      }
+  
+      .booking-details p {
+        margin: 4px 0;
+        font-size: 14px;
+        color: #333;
+      }
+  
+      ion-badge {
+        text-transform: capitalize;
+        font-size: 13px;
+      }
+  
+      .booking-actions {
+        margin-top: 15px;
+        display: flex;
+        gap: 12px;
+      }
+    }
+  
+    .no-bookings {
+      text-align: center;
+      color: #999;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+  
+    .bck-btn-container {
+      margin-bottom: 10px;
+    }
+  }
+
+  .custom-btn{
+    margin-top: 20px;
+    --background: #008C64;
+    --border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  

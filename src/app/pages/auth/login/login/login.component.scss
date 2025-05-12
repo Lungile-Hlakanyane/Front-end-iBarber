@@ -71,6 +71,7 @@
       .create-btn {
         --background: #000;
         --color: #fff;
+        --border-radius: 12px;
         border-radius: 12px;
         font-weight: bold;
         margin-top: 10px;
@@ -89,5 +90,12 @@
         }
       }
     }
+  }
+  
+  .error {
+    color: red;
+    font-size: 0.9em;
+    margin-left: 16px;
+    margin-top: 4px;
   }
   

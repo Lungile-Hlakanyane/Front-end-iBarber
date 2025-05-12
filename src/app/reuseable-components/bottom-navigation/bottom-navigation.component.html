@@ -5,7 +5,12 @@
       <ion-label>Home</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="bookings" href="/tabs/bookings">
+    <ion-tab-button tab="bookings" href="/tabs/bookings" *ngIf="role === 'admin'">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <ion-label>Bookings</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="barber-bookings" href="/tabs/barber-bookings" *ngIf="role === 'barber'">
       <ion-icon name="calendar-outline"></ion-icon>
       <ion-label>Bookings</ion-label>
     </ion-tab-button>

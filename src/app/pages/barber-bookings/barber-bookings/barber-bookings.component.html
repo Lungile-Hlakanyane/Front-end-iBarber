@@ -1,0 +1,49 @@
+<ion-content class="ion-padding barber-bookings-page">
+
+  <div class="bck-btn-container" style="display:flex; gap:10px;">
+    <p style="font-size:30px;" (click)="navigate('/home')">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+    <p style="color:#000; font-weight: bold; font-size:25px; position:relative; top:10px;">Client Bookings</p>
+  </div>
+
+  <h2 class="section-title">Upcoming Bookings</h2>
+
+  <div *ngIf="bookings.length === 0" class="no-bookings">
+    <p>No bookings found.</p>
+  </div>
+
+  <ion-card *ngFor="let booking of bookings" class="booking-card">
+    <ion-card-header>
+      <ion-card-title>{{ booking.clientName }}</ion-card-title>
+      <ion-card-subtitle>{{ booking.service }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="booking-details">
+        <p><strong>Date:</strong> {{ booking.date }}</p>
+        <p><strong>Time:</strong> {{ booking.time }}</p>
+        <p><strong>Status:</strong> <ion-badge [color]="getStatusColor(booking.status)">
+          {{ booking.status }}
+        </ion-badge></p>
+      </div>
+
+      <div *ngIf="booking.status === 'pending'" class="booking-actions">
+        <ion-button size="small" color="success" (click)="handleAction(booking.id, 'approved')">
+          Approve
+        </ion-button>
+        <ion-button size="small" color="danger" (click)="handleAction(booking.id, 'declined')">
+          Decline
+        </ion-button>
+        <ion-button size="small" color="tertiary" (click)="handleAction(booking.id, 'approved')">
+          Chat
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="action-btn-container">
+    <ion-button expand="block" class="custom-btn" (click)="navigate('/create-slots')">Create Slot</ion-button>
+  </div>
+
+</ion-content>

@@ -14,6 +14,8 @@ import { SelectBarberComponent } from './pages/select-barber/select-barber/selec
 import { ViewBarberProfileComponent } from './pages/view-barber-profile/view-barber-profile/view-barber-profile.component';
 import { BookAppointmentComponent } from './pages/book-appointment/book-appointment/book-appointment.component';
 import { PaymentMethodsComponent } from './pages/payment-methods/payment-methods/payment-methods.component';
+import { BarberBookingsComponent } from './pages/barber-bookings/barber-bookings/barber-bookings.component';
+import { CreateSlotComponent } from './pages/create-slot/create-slot/create-slot.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -26,6 +28,7 @@ const routes: Routes = [
   { path: 'view-barber-profile', component:ViewBarberProfileComponent},
   { path: 'book-appointment', component:BookAppointmentComponent},
   { path: 'payment-methods', component:PaymentMethodsComponent},
+  { path: 'create-slots', component:CreateSlotComponent},
   {
     path: '',
     component: BottomNavigationComponent,
@@ -36,6 +39,7 @@ const routes: Routes = [
       { path: 'chat-list', component: ChatListComponent},
       { path: 'create-post', component: CreatePostComponent},
       { path: 'bookings', component: BookingsComponent},
+      { path: 'barber-bookings', component: BarberBookingsComponent},
     ]
   }
 ];

@@ -1,0 +1,26 @@
+.profile-page {
+    --background: #f4f5f8;
+  
+    .form-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      margin-top: 20px;
+    }
+  
+    ion-item {
+      --background: transparent;
+      margin-bottom: 15px;
+    }
+  
+    ion-label {
+      font-weight: 600;
+      color: #333;
+    }
+  
+    ion-button {
+      margin-top: 20px;
+    }
+  }
+  
