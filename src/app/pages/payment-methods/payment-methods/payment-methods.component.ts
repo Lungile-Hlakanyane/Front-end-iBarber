@@ -52,7 +52,7 @@ export class PaymentMethodsComponent  implements OnInit {
       await loading.dismiss();
       const modal = await this.modalController.create({
         component: SuccessPayModalComponent,
-        cssClass: 'bottom-modal'
+        cssClass: 'payment-modal'
       });
       await modal.present();
   

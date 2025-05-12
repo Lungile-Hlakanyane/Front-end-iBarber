@@ -28,21 +28,33 @@ export class HomePage {
       profileImage: 'assets/barbers/jay.jpg',
       imageUrl: 'assets/cuts/fade1.jpg',
       caption: 'Fresh fade drop 🔥 Book me via iBarber app!',
-      timestamp: '2 hours ago'
+      timestamp: '2 hours ago',
+      liked: false,
+      showComments: false,
+      comments: [],
+      newComment: ''
     },
     {
       barberName: 'Mel Trims',
       profileImage: 'assets/barbers/mel.jpg',
       imageUrl: 'assets/cuts/taper.jpg',
       caption: 'Tapered look for the weekend 💈',
-      timestamp: 'Yesterday'
+      timestamp: 'Yesterday',
+      liked: false,
+      showComments: false,
+      comments: [],
+      newComment: ''
     },
     {
       barberName: 'Fade King',
       profileImage: 'assets/barbers/king.jpg',
       imageUrl: 'assets/cuts/skinfade.jpg',
       caption: 'Skin fade perfection! DM to lock a slot!',
-      timestamp: 'Just now'
+      timestamp: 'Just now',
+      liked: false,
+      showComments: false,
+      comments: [],
+      newComment: ''
     }
   ];
 
@@ -57,6 +69,21 @@ export class HomePage {
       component: SideMenuComponent,
     });
     await modal.present();
+  }
+
+  toggleLike(post: any) {
+    post.liked = !post.liked;
+  }
+
+  toggleComments(post: any) {
+    post.showComments = !post.showComments;
+  }
+  
+  addComment(post: any) {
+    if (post.newComment && post.newComment.trim() !== '') {
+      post.comments.push(post.newComment.trim());
+      post.newComment = '';
+    }
   }
 
 }

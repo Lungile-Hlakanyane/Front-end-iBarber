@@ -30,10 +30,29 @@
        </div>
        <img [src]="post.imageUrl" class="post-image" /> 
        <div class="post-body">
-         <p>{{ post.caption }}</p>
-         <ion-icon name="heart-outline"></ion-icon>
-         <ion-icon name="chatbubble-outline"></ion-icon>
-       </div>
+        <p>{{ post.caption }}</p>
+        <ion-icon
+          [name]="post.liked ? 'heart' : 'heart-outline'"
+          color="danger"
+          (click)="toggleLike(post)">
+        </ion-icon>
+        <ion-icon name="chatbubble-outline" (click)="toggleComments(post)"></ion-icon>
+      </div>
+      
+      <!-- Comments Section -->
+      <div *ngIf="post.showComments" class="comments-section">
+        <div *ngFor="let comment of post.comments" class="comment">
+          <p><strong>User:</strong> {{ comment }}</p>
+        </div>
+        <ion-item>
+          <ion-input
+            placeholder="Add a comment..."
+            [(ngModel)]="post.newComment">
+          </ion-input>
+          <ion-button (click)="addComment(post)" fill="clear">Post</ion-button>
+        </ion-item>
+      </div>
+       
      </ion-card>
    </div>
  </ion-content>

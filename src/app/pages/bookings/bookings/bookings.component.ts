@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-bookings',
@@ -13,11 +16,14 @@ import { FormsModule } from '@angular/forms';
 })
 export class BookingsComponent  implements OnInit {
   selectedSegment: string = 'upcoming';
-bookingTab: any;
-bookingHistory: any;
+  bookingTab: any;
+  bookingHistory: any;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private alertController: AlertController,
+    private loadingController: LoadingController,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {}
@@ -65,12 +71,51 @@ bookingHistory: any;
   }
 
   reschedule(booking: any) {
-    console.log('Reschedule clicked for', booking);
+   this.router.navigate(['/book-appointment']);
   }
 
-  cancel(booking: any) {
-    console.log('Cancel clicked for', booking);
+  async cancel(booking: any) {
+    const alert = await this.alertController.create({
+      header: 'Cancel Appointment',
+      message: 'Are you sure you want to cancel this appointment?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancellation aborted');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: async () => {
+            const loading = await this.loadingController.create({
+              message: 'Cancelling...',
+              spinner: 'circular',
+              duration: 2000 // Simulates the cancellation time
+            });
+            await loading.present();
+  
+            setTimeout(async () => {
+              await loading.dismiss();
+  
+              const toast = await this.toastController.create({
+                message: 'You have successfully cancelled this appointment.',
+                duration: 3000,
+                color: 'success',
+                position: 'top'
+              });
+              await toast.present();
+              booking.status = 'cancelled';
+            }, 2000);
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
   }
+  
 
   rebook(booking: any) {
     console.log('Rebook clicked for', booking);
