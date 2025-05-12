@@ -10,11 +10,17 @@ import { ModalController } from '@ionic/angular';
   standalone: false,
 })
 export class HomePage {
+  showSearchBar = false;
+  searchText = '';
 
   constructor(
     private router: Router,
     private modalController: ModalController,
   ) { }
+
+  toggleSearchBar() {
+    this.showSearchBar = !this.showSearchBar;
+  }
 
   posts = [
     {

@@ -9,24 +9,26 @@
      </div>
    </div>
    <div class="options" style="display: flex; gap: 10px; position: relative; top: 27px;">
-     <ion-icon name="search-outline" style="font-size: 24px;"></ion-icon>
-     <ion-icon name="notifications-outline" style="font-size: 24px;"></ion-icon>
-     <ion-icon name="person-outline" style="font-size: 24px;"></ion-icon>
+    <ion-icon name="search-outline" style="font-size: 24px;"(click)="toggleSearchBar()"></ion-icon>
+     <ion-icon name="notifications-outline" style="font-size: 24px;" (click)="navigate('/chat-list')"></ion-icon>
+     <ion-icon name="person-outline" style="font-size: 24px;" (click)="navigate('/profile')"></ion-icon>
    </div>
+  </div>
+
+  <div class="search-container" *ngIf="showSearchBar">
+    <ion-searchbar placeholder="Search..." [(ngModel)]="searchText"></ion-searchbar>
   </div>
  
    <div class="feed-wrapper">
      <ion-card *ngFor="let post of posts" class="post-card">
        <div class="post-header">
          <img [src]="post.profileImage" class="avatar" />
-         <div class="info">
+         <div class="info" (click)="navigate('/view-barber-profile')">
            <h3>{{ post.barberName }}</h3>
            <p>{{ post.timestamp }}</p>
          </div>
        </div>
- 
-       <img [src]="post.imageUrl" class="post-image" />
- 
+       <img [src]="post.imageUrl" class="post-image" /> 
        <div class="post-body">
          <p>{{ post.caption }}</p>
          <ion-icon name="heart-outline"></ion-icon>

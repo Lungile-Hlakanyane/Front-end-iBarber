@@ -12,13 +12,25 @@ import { BottomNavigationComponent } from './reuseable-components/bottom-navigat
 import { SideMenuComponent } from './reuseable-components/side-menu/side-menu.component';
 import { ProfileComponent } from './pages/profile/profile/profile.component';
 import { PersonalInfoModalComponent } from './reuseable-components/personal-infor-modal/personal-info-modal/personal-info-modal.component';
+import { ChatComponent } from './pages/chat/chat/chat.component';
+import { ChatListComponent } from './pages/chat-list/chat-list/chat-list.component';
+import { CreatePostComponent } from './pages/post/create-post/create-post.component';
+import { BookingsComponent } from './pages/bookings/bookings/bookings.component';
+import { SelectBarberComponent } from './pages/select-barber/select-barber/select-barber.component';
+import { ViewBarberProfileComponent } from './pages/view-barber-profile/view-barber-profile/view-barber-profile.component';
+import { BookAppointmentComponent } from './pages/book-appointment/book-appointment/book-appointment.component';
+import { PaymentMethodsComponent } from './pages/payment-methods/payment-methods/payment-methods.component';
+import { SuccessPayModalComponent } from './reuseable-components/successs-payment-modal/success-pay-modal/success-pay-modal.component';
+
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
     LoginComponent, RegisterComponent, OtpComponent,
     FeedComponent, BottomNavigationComponent, SideMenuComponent, ProfileComponent, 
-    PersonalInfoModalComponent
+    PersonalInfoModalComponent, ChatComponent,ChatListComponent,CreatePostComponent,
+    BookingsComponent,SelectBarberComponent,ViewBarberProfileComponent,BookAppointmentComponent,
+    PaymentMethodsComponent,SuccessPayModalComponent
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

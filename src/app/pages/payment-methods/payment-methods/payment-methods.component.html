@@ -1,0 +1,57 @@
+<ion-content class="ion-padding payment-methods-page">
+  <div class="bck-btn-container">
+    <p style="font-size:30px;" (click)="goBack()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+  </div>
+
+  <h2 class="section-title">Select Payment Method</h2>
+
+  <ion-list lines="none" class="payment-list">
+    <ion-item button (click)="selectPayment('Pay After Fade')">
+      <ion-icon name="cash-outline" slot="start"></ion-icon>
+      <ion-label>Pay After Fade (Cash)</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="selectPayment('Credit/Debit Card')">
+      <ion-icon name="card-outline" slot="start"></ion-icon>
+      <ion-label>Credit/Debit Card</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="selectedPaymentMethod === 'Credit/Debit Card'" class="card-inputs">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Enter Card Details</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Card Number</ion-label>
+          <ion-input type="text" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Expiry Date</ion-label>
+          <ion-input type="text" placeholder="MM/YY" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">CVV</ion-label>
+          <ion-input type="password" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Cardholder Name</ion-label>
+          <ion-input type="text" required></ion-input>
+        </ion-item>
+
+        <ion-button expand="block" class="pay-btn" (click)="payNow()">Pay Now</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="action-btn-container">
+    <ion-button expand="block" class="pay-btn" (click)="payNow()">Pay Now</ion-button>
+  </div>
+  
+</ion-content>

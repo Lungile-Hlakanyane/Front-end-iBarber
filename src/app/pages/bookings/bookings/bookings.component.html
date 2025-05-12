@@ -1,0 +1,74 @@
+<ion-content class="ion-padding profile-page">
+
+  <div class="bck-btn-container" style="display:flex; gap:10px;">
+   <div>
+    <p style="font-size:30px;" (click)="navigate('/home')">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+   </div>
+    <div class="page-title-container">
+      <p style="color:#000; font-weight: bold; font-size: 30px;;">My Bookings</p>
+    </div>
+  </div>
+
+  <div class="profile-header">
+    <div class="avatar-container">
+      <img class="avatar" src="../../../../assets/profile-pic-image.jpg" alt="Profile Image" />
+    </div>
+    <div class="user-info">
+      <h2 class="name">Lungile Hlakanyane</h2>
+      <p class="email">lungilehlakasgmail.com</p>
+    </div>
+  </div>
+  
+  <ion-segment [(ngModel)]="bookingTab" class="segment-tabs">
+    <ion-segment-button value="upcoming">
+      <ion-label>Upcoming</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="history">
+      <ion-label>History</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- UPCOMING BOOKINGS TAB -->
+  <div *ngIf="bookingTab === 'upcoming'">
+    <ion-card class="booking-card" *ngFor="let booking of upcomingBookings">
+      <ion-card-header>
+        <ion-card-title>{{ booking.barberName }}</ion-card-title>
+        <p class="booking-status confirmed">{{ booking.status }}</p>
+      </ion-card-header>
+      <ion-card-content>
+        <p><ion-icon name="calendar-outline"></ion-icon> {{ booking.date }} at {{ booking.time }}</p>
+        <p><ion-icon name="location-outline"></ion-icon> {{ booking.location }}</p>
+        <div class="booking-actions">
+          <ion-button fill="clear" size="small" color="medium" (click)="reschedule(booking)">Reschedule</ion-button>
+          <ion-button fill="clear" size="small" color="success" (click)="navigate('/chat')">Chat</ion-button>
+          <ion-button fill="clear" size="small" color="danger" (click)="cancel(booking)">Cancel</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- HISTORY BOOKINGS TAB -->
+  <div *ngIf="bookingTab === 'history'">
+    <ion-card class="booking-card" *ngFor="let history of bookingHistory">
+      <ion-card-header>
+        <ion-card-title>{{ history.barberName }}</ion-card-title>
+        <p class="booking-status completed">{{ history.status }}</p>
+      </ion-card-header>
+      <ion-card-content>
+        <p><ion-icon name="calendar-outline"></ion-icon> {{ history.date }} at {{ history.time }}</p>
+        <p><ion-icon name="location-outline"></ion-icon> {{ history.location }}</p>
+        <div *ngIf="history.feedback">
+          <p><ion-icon name="chatbubble-ellipses-outline"></ion-icon> {{ history.feedback }}</p>
+        </div>
+        <ion-button fill="outline" size="small" color="primary" (click)="rebook(history)">Rebook</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="action-btn-container">
+    <ion-button expand="block" class="custom-btn" (click)="navigate('/select-barber')">Add Bookings</ion-button>
+  </div>
+
+</ion-content>

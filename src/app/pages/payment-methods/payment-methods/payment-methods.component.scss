@@ -1,0 +1,42 @@
+.payment-methods-page {
+    --background: #f4f5f8;
+  
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #222;
+    }
+  
+    .payment-list {
+      ion-item {
+        margin: 10px 16px;
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        --padding-start: 16px;
+  
+        ion-icon {
+          color: #007f5f;
+          font-size: 22px;
+        }
+  
+        ion-label {
+          font-weight: 500;
+        }
+      }
+    }
+  
+    .bck-btn-container {
+      margin-bottom: 10px;
+    }
+  }
+
+  .pay-btn{
+    margin-top: 20px;
+    --background: #008C64;
+    --border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  

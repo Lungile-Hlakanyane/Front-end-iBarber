@@ -1,0 +1,43 @@
+<ion-content class="ion-padding select-barber-page">
+
+  <!-- Back Button and Title -->
+  <div class="bck-btn-container" style="display:flex; gap:10px; align-items: center;">
+    <p style="font-size:30px; margin:0;" (click)="navigate('/bookings')">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+    <p style="color:#000; font-weight: bold; font-size: 30px; margin:0;">Select a Barber</p>
+  </div>
+
+  <!-- Search Bar -->
+  <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterBarbers()" placeholder="Search for a barber..."></ion-searchbar>
+
+  <!-- Barber List -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" *ngFor="let barber of filteredBarbers">
+        <ion-card class="barber-card ion-activatable ripple-parent">
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <img [src]="barber.profileImageUrl" alt="Barber photo" />
+            </ion-avatar>
+            <ion-label>
+              <h2>{{ barber.name }}</h2>
+              <p>{{ barber.email }}</p>
+              <p>{{ barber.contactNumber }}</p>
+              <p>{{ barber.location }}</p>
+            </ion-label>
+          </ion-item>
+      
+          <!-- Book Now Button -->
+          <ion-button class="custom-btn" expand="block" (click)="navigate('/book-appointment')">
+            Book Now
+          </ion-button>
+      
+          <ion-ripple-effect></ion-ripple-effect>
+        </ion-card>
+      </ion-col>
+      
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

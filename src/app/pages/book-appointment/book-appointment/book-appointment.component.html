@@ -1,0 +1,46 @@
+<ion-content class="ion-padding book-appointment-page">
+  <div class="bck-btn-container">
+    <p style="font-size:30px;" (click)="goBack()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+  </div>
+
+  <h2 class="section-title">Select Date</h2>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4" *ngFor="let date of availableDates">
+        <ion-button
+          expand="block"
+          fill="outline"
+          [color]="selectedDate === date ? 'primary' : 'medium'"
+          (click)="selectDate(date)">
+          {{ date }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <h2 class="section-title">Select Time</h2>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4" *ngFor="let time of availableTimes">
+        <ion-button
+          expand="block"
+          fill="outline"
+          [color]="selectedTime === time ? 'primary' : 'medium'"
+          (click)="selectTime(time)">
+          {{ time }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button
+    expand="block"
+    color="success"
+    class="book-btn"
+    [disabled]="!selectedDate || !selectedTime"
+    (click)="bookAppointment()">
+    Book Appointment
+  </ion-button>
+</ion-content>

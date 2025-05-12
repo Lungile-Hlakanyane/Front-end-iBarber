@@ -1,0 +1,46 @@
+<ion-content class="ion-padding profile-page">
+
+  <div class="bck-btn-container">
+    <p style="font-size:30px;" (click)="navigate('/home')">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+  </div>
+
+  <div class="profile-header">
+    <img class="avatar" [src]="barber.imageUrl || 'assets/default-barber.jpg'" alt="Barber Image" />
+    <h2 class="name">{{ barber.name }}</h2>
+    <p class="email">{{ barber.email }}</p>
+  </div>
+
+  <div class="stats-card">
+    <div class="stats">
+      <div class="stat-item">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <p>{{ barber.experience }} yrs</p>
+        <small>Experience</small>
+      </div>
+      <div class="stat-item">
+        <ion-icon name="cut-outline"></ion-icon>
+        <p>{{ barber.specialty }}</p>
+        <small>Specialty</small>
+      </div>
+      <div class="stat-item">
+        <ion-icon name="star-outline"></ion-icon>
+        <p>{{ barber.rating }}/5</p>
+        <small>Rating</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="portfolio-section">
+    <h3>Portfolio</h3>
+    <div class="portfolio-grid">
+      <img *ngFor="let img of barber.portfolio" [src]="img" alt="Haircut" (click)="openImagePreview(img)" />
+    </div>
+  </div>
+
+  <div class="action-btn-container">
+    <ion-button expand="block" class="custom-btn" (click)="navigate('/book-appointment')">Book Appointment</ion-button>
+  </div>
+
+</ion-content>

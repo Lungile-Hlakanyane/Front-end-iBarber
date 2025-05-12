@@ -1,0 +1,28 @@
+<ion-content class="ion-padding chat-page">
+
+  <div class="bck-btn-container">
+    <p style="font-size:30px;" (click)="navigate('/chat-list')">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+  </div>
+
+  <div class="chat-header">
+    <img class="chat-avatar" src="../../../../assets/profile-pic-image.jpg" alt="User Avatar" />
+    <h2 class="chat-name">Lungile Hlakanyane</h2>
+    <p class="chat-subtitle">Online</p>
+  </div>
+
+  <div class="chat-messages">
+    <div *ngFor="let msg of messages" [ngClass]="msg.from === 'me' ? 'my-message' : 'other-message'">
+      <p>{{ msg.text }}</p>
+    </div>
+  </div>
+
+  <div class="chat-input-container">
+    <ion-input [(ngModel)]="messageText" placeholder="Type your message..."></ion-input>
+    <ion-button (click)="sendMessage()" fill="clear">
+      <ion-icon name="send-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+</ion-content>

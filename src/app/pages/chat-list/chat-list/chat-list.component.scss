@@ -1,0 +1,65 @@
+.chat-list-page {
+    --background: #f4f5f8;
+  
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+  
+      .title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #222;
+      }
+  
+      .new-chat-icon {
+        font-size: 24px;
+        color: #007f5f;
+      }
+    }
+  
+    ion-segment {
+      margin-bottom: 10px;
+    }
+  
+    ion-searchbar {
+      --background: #fff;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+  
+    .chat-item {
+      background: #ffffff;
+      border-radius: 16px;
+      margin: 8px 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  
+      ion-avatar {
+        width: 48px;
+        height: 48px;
+      }
+  
+      ion-label h3 {
+        font-weight: 600;
+        color: #222;
+        margin: 0;
+      }
+  
+      .last-message {
+        color: #666;
+        font-size: 14px;
+        margin-top: 4px;
+      }
+  
+      .meta-info {
+        text-align: right;
+  
+        .timestamp {
+          font-size: 12px;
+          color: #aaa;
+        }
+      }
+    }
+  }
+  

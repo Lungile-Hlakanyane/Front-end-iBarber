@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+
+      <ion-button fill="clear" (click)="navigate('/home')">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+
+      <ion-avatar class="ml-2">
+        <img style="width:85px; height:60px;" src="../../../../assets/profile-pic-image.jpg"/>
+      </ion-avatar>
+
+      <ion-select
+      interface="popover"
+      [(ngModel)]="selectedAudience"
+      class="audience-select"
+      style="margin-left: 12px;">
+      <ion-select-option value="anyone">Anyone</ion-select-option>
+      <ion-select-option value="connections">Connections</ion-select-option>
+      <ion-select-option value="private">Only Me</ion-select-option>
+    </ion-select>
+
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear">
+        <ion-icon name="time-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button [disabled]="!postText.trim()" color="primary">
+        Post
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+  <ion-textarea
+    [(ngModel)]="postText"
+    placeholder="What do you want to talk about?"
+    autoGrow="true"
+    class="post-textarea"
+  ></ion-textarea>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear">
+        <ion-icon name="image-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
