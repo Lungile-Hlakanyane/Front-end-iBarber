@@ -7,40 +7,101 @@
     <p style="color:#000; font-weight: bold; font-size:25px; position:relative; top:10px;">Client Bookings</p>
   </div>
 
-  <h2 class="section-title">Upcoming Bookings</h2>
+  <!-- Tabs (Segment) -->
+  <ion-segment [(ngModel)]="selectedTab">
+    <ion-segment-button value="upcoming">
+      <ion-label>Upcoming</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="created">
+      <ion-label>Created</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
-  <div *ngIf="bookings.length === 0" class="no-bookings">
-    <p>No bookings found.</p>
+  <!-- Upcoming Bookings Tab -->
+  <div *ngIf="selectedTab === 'upcoming'">
+    <div style="display:flex; justify-content: space-between;">
+      <h2 class="section-title">Upcoming Bookings</h2>
+      <p (click)="toggleSearch()"><ion-icon name="search-outline"></ion-icon></p>
+    </div>
+
+    <div class="search-container" *ngIf="searchVisible" style="border-radius: 12px; overflow: hidden;">
+      <ion-searchbar 
+        [(ngModel)]="searchTerm" 
+        (ionInput)="filterBookings()" 
+        placeholder="Search...">
+      </ion-searchbar>
+    </div>
+
+    <div *ngIf="bookings.length === 0" class="no-bookings">
+      <p>No bookings found.</p>
+    </div>
+
+    <ion-card *ngFor="let booking of filteredBookings.length > 0 ? filteredBookings : bookings" class="booking-card">
+      <ion-card-header>
+        <ion-card-title (click)="navigate('/view-client-profile')">{{ booking.clientName }}</ion-card-title>
+        <ion-card-subtitle>{{ booking.service }}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="booking-details">
+          <p><strong>Date:</strong> {{ booking.date }}</p>
+          <p><strong>Time:</strong> {{ booking.time }}</p>
+          <p><strong>Status:</strong> <ion-badge [color]="getStatusColor(booking.status)">
+            {{ booking.status }}
+          </ion-badge></p>
+        </div>
+
+        <div *ngIf="booking.status === 'pending'" class="booking-actions">
+          <ion-button size="small" color="success" (click)="handleAction(booking.id, 'approved')">
+            Approve
+          </ion-button>
+          <ion-button size="small" color="danger" (click)="handleAction(booking.id, 'declined')">
+            Decline
+          </ion-button>
+          <ion-button size="small" *ngIf="booking.showChatButton" color="tertiary" (click)="navigate('/chat')">
+            Chat
+          </ion-button>          
+        </div>
+      </ion-card-content>
+    </ion-card>
   </div>
 
-  <ion-card *ngFor="let booking of bookings" class="booking-card">
-    <ion-card-header>
-      <ion-card-title>{{ booking.clientName }}</ion-card-title>
-      <ion-card-subtitle>{{ booking.service }}</ion-card-subtitle>
-    </ion-card-header>
+  <!-- Created Bookings Tab -->
+  <div *ngIf="selectedTab === 'created'">
+    <div style="display:flex; justify-content: space-between;">
+      <h2 class="section-title">Created Bookings</h2>
+      <p (click)="toggleSearchCreatedBookings()"><ion-icon name="search-outline"></ion-icon></p>
+    </div>
 
-    <ion-card-content>
-      <div class="booking-details">
-        <p><strong>Date:</strong> {{ booking.date }}</p>
-        <p><strong>Time:</strong> {{ booking.time }}</p>
-        <p><strong>Status:</strong> <ion-badge [color]="getStatusColor(booking.status)">
-          {{ booking.status }}
-        </ion-badge></p>
-      </div>
+    <div class="search-container" *ngIf="searchCreatedBookings" style="border-radius: 12px; overflow: hidden;">
+      <ion-searchbar 
+        [(ngModel)]="searchTerm" 
+        (ionInput)="filterBookings()" 
+        placeholder="Search...">
+      </ion-searchbar>
+    </div>
 
-      <div *ngIf="booking.status === 'pending'" class="booking-actions">
-        <ion-button size="small" color="success" (click)="handleAction(booking.id, 'approved')">
-          Approve
-        </ion-button>
-        <ion-button size="small" color="danger" (click)="handleAction(booking.id, 'declined')">
-          Decline
-        </ion-button>
-        <ion-button size="small" color="tertiary" (click)="handleAction(booking.id, 'approved')">
-          Chat
-        </ion-button>
-      </div>
-    </ion-card-content>
-  </ion-card>
+    <div *ngIf="createdBookings.length === 0" class="no-bookings">
+      <p>No created bookings found.</p>
+    </div>
+
+    <ion-card *ngFor="let booking of createdBookings" class="booking-card">
+      <ion-card-header>
+        <ion-card-title>{{ booking.clientName }}</ion-card-title>
+        <ion-card-subtitle>{{ booking.service }}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="booking-details">
+          <p><strong>Date:</strong> {{ booking.date }}</p>
+          <p><strong>Time:</strong> {{ booking.time }}</p>
+          <p><strong>Status:</strong> <ion-badge [color]="getStatusColor(booking.status)">
+            {{ booking.status }}
+          </ion-badge></p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
   <div class="action-btn-container">
     <ion-button expand="block" class="custom-btn" (click)="navigate('/create-slots')">Create Slot</ion-button>

@@ -25,6 +25,7 @@ import { RateModalComponent } from './reuseable-components/rate-a-barber/rate-mo
 import { ReactiveFormsModule } from '@angular/forms';
 import { BarberBookingsComponent } from './pages/barber-bookings/barber-bookings/barber-bookings.component';
 import { CreateSlotComponent } from './pages/create-slot/create-slot/create-slot.component';
+import { ViewClientProfileComponent } from './pages/view-client-profile/view-client-profile/view-client-profile.component';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { CreateSlotComponent } from './pages/create-slot/create-slot/create-slot
     PersonalInfoModalComponent, ChatComponent,ChatListComponent,CreatePostComponent,
     BookingsComponent,SelectBarberComponent,ViewBarberProfileComponent,BookAppointmentComponent,
     PaymentMethodsComponent,SuccessPayModalComponent,RateModalComponent,ReactiveFormsModule,
-    BarberBookingsComponent,CreateSlotComponent
+    BarberBookingsComponent,CreateSlotComponent,ViewClientProfileComponent
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

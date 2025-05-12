@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { IonicModule, ToastController } from '@ionic/angular';
+import { IonicModule, LoadingController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-create-slot',
@@ -16,9 +16,9 @@ export class CreateSlotComponent  implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
-    private toastCtrl: ToastController, 
+    private toastController: ToastController, 
+    private loadingController: LoadingController,
     private router: Router) {
-   
   }
 
   ngOnInit() {}
@@ -28,29 +28,26 @@ export class CreateSlotComponent  implements OnInit {
   }
 
   async submitSlot() {
-    const slotData = this.slotForm.value;
-    console.log('Slot created:', slotData);
-  
-    const loading = await this.toastCtrl.create({
+    const loading = await this.loadingController.create({
       message: 'Creating slot...',
-      duration: 2000,
-      position: 'middle',
-      translucent: true,
+      spinner: 'circular',
+      duration: 2000
     });
   
     await loading.present();
     setTimeout(async () => {
       await loading.dismiss();
-      const successToast = await this.toastCtrl.create({
+      const successToast = await this.toastController.create({
         message: 'You have successfully created a slot',
         duration: 2000,
         color: 'success',
         position: 'top',
       });
-      await successToast.present();
+      await successToast.present().then(()=>{
+        this.router.navigate(['/barber-bookings']);
+      });
       this.slotForm.reset();
-    }, 2000); 
+    }, 2000);
   }
   
-
 }

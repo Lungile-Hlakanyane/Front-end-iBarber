@@ -5,4 +5,5 @@ export interface Booking {
     date: string;
     time: string;
     status: 'pending' | 'approved' | 'declined';
+    showChatButton: boolean;
 }

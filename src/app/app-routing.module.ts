@@ -16,6 +16,7 @@ import { BookAppointmentComponent } from './pages/book-appointment/book-appointm
 import { PaymentMethodsComponent } from './pages/payment-methods/payment-methods/payment-methods.component';
 import { BarberBookingsComponent } from './pages/barber-bookings/barber-bookings/barber-bookings.component';
 import { CreateSlotComponent } from './pages/create-slot/create-slot/create-slot.component';
+import { ViewClientProfileComponent } from './pages/view-client-profile/view-client-profile/view-client-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'book-appointment', component:BookAppointmentComponent},
   { path: 'payment-methods', component:PaymentMethodsComponent},
   { path: 'create-slots', component:CreateSlotComponent},
+  { path: 'view-client-profile', component:ViewClientProfileComponent},
   {
     path: '',
     component: BottomNavigationComponent,

@@ -14,8 +14,14 @@ import { BookingService } from 'src/app/services/booking-service/booking.service
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class BarberBookingsComponent  implements OnInit {
-
+  selectedTab: string = 'upcoming';
   bookings: Booking[] = [];
+  searchTerm: string = '';
+  createdBookings: any[] = [];
+  filteredBookings: any[] = [];
+  searchVisible: boolean = false;
+  searchCreatedBookings: boolean = false;
+  showChatButton: boolean = false;
 
   constructor(
     private bookingService: BookingService,
@@ -27,16 +33,45 @@ export class BarberBookingsComponent  implements OnInit {
     this.loadBookings();
   }
 
+  toggleSearch() {
+    this.searchVisible = !this.searchVisible;
+  }
+
+  toggleSearchCreatedBookings() {
+    this.searchCreatedBookings = !this.searchCreatedBookings;
+  } 
+
   loadBookings(): void {
     this.bookingService.getBookings().subscribe(data => this.bookings = data);
+
+    this.createdBookings = [
+      {
+        id: 1,
+        clientName: 'Not Assigned',
+        service: 'Haircut',
+        date: '2025-05-15',
+        time: '10:00 AM',
+        status: 'not-booked'
+      }
+    ];
+  
+    // Optionally sort by date if needed
+    this.createdBookings.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
   async handleAction(id: number, action: 'approved' | 'declined') {
     this.bookingService.updateBookingStatus(id, action).subscribe(() => {
-      this.loadBookings();
+      const booking = this.bookings.find(b => b.id === id);
+      if (booking) {
+        booking.status = action;
+        if (action === 'approved') {
+          booking.showChatButton = true;
+        }
+      }
       this.showToast(`Booking ${action}`);
     });
   }
+  
 
   getStatusColor(status: string): string {
     switch (status) {
@@ -59,4 +94,13 @@ export class BarberBookingsComponent  implements OnInit {
   navigate(route: string) {
     this.router.navigate([route]);
   }
+
+  filterBookings() {
+    const term = this.searchTerm.toLowerCase();
+    this.filteredBookings = this.bookings.filter(booking =>
+      booking.clientName.toLowerCase().includes(term) ||
+      booking.service.toLowerCase().includes(term)
+    );
+  }
+
 }
