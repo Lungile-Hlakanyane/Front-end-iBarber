@@ -1,0 +1,21 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Rate the Service</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="star-rating">
+    <ion-icon
+      *ngFor="let star of stars; let i = index"
+      [name]="i < selectedRating ? 'star' : 'star-outline'"
+      class="star"
+    ></ion-icon>
+  </div>
+
+  <ion-button expand="block" (click)="submitRating()" class="custom-btn">Submit</ion-button>
+
+</ion-content>

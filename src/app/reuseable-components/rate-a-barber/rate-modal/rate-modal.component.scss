@@ -1,0 +1,19 @@
+.star-rating {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .star {
+    font-size: 40px;
+    color: #008C64;
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .custom-btn{
+    margin-top: 20px;
+    --background: #008C64;
+    --border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }

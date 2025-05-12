@@ -21,6 +21,7 @@ import { ViewBarberProfileComponent } from './pages/view-barber-profile/view-bar
 import { BookAppointmentComponent } from './pages/book-appointment/book-appointment/book-appointment.component';
 import { PaymentMethodsComponent } from './pages/payment-methods/payment-methods/payment-methods.component';
 import { SuccessPayModalComponent } from './reuseable-components/successs-payment-modal/success-pay-modal/success-pay-modal.component';
+import { RateModalComponent } from './reuseable-components/rate-a-barber/rate-modal/rate-modal.component';
 
 
 @NgModule({
@@ -30,7 +31,7 @@ import { SuccessPayModalComponent } from './reuseable-components/successs-paymen
     FeedComponent, BottomNavigationComponent, SideMenuComponent, ProfileComponent, 
     PersonalInfoModalComponent, ChatComponent,ChatListComponent,CreatePostComponent,
     BookingsComponent,SelectBarberComponent,ViewBarberProfileComponent,BookAppointmentComponent,
-    PaymentMethodsComponent,SuccessPayModalComponent
+    PaymentMethodsComponent,SuccessPayModalComponent,RateModalComponent
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
