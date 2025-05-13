@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular'; 
 import { Client } from 'src/app/models/Client';
-import { AlertController,ToastController,LoadingController } from '@ionic/angular';
+import { AlertController,ToastController,LoadingController,ModalController } from '@ionic/angular';
+import { ReportUserModalComponent } from 'src/app/reuseable-components/report-user-modal/report-user-modal/report-user-modal.component';
 
 @Component({
   selector: 'app-view-client-profile',
@@ -20,7 +21,8 @@ export class ViewClientProfileComponent  implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private toastController: ToastController,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private modalController: ModalController  
   ) { }
 
   ngOnInit() {
@@ -98,5 +100,20 @@ export class ViewClientProfileComponent  implements OnInit {
     await alert.present();
   }
   
+
+  async openReportModal() {
+    const modal = await this.modalController.create({
+      component: ReportUserModalComponent,
+      cssClass: 'bottom-modal'
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (data?.reason) {
+      console.log('Selected reason:', data.reason);
+      // You can now call your block-user API or perform an action here.
+    }
+  }
 
 }

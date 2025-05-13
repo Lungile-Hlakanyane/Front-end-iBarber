@@ -1,0 +1,63 @@
+<ion-content class="ion-padding profile-page">
+
+  <div class="bck-btn-container">
+    <p style="font-size:30px;" (click)="navigate('/home')">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+  </div>
+
+  <div class="profile-header">
+    <img class="avatar" src="../../../../assets/profile-pic-image.jpg" alt="Profile Image" />
+    <h2 class="name">Lungile Hlakanyane</h2>
+    <p class="email">lungilehlakasgmail.com</p>
+    <p class="email">+27 65 635 2578</p>
+  </div>
+
+  <!-- Tabs -->
+  <ion-segment [(ngModel)]="currentTab" color="primary">
+    <ion-segment-button value="images">
+      <ion-label>Images</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="videos">
+      <ion-label>Videos</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Images Tab -->
+  <div *ngIf="currentTab === 'images'">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" sizeMd="4" *ngFor="let image of portfolioImages">
+          <ion-card (click)="openImageViewer(image)">
+            <img [src]="image" />
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="action-btn-container">
+      <ion-button expand="block" class="custom-btn">Upload Images</ion-button>
+    </div>
+  </div>
+
+  <!-- Videos Tab -->
+  <div *ngIf="currentTab === 'videos'">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" sizeMd="6" *ngFor="let video of portfolioVideos">
+          <ion-card>
+            <video width="100%" height="200" controls>
+              <source [src]="video" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="action-btn-container">
+      <ion-button expand="block" class="custom-btn">Upload Videos</ion-button>
+    </div>
+  </div>
+
+</ion-content>

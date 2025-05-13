@@ -26,6 +26,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BarberBookingsComponent } from './pages/barber-bookings/barber-bookings/barber-bookings.component';
 import { CreateSlotComponent } from './pages/create-slot/create-slot/create-slot.component';
 import { ViewClientProfileComponent } from './pages/view-client-profile/view-client-profile/view-client-profile.component';
+import { ReportUserModalComponent } from './reuseable-components/report-user-modal/report-user-modal/report-user-modal.component';
+import { FianceReportComponent } from './pages/finance-report/fiance-report/fiance-report.component';
+import { PortfolioComponent } from './pages/portfolio/portfolio/portfolio.component';
+import { ViewPortfolioImageComponent } from './reuseable-components/view-porfolio-image/view-portfolio-image/view-portfolio-image.component';
 
 
 @NgModule({
@@ -36,7 +40,8 @@ import { ViewClientProfileComponent } from './pages/view-client-profile/view-cli
     PersonalInfoModalComponent, ChatComponent,ChatListComponent,CreatePostComponent,
     BookingsComponent,SelectBarberComponent,ViewBarberProfileComponent,BookAppointmentComponent,
     PaymentMethodsComponent,SuccessPayModalComponent,RateModalComponent,ReactiveFormsModule,
-    BarberBookingsComponent,CreateSlotComponent,ViewClientProfileComponent
+    BarberBookingsComponent,CreateSlotComponent,ViewClientProfileComponent,ReportUserModalComponent,
+    FianceReportComponent,PortfolioComponent,ViewPortfolioImageComponent
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

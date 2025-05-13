@@ -15,6 +15,8 @@ import { PersonalInfoModalComponent } from 'src/app/reuseable-components/persona
 })
 export class ProfileComponent  implements OnInit {
 
+  role: string = '';
+
   constructor(
     private router: Router,
     private actionSheetController: ActionSheetController,
@@ -23,7 +25,12 @@ export class ProfileComponent  implements OnInit {
     private modalController: ModalController
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const storedRole = localStorage.getItem('userRole');
+    if (storedRole) {
+      this.role = storedRole;
+    }
+  }
 
   navigate(link:string){
     this.router.navigate([link]); 

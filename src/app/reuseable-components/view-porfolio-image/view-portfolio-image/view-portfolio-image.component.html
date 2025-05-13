@@ -1,0 +1,13 @@
+<ion-content class="ion-padding" fullscreen>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <div class="image-container">
+    <img [src]="imageSrc" class="full-image" />
+  </div>
+</ion-content>

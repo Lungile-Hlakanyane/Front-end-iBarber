@@ -17,6 +17,8 @@ import { PaymentMethodsComponent } from './pages/payment-methods/payment-methods
 import { BarberBookingsComponent } from './pages/barber-bookings/barber-bookings/barber-bookings.component';
 import { CreateSlotComponent } from './pages/create-slot/create-slot/create-slot.component';
 import { ViewClientProfileComponent } from './pages/view-client-profile/view-client-profile/view-client-profile.component';
+import { FianceReportComponent } from './pages/finance-report/fiance-report/fiance-report.component';
+import { PortfolioComponent } from './pages/portfolio/portfolio/portfolio.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -31,6 +33,8 @@ const routes: Routes = [
   { path: 'payment-methods', component:PaymentMethodsComponent},
   { path: 'create-slots', component:CreateSlotComponent},
   { path: 'view-client-profile', component:ViewClientProfileComponent},
+  { path: 'finance-report', component:FianceReportComponent},
+  { path: 'portfolio', component:PortfolioComponent},
   {
     path: '',
     component: BottomNavigationComponent,

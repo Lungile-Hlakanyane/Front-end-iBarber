@@ -24,5 +24,4 @@ export class BottomNavigationComponent  implements OnInit {
     }
   }
   
-
 }

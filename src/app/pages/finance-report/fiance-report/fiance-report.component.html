@@ -1,0 +1,38 @@
+<ion-content class="ion-padding">
+
+  <div class="heading-title" style="display:flex; gap:10px;">
+    <p style="color:#000; font-size: 29px; font-weight: bold;" (click)="navigate('/profile')">
+      <ion-icon name="chevron-back-outline"></ion-icon></p>
+    <p style="color:#000; font-size: 29px; font-weight: bold;">Finance Report</p>
+  </div>
+
+  <ion-segment (ionChange)="filterReport()">
+    <ion-segment-button value="week">
+      <ion-label>1 Week</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="month">
+      <ion-label>1 Month</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="year">
+      <ion-label>1 Year</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="reportData">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Total Revenue</ion-card-title>
+        <ion-card-subtitle>({{ selectedPeriod | titlecase }})</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <h2>R{{ reportData.totalRevenue | number:'1.2-2' }}</h2>
+        <p>Total Appointments: {{ reportData.totalAppointments }}</p>
+        <p>Completed Appointments: {{ reportData.completedAppointments }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-text color="medium" *ngIf="!reportData">
+    <p>No report data available for this period.</p>
+  </ion-text>
+</ion-content>
