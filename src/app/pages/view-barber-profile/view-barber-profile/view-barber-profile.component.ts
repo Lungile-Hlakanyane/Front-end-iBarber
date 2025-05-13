@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RateModalComponent } from 'src/app/reuseable-components/rate-a-barber/rate-modal/rate-modal.component';
 import { ModalController } from '@ionic/angular';
 import { ImagePreviewModalComponent } from 'src/app/reuseable-components/image-preview-modal/image-preview-modal/image-preview-modal.component';
+import { ReportUserModalComponent } from 'src/app/reuseable-components/report-user-modal/report-user-modal/report-user-modal.component';
 
 @Component({
   selector: 'app-view-barber-profile',
@@ -76,5 +77,20 @@ export class ViewBarberProfileComponent  implements OnInit {
   
     await modal.present();
   }
+
+  async openReportModal() {
+    const modal = await this.modalController.create({
+      component: ReportUserModalComponent,
+      cssClass: 'report-modal',
+    });
+  
+    modal.onDidDismiss().then((result) => {
+      if (result.data !== null) {
+        console.log('User rated:', result.data);
+      }
+    });
+    await modal.present();
+  }
+
 
 }

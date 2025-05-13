@@ -19,6 +19,12 @@ import { CreateSlotComponent } from './pages/create-slot/create-slot/create-slot
 import { ViewClientProfileComponent } from './pages/view-client-profile/view-client-profile/view-client-profile.component';
 import { FianceReportComponent } from './pages/finance-report/fiance-report/fiance-report.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio/portfolio.component';
+import { ManageUsersComponent } from './pages/manage-users/manage-users/manage-users.component';
+import { AdminViewUserComponent } from './pages/admin-view-user/admin-view-user/admin-view-user.component';
+import { AnalyticsComponent } from './pages/analytics/analytics/analytics.component';
+import { ReportHandlingComponent } from './pages/report-handling/report-handling/report-handling.component';
+import { FeedbackSupportComponent } from './pages/feedback-support/feedback-support/feedback-support.component';
+import { BroadcastAnnouncementsComponent } from './pages/broadcast-announcements/broadcast-announcements/broadcast-announcements.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -35,6 +41,11 @@ const routes: Routes = [
   { path: 'view-client-profile', component:ViewClientProfileComponent},
   { path: 'finance-report', component:FianceReportComponent},
   { path: 'portfolio', component:PortfolioComponent},
+  { path: 'admin-view-user', component:AdminViewUserComponent},
+  { path: 'analytics', component:AnalyticsComponent},
+  { path: 'report-handling', component: ReportHandlingComponent},
+  { path: 'feedback-support', component:FeedbackSupportComponent},
+  { path: 'broadcast-announcement', component:BroadcastAnnouncementsComponent},
   {
     path: '',
     component: BottomNavigationComponent,
@@ -46,6 +57,7 @@ const routes: Routes = [
       { path: 'create-post', component: CreatePostComponent},
       { path: 'bookings', component: BookingsComponent},
       { path: 'barber-bookings', component: BarberBookingsComponent},
+      { path: 'manage-users', component:ManageUsersComponent},
     ]
   }
 ];

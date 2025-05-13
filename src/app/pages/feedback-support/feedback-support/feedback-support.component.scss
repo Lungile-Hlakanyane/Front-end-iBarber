@@ -1,0 +1,63 @@
+.feedback-support {
+    --background: #f4f5f8;
+  
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+  
+      h1 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #222;
+      }
+  
+      p {
+        font-size: 14px;
+        color: #666;
+      }
+    }
+  
+    .ticket-card {
+      margin-bottom: 16px;
+      border-radius: 20px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  
+      ion-card-title {
+        font-size: 18px;
+        color: #222;
+      }
+  
+      ion-card-subtitle {
+        font-size: 14px;
+        color: #888;
+      }
+  
+      p {
+        font-size: 14px;
+        margin: 4px 0;
+        color: #444;
+  
+        span.resolved {
+          color: #007f5f;
+          font-weight: 600;
+        }
+  
+        span.pending {
+          color: #ff8800;
+          font-weight: 600;
+        }
+      }
+  
+      .actions {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+  
+        ion-button {
+          font-size: 13px;
+          border-radius: 14px;
+        }
+      }
+    }
+  }
+  

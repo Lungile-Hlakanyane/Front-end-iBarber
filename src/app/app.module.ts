@@ -30,7 +30,12 @@ import { ReportUserModalComponent } from './reuseable-components/report-user-mod
 import { FianceReportComponent } from './pages/finance-report/fiance-report/fiance-report.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio/portfolio.component';
 import { ViewPortfolioImageComponent } from './reuseable-components/view-porfolio-image/view-portfolio-image/view-portfolio-image.component';
-
+import { ManageUsersComponent } from './pages/manage-users/manage-users/manage-users.component';
+import { AdminViewUserComponent } from './pages/admin-view-user/admin-view-user/admin-view-user.component';
+import { AnalyticsComponent } from './pages/analytics/analytics/analytics.component';
+import { ReportHandlingComponent } from './pages/report-handling/report-handling/report-handling.component';
+import { FeedbackSupportComponent } from './pages/feedback-support/feedback-support/feedback-support.component';
+import { BroadcastAnnouncementsComponent } from './pages/broadcast-announcements/broadcast-announcements/broadcast-announcements.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,7 +46,9 @@ import { ViewPortfolioImageComponent } from './reuseable-components/view-porfoli
     BookingsComponent,SelectBarberComponent,ViewBarberProfileComponent,BookAppointmentComponent,
     PaymentMethodsComponent,SuccessPayModalComponent,RateModalComponent,ReactiveFormsModule,
     BarberBookingsComponent,CreateSlotComponent,ViewClientProfileComponent,ReportUserModalComponent,
-    FianceReportComponent,PortfolioComponent,ViewPortfolioImageComponent
+    FianceReportComponent,PortfolioComponent,ViewPortfolioImageComponent,ManageUsersComponent,
+    AdminViewUserComponent,AnalyticsComponent,ReportHandlingComponent,FeedbackSupportComponent,
+    BroadcastAnnouncementsComponent
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

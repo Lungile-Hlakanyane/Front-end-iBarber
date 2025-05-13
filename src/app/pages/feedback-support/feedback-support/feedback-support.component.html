@@ -1,0 +1,38 @@
+<ion-content class="ion-padding feedback-support">
+
+  <div class="header"  style="display: flex; gap: 10px;">
+    <div class="back-btn">
+      <p style="color:#000; font-weight:bold; font-size:30px" (click)="navigate('/profile')">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </p>
+    </div>
+    <div style="position:relative; top:10px;">
+      <h1>User Feedback & Support</h1>
+      <p>Review and manage support tickets</p>
+    </div>
+  </div>
+
+  <ion-list class="ticket-list">
+    <ion-card *ngFor="let ticket of supportTickets" class="ticket-card">
+      <ion-card-header>
+        <ion-card-title>{{ ticket.subject }}</ion-card-title>
+        <ion-card-subtitle>From: {{ ticket.username }}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p><strong>Message:</strong> {{ ticket.message }}</p>
+        <p><strong>Status:</strong> 
+          <span [ngClass]="{'resolved': ticket.status === 'Resolved', 'pending': ticket.status === 'Pending'}">
+            {{ ticket.status }}
+          </span>
+        </p>
+
+        <div class="actions">
+          <ion-button fill="outline" color="success" *ngIf="ticket.status !== 'Resolved'" (click)="markAsResolved(ticket)">Mark Resolved</ion-button>
+          <ion-button fill="outline" color="medium" (click)="viewTicket(ticket)">View</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+</ion-content>

@@ -1,0 +1,38 @@
+<ion-content class="ion-padding profile-page">
+
+  <!-- Back button -->
+  <div class="bck-btn-container">
+    <p style="font-size:30px;">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+  </div>
+
+  <!-- Page Title -->
+  <div class="profile-header">
+    <h2 class="name">All Users</h2>
+    <p class="email">View all registered users</p>
+  </div>
+
+  <!-- Search Bar -->
+  <ion-item lines="none">
+    <ion-icon name="search-outline" slot="start"></ion-icon>
+    <ion-input [(ngModel)]="searchTerm" (ionInput)="filterUsers()" placeholder="Search users..."></ion-input>
+  </ion-item>
+
+  <!-- Users List -->
+  <ion-list lines="none" class="menu-list">
+    <ion-item *ngFor="let user of filteredUsers">
+      <ion-avatar slot="start">
+        <img src="assets/profile-pic-image.jpg" />
+      </ion-avatar>
+      <ion-label>
+        <h3>{{ user.name }}</h3>
+        <p>{{ user.email }}</p>
+        <p>{{ user.phone }}</p>
+        <ion-badge color="primary">{{ user.role }}</ion-badge>
+      </ion-label>
+      <ion-icon name="ellipsis-vertical-sharp" slot="end" style="font-size: 20px;" (click)=" presentActionSheet(user)"></ion-icon>
+    </ion-item>    
+  </ion-list>
+
+</ion-content>

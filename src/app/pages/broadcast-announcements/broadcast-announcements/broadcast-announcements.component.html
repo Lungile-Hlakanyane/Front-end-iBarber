@@ -1,0 +1,57 @@
+<ion-content class="ion-padding broadcast-announcements">
+  <div class="header" style="display: flex; gap:10px;">
+    <div class="back-btn">
+      <p style="color:#000; font-weight:bold; font-size:30px" (click)="navigate('/profile')">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </p>
+    </div>
+    <div style="position:relative; top:10px;">
+      <h1>Broadcast Announcement</h1>
+      <p>Send messages to all users or specific groups</p>
+    </div>
+  </div>
+
+  <ion-card class="broadcast-form">
+    <ion-card-content>
+      <form [formGroup]="broadcastForm" (ngSubmit)="sendBroadcast()">
+        
+        <ion-item>
+          <ion-label position="stacked">Title</ion-label>
+          <ion-input formControlName="title" placeholder="Enter title"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Message</ion-label>
+          <ion-textarea formControlName="message" placeholder="Write your announcement here..."></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Target Group</ion-label>
+          <ion-select formControlName="targetGroup" placeholder="Select group">
+            <ion-select-option value="all">All Users</ion-select-option>
+            <ion-select-option value="barbers">Barbers Only</ion-select-option>
+            <ion-select-option value="customers">Customers Only</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button expand="block" class="custom-btn" type="submit" [disabled]="broadcastForm.invalid">
+          Send Announcement
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="history">
+    <h2>Previous Announcements</h2>
+    <ion-list>
+      <ion-item *ngFor="let item of broadcastHistory">
+        <ion-label>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.message }}</p>
+          <small>To: {{ item.targetGroup | titlecase }} | {{ item.date }}</small>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>

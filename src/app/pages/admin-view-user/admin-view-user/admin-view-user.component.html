@@ -1,0 +1,30 @@
+<ion-content class="ion-padding profile-page">
+  <div class="bck-btn-container">
+    <p style="font-size:30px;" (click)="navigate('/manage-users')"><ion-icon name="chevron-back-outline"></ion-icon></p>
+  </div>
+
+  <div class="profile-header">
+    <img class="avatar" [src]="user.avatarUrl || 'assets/default-avatar.png'" alt="Profile Image" />
+    <h2 class="name">{{ user.fullName }}</h2>
+    <p class="email">{{ user.username }} | {{ user.email }}</p>
+    <p class="phone">{{ user.phoneNumber }}</p>
+    <p class="role-badge">{{ user.role | titlecase }}</p>
+  </div>
+
+  <div class="finance-section">
+    <div class="report-card">
+      <h3>This Week</h3>
+      <p class="amount">R{{ finance.weekly | number:'1.2-2' }}</p>
+    </div>
+
+    <div class="report-card">
+      <h3>This Month</h3>
+      <p class="amount">R{{ finance.monthly | number:'1.2-2' }}</p>
+    </div>
+
+    <div class="report-card">
+      <h3>This Year</h3>
+      <p class="amount">R{{ finance.yearly | number:'1.2-2' }}</p>
+    </div>
+  </div>
+</ion-content>

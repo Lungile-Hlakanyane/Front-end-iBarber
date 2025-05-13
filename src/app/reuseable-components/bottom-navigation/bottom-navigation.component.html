@@ -10,6 +10,11 @@
       <ion-label>Bookings</ion-label>
     </ion-tab-button>
 
+    <ion-tab-button tab="manage-users" href="/tabs/manage-users" *ngIf="role === 'admin'">
+      <ion-icon name="people-outline"></ion-icon>
+      <ion-label>Users</ion-label>
+    </ion-tab-button>
+
     <ion-tab-button tab="barber-bookings" href="/tabs/barber-bookings" *ngIf="role === 'barber'">
       <ion-icon name="calendar-outline"></ion-icon>
       <ion-label>Bookings</ion-label>

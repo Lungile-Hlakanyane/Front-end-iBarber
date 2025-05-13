@@ -1,0 +1,40 @@
+<ion-content class="ion-padding analytics-dashboard">
+
+  <div class="dashboard-header" style="display: flex; gap: 10px;">
+    <div class="back-btn">
+      <p style="color:#000; font-weight:bold; font-size:30px" (click)="navigate('/profile')">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </p>
+    </div>
+    <div style="position:relative; top:10px;">
+      <h1>Analytics Dashboard</h1>
+      <p>System-wide overview</p>
+    </div>
+  </div>
+
+  <div class="dashboard-cards">
+    <ion-card class="dashboard-card">
+      <ion-icon name="people-outline"></ion-icon>
+      <h5>{{ activeUsers }}</h5>
+      <p>Active Users</p>
+    </ion-card>
+
+    <ion-card class="dashboard-card">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <h5>{{ totalBookings }}</h5>
+      <p>Total Bookings</p>
+    </ion-card>
+
+    <ion-card class="dashboard-card">
+      <ion-icon name="cash-outline"></ion-icon>
+      <h5>R {{ totalRevenue }}</h5>
+      <p>Total Revenue</p>
+    </ion-card>
+  </div>
+
+  <div class="section-title">Monthly Revenue</div>
+  <div class="chart-card">
+    <canvas id="revenueChart"></canvas>
+  </div>
+
+</ion-content>
