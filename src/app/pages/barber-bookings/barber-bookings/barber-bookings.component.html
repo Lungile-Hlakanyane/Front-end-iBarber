@@ -90,17 +90,20 @@
         <ion-card-title>{{ booking.clientName }}</ion-card-title>
         <ion-card-subtitle>{{ booking.service }}</ion-card-subtitle>
       </ion-card-header>
-
       <ion-card-content>
         <div class="booking-details">
           <p><strong>Date:</strong> {{ booking.date }}</p>
           <p><strong>Time:</strong> {{ booking.time }}</p>
-          <p><strong>Status:</strong> <ion-badge [color]="getStatusColor(booking.status)">
-            {{ booking.status }}
-          </ion-badge></p>
+          <p><strong>Status:</strong> 
+            <ion-badge [color]="getStatusColor(booking.status)">
+              {{ booking.status }}
+            </ion-badge>
+          </p>
         </div>
       </ion-card-content>
     </ion-card>
+    
+
   </div>
 
   <div class="action-btn-container">

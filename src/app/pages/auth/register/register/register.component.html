@@ -14,25 +14,25 @@
     <p>Fill in your details to get started with iBarber.</p>
 
     <ion-item lines="none" class="input-item">
-      <ion-input placeholder="Username" type="text"></ion-input>
+      <ion-input placeholder="Username" type="text" [(ngModel)]="user.username"></ion-input>
     </ion-item>
 
     <ion-item lines="none" class="input-item">
-      <ion-input placeholder="Email" type="email"></ion-input>
+      <ion-input placeholder="Email" type="email" [(ngModel)]="user.email"></ion-input>
     </ion-item>
 
     <ion-item lines="none" class="input-item">
-      <ion-input placeholder="Password" type="password"></ion-input>
+      <ion-input placeholder="Password" type="password" [(ngModel)]="user.password"></ion-input>
     </ion-item>
 
     <ion-item lines="none" class="input-item">
-      <ion-select placeholder="Select Role">
+      <ion-select placeholder="Select Role" [(ngModel)]="user.role">
         <ion-select-option value="barber">Barber</ion-select-option>
         <ion-select-option value="client">Client</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <ion-button expand="block" class="create-btn" (click)="navigate('/otp')">Register</ion-button>
+    <ion-button expand="block" class="create-btn" (click)="register()">Register</ion-button>
 
     <div class="guest">
       Already have an account? <span class="guest-link" (click)="navigate('/login')">Login</span>

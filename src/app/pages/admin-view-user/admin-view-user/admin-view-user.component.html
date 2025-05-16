@@ -4,9 +4,9 @@
   </div>
 
   <div class="profile-header">
-    <img class="avatar" [src]="user.avatarUrl || 'assets/default-avatar.png'" alt="Profile Image" />
-    <h2 class="name">{{ user.fullName }}</h2>
-    <p class="email">{{ user.username }} | {{ user.email }}</p>
+    <img class="avatar" src="assets/profile-pic-image.jpg" />
+    <h2 class="name">{{ user.username }}</h2>
+    <p class="email">{{ user.email }}</p>
     <p class="phone">{{ user.phoneNumber }}</p>
     <p class="role-badge">{{ user.role | titlecase }}</p>
   </div>

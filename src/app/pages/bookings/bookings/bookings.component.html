@@ -16,8 +16,8 @@
       <img class="avatar" src="../../../../assets/profile-pic-image.jpg" alt="Profile Image" />
     </div>
     <div class="user-info">
-      <h2 class="name">Lungile Hlakanyane</h2>
-      <p class="email">lungilehlakasgmail.com</p>
+      <h2 class="name">{{user?.username}}</h2>
+      <p class="email">{{user?.email}}</p>
     </div>
   </div>
   
@@ -34,12 +34,11 @@
   <div *ngIf="bookingTab === 'upcoming'">
     <ion-card class="booking-card" *ngFor="let booking of upcomingBookings">
       <ion-card-header>
-        <ion-card-title>{{ booking.barberName }}</ion-card-title>
-        <p class="booking-status confirmed">{{ booking.status }}</p>
+        <ion-card-title>{{ booking.username }}</ion-card-title>
+        <p class="booking-status confirmed">Booked - waiting for approval from barber</p>
       </ion-card-header>
       <ion-card-content>
         <p><ion-icon name="calendar-outline"></ion-icon> {{ booking.date }} at {{ booking.time }}</p>
-        <p><ion-icon name="location-outline"></ion-icon> {{ booking.location }}</p>
         <div class="booking-actions">
           <ion-button fill="clear" size="small" color="medium" (click)="reschedule(booking)">Reschedule</ion-button>
           <ion-button fill="clear" size="small" color="success" (click)="navigate('/chat')">Chat</ion-button>

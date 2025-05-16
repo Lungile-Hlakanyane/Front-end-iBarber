@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
+import { LoginService } from 'src/app/services/login-service/login.service';
+import { LoginRequest } from 'src/app/models/LoginRequest';
+import { RegisterService } from 'src/app/services/user-service/register.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +23,9 @@ export class LoginComponent  implements OnInit {
   constructor(
     private router: Router,
     private fb:FormBuilder,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private loginService:LoginService,
+    private userService:RegisterService
   ) { }
 
   ngOnInit() {
@@ -43,26 +48,52 @@ export class LoginComponent  implements OnInit {
   }
 
   async onLogin() {
-    const email = this.email.value.toLowerCase();
-    if (email === 'admin@ibarber.co.za') {
-      this.role = 'admin';
-    } else if (email === 'barber@ibarber.co.za') {
-      this.role = 'barber';
-    } else {
-      this.role = 'client';
-    }
+    if (this.loginForm.invalid) return;
   
-    localStorage.setItem('userRole', this.role);
+    const credentials = this.loginForm.value;
   
-    const toast = await this.toastController.create({
-      message: `Logged in as ${this.role}`,
-      duration: 2000,
-      position: 'top',
-      color: 'success'
+    this.loginService.login(credentials).subscribe({
+      next: async (response) => {
+        const toast = await this.toastController.create({
+          message: response.message || 'Login successful',
+          duration: 2000,
+          color: 'success',
+          position: 'top'
+        });
+        await toast.present();
+  
+        localStorage.setItem('userEmail', response.email);
+        localStorage.setItem('userRole', response.role);
+  
+        this.userService.getUserByEmail(response.email).subscribe({
+          next: (userData) => {
+            localStorage.setItem('userId', userData.id);
+            this.router.navigate(['/home']);
+          },
+          error: async (err) => {
+            const toast = await this.toastController.create({
+              message: 'Failed to fetch user ID',
+              duration: 2000,
+              color: 'warning',
+              position: 'top'
+            });
+            await toast.present();
+          }
+        });
+      },
+      error: async (err) => {
+        const toast = await this.toastController.create({
+          message: err.error.message || 'Invalid credentials',
+          duration: 2000,
+          color: 'danger',
+          position: 'top'
+        });
+        await toast.present();
+      }
     });
-    await toast.present();
-    this.router.navigate(['/home']);
   }
+  
+
   
 
 }

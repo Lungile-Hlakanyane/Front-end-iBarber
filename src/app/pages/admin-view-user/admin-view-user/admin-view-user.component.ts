@@ -12,14 +12,7 @@ import { FormsModule } from '@angular/forms';
   imports: [IonicModule, FormsModule, CommonModule]
 })
 export class AdminViewUserComponent  implements OnInit {
-  user: any = {
-    fullName: 'Lungile Hlakanyane',
-    username: 'lungilehlaka',
-    email: 'lungilehlakas@gmail.com',
-    phoneNumber: '073 456 7890',
-    role: 'barber',
-    avatarUrl: 'assets/profile-pic-image.jpg' // You can later replace this with dynamic loading
-  };
+  user: any;
 
   finance = {
     weekly: 1250.00,
@@ -27,11 +20,16 @@ export class AdminViewUserComponent  implements OnInit {
     yearly: 67250.99
   };
 
-  constructor(
-    private router:Router
-  ) { }
+  constructor(private router:Router) { 
+    const nav = this.router.getCurrentNavigation();
+    this.user = nav?.extras?.state?.['user'];
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (!this.user) {
+      this.router.navigateByUrl('/manage-users');
+    }
+  }
 
   navigate(link:string){
     this.router.navigateByUrl(link);

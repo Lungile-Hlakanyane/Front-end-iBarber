@@ -6,6 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
+import { RegisterService } from 'src/app/services/user-service/register.service';
+import { SlotService } from 'src/app/services/slot-service/slot.service';
+import { SlotDTO } from 'src/app/models/SlotDTO';
 
 @Component({
   selector: 'app-bookings',
@@ -18,53 +21,26 @@ export class BookingsComponent  implements OnInit {
   selectedSegment: string = 'upcoming';
   bookingTab: any;
   bookingHistory: any;
+  user: any = null;
 
   constructor(
     private router: Router,
     private alertController: AlertController,
     private loadingController: LoadingController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private registerService:RegisterService,
+    private slotService:SlotService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fetchUserDetails();
+  }
 
   navigate(link:string){
     this.router.navigate([link]);
   }
 
-  upcomingBookings = [
-    {
-      barberName: 'Jay The Barber',
-      date: '12 Apr 2025',
-      time: '14:00',
-      location: 'Downtown Barbershop',
-      status: 'confirmed'
-    },
-    {
-      barberName: 'Mel Trims',
-      date: '15 Apr 2025',
-      time: '10:00',
-      location: 'City Mall',
-      status: 'pending'
-    }
-  ];
-
-  pastBookings = [
-    {
-      barberName: 'Fade King',
-      date: '02 Apr 2025',
-      time: '12:00',
-      location: 'East Side Barber',
-      status: 'completed'
-    },
-    {
-      barberName: 'Jay The Barber',
-      date: '25 Mar 2025',
-      time: '09:00',
-      location: 'Downtown Barbershop',
-      status: 'cancelled'
-    }
-  ];
+  upcomingBookings: any = [];
 
   onSegmentChanged(event: any) {
     this.selectedSegment = event.detail.value;
@@ -119,6 +95,37 @@ export class BookingsComponent  implements OnInit {
 
   rebook(booking: any) {
     console.log('Rebook clicked for', booking);
+  }
+
+  fetchUserDetails(){
+    const email = localStorage.getItem('userEmail');
+    if (email) {
+      this.registerService.getUserByEmail(email).subscribe({
+        next: (data) => {
+          this.user = data;
+          this.fetchBookings(this.user.id);
+        },
+        error: (err) => {
+          console.error('Error fetching user data:', err);
+        }
+      });
+    }
+  }
+
+  fetchBookings(clientId: number) {
+    this.slotService.getSlotByClientId(clientId).subscribe({
+      next: (data) => {
+        this.upcomingBookings = data.map((slot: any) => ({
+          username: slot.barber?.username || 'Unknown Barber',
+          date: slot.date,
+          time: slot.startTime,
+          status: 'pending'
+        }));
+      },
+      error: (err) => {
+        console.error('Error fetching bookings:', err);
+      }
+    });
   }
 
 }

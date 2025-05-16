@@ -35,7 +35,7 @@ const routes: Routes = [
   { path: 'chat', component:ChatComponent},
   { path: 'select-barber', component: SelectBarberComponent},
   { path: 'view-barber-profile', component:ViewBarberProfileComponent},
-  { path: 'book-appointment', component:BookAppointmentComponent},
+  { path: 'book-appointment/:barberId', component:BookAppointmentComponent},
   { path: 'payment-methods', component:PaymentMethodsComponent},
   { path: 'create-slots', component:CreateSlotComponent},
   { path: 'view-client-profile', component:ViewClientProfileComponent},

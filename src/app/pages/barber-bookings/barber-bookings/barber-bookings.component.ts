@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { IonicModule, ToastController } from '@ionic/angular'; 
 import { Booking } from 'src/app/models/Booking';
 import { BookingService } from 'src/app/services/booking-service/booking.service';
+import { SlotService } from 'src/app/services/slot-service/slot.service';
+import { SlotDTO } from 'src/app/models/SlotDTO';
+import { RegisterService } from 'src/app/services/user-service/register.service';
 
 @Component({
   selector: 'app-barber-bookings',
@@ -22,15 +25,19 @@ export class BarberBookingsComponent  implements OnInit {
   searchVisible: boolean = false;
   searchCreatedBookings: boolean = false;
   showChatButton: boolean = false;
+  createdSlots: SlotDTO[] =[];
 
   constructor(
     private bookingService: BookingService,
     private toastController:ToastController,
-    private router:Router
+    private slotService:SlotService,
+    private router:Router,
+    private userService:RegisterService
   ) {}
 
   ngOnInit(): void {
     this.loadBookings();
+    this.loadUnbookedSlots();
   }
 
   toggleSearch() {
@@ -72,7 +79,6 @@ export class BarberBookingsComponent  implements OnInit {
     });
   }
   
-
   getStatusColor(status: string): string {
     switch (status) {
       case 'approved': return 'success';
@@ -101,6 +107,36 @@ export class BarberBookingsComponent  implements OnInit {
       booking.clientName.toLowerCase().includes(term) ||
       booking.service.toLowerCase().includes(term)
     );
+  }
+
+  loadUnbookedSlots(): void {
+    const email = localStorage.getItem('userEmail');
+    if (!email) return;
+
+    this.userService.getBarberIdByEmail(email).subscribe({
+      next: (barberId) => {
+        this.slotService.getUnbookedSlotsByBarber(barberId).subscribe({
+          next: (slots) => {
+            this.createdBookings = slots.map(slot => ({
+              clientName: 'Not Assigned',
+              service: 'Available',
+              date: slot.date,
+              time: `${slot.startTime} - ${slot.endTime}`,
+              status: 'not-booked'
+            }));
+            this.createdBookings.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+          },
+          error: (err) => {
+            console.error('Error loading slots:', err);
+            this.showToast('Failed to load created slots');
+          }
+        });
+      },
+      error: (err) => {
+        console.error('Error fetching barber ID:', err);
+        this.showToast('Failed to get barber ID');
+      }
+    });
   }
 
 }

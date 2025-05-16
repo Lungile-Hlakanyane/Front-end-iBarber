@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SideMenuComponent } from '../reuseable-components/side-menu/side-menu.component';
 import { ModalController } from '@ionic/angular';
+import { RegisterService } from '../services/user-service/register.service';
 
 @Component({
   selector: 'app-home',
@@ -12,10 +13,12 @@ import { ModalController } from '@ionic/angular';
 export class HomePage {
   showSearchBar = false;
   searchText = '';
+  userDetails: any;
 
   constructor(
     private router: Router,
     private modalController: ModalController,
+    private userService:RegisterService
   ) { }
 
   toggleSearchBar() {
@@ -58,7 +61,20 @@ export class HomePage {
     }
   ];
 
-  ngOnInit() {}
+  ngOnInit() {
+    const email = localStorage.getItem('userEmail');
+    if (email) {
+      this.userService.getUserByEmail(email).subscribe({
+        next: (user) => {
+          this.userDetails = user;
+          console.log('Logged-in user details:', this.userDetails);
+        },
+        error: (err) => {
+          console.error('Failed to fetch user:', err);
+        }
+      });
+    }
+  }
 
   navigate(link:string){
     this.router.navigate([link]); 
@@ -78,6 +94,7 @@ export class HomePage {
   toggleComments(post: any) {
     post.showComments = !post.showComments;
   }
+  
   
   addComment(post: any) {
     if (post.newComment && post.newComment.trim() !== '') {

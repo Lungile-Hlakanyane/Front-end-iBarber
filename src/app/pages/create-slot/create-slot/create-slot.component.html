@@ -8,27 +8,27 @@
   <h2 style="text-align:center; font-weight:600;">Create Availability Slot</h2>
 
   <ion-card class="form-card">
-    <ion-card-content>
-      
-        <ion-item>
-          <ion-label position="stacked">Date</ion-label>
-          <ion-datetime presentation="date"></ion-datetime>
-        </ion-item>
+    <ion-card-content [formGroup]="slotForm">
 
-        <ion-item>
-          <ion-label position="stacked">Start Time</ion-label>
-          <ion-datetime presentation="time"></ion-datetime>
-        </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Date</ion-label>
+        <ion-datetime presentation="date" formControlName="date"></ion-datetime>
+      </ion-item>
 
-        <ion-item>
-          <ion-label position="stacked">End Time</ion-label>
-          <ion-datetime presentation="time"></ion-datetime>
-        </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Start Time</ion-label>
+        <ion-datetime presentation="time" formControlName="startTime"></ion-datetime>
+      </ion-item>
 
-        <ion-button expand="block" type="submit" color="success" (click)="submitSlot()">
-          Create Slot
-        </ion-button>
-      
+      <ion-item>
+        <ion-label position="stacked">End Time</ion-label>
+        <ion-datetime presentation="time" formControlName="endTime"></ion-datetime>
+      </ion-item>
+
+      <ion-button expand="block" type="submit" color="success" (click)="submitSlot()">
+        Create Slot
+      </ion-button>
+
     </ion-card-content>
   </ion-card>
 </ion-content>

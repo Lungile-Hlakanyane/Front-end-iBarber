@@ -18,18 +18,17 @@
         <ion-card class="barber-card ion-activatable ripple-parent">
           <ion-item lines="none">
             <ion-avatar slot="start">
-              <img [src]="barber.profileImageUrl" alt="Barber photo" />
+              <img src="../../../../assets/profile-pic-image.jpg" alt="Barber photo" />
             </ion-avatar>
             <ion-label>
-              <h2>{{ barber.name }}</h2>
+              <h2>{{ barber.username }}</h2>
               <p>{{ barber.email }}</p>
               <p>{{ barber.contactNumber }}</p>
-              <p>{{ barber.location }}</p>
             </ion-label>
           </ion-item>
       
           <!-- Book Now Button -->
-          <ion-button class="custom-btn" expand="block" (click)="navigate('/book-appointment')">
+          <ion-button class="custom-btn" expand="block" (click)="bookNow(barber)">
             Book Now
           </ion-button>
       

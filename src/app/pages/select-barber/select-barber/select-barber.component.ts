@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RegisterService } from 'src/app/services/user-service/register.service';
 
 @Component({
   selector: 'app-select-barber',
@@ -14,74 +15,38 @@ import { FormsModule } from '@angular/forms';
 export class SelectBarberComponent  implements OnInit {
   searchTerm: string = '';
   filteredBarbers: any[] = [];
-
-  barbers = [
-    {
-      id: 1,
-      name: 'John Fadez',
-      email: 'john@barber.com',
-      profileImageUrl: 'assets/barbers/jay.jpg',
-      contactNumber: '123-456-7890',
-      location: 'Downtown Barbershop',
-    },
-    {
-      id: 2,
-      name: 'Sarah Clippers',
-      email: 'sarah@barber.com',
-      profileImageUrl: 'assets/barbers/king.jpg',
-      contactNumber: '123-456-7890',
-      location: 'Downtown Barbershop',
-    },
-    {
-      id: 3,
-      name: 'Mike Sharp',
-      email: 'mike@barber.com',
-      profileImageUrl: 'assets/barbers/mel.jpg',
-      contactNumber: '123-456-7890',
-      location: 'Downtown Barbershop',
-    },
-    {
-      id: 4,
-      name: 'Tumza the Barber',
-      email: 'mike@barber.com',
-      profileImageUrl: 'assets/barbers/mel.jpg',
-      contactNumber: '123-456-7890',
-      location: 'Downtown Barbershop',
-    },
-    {
-      id: 5,
-      name: 'AF Fades',
-      email: 'mike@barber.com',
-      profileImageUrl: 'assets/barbers/mel.jpg',
-      contactNumber: '123-456-7890',
-      location: 'Downtown Barbershop',
-    },
-  ];
+  barbers: any[] = [];
   
   selectBarber(barber: any) {
     console.log('Selected Barber:', barber);
   }
 
   constructor(
-    private router: Router
+    private router: Router,
+    private registerService:RegisterService
   ) { }
 
   ngOnInit() {
-    this.filteredBarbers = this.barbers;
+    this.registerService.getAllBarbers().subscribe((barbers) => {
+      this.barbers = barbers;
+      this.filteredBarbers = barbers;
+    });
   }
 
   filterBarbers() {
     const term = this.searchTerm.toLowerCase();
     this.filteredBarbers = this.barbers.filter(barber =>
-      barber.name.toLowerCase().includes(term) ||
-      barber.email.toLowerCase().includes(term) ||
-      barber.contactNumber.toLowerCase().includes(term) ||
-      barber.location.toLowerCase().includes(term)
+      barber.username.toLowerCase().includes(term) ||
+      barber.email.toLowerCase().includes(term)
     );
   }
 
   navigate(link: string) {
     this.router.navigate([link]);
+  }
+
+  bookNow(barber: any) {
+    this.router.navigate(['/book-appointment', barber.id]);
   }
 
 

@@ -12,15 +12,15 @@
     <p>Please enter the code to continue.</p>
 
     <div class="otp-inputs">
-      <ion-input type="text" maxlength="1"></ion-input>
-      <ion-input type="text" maxlength="1"></ion-input>
-      <ion-input type="text" maxlength="1"></ion-input>
-      <ion-input type="text" maxlength="1"></ion-input>
-      <ion-input type="text" maxlength="1"></ion-input>
-      <ion-input type="text" maxlength="1"></ion-input>
+      <ion-input #input type="text" maxlength="1"></ion-input>
+      <ion-input #input type="text" maxlength="1"></ion-input>
+      <ion-input #input type="text" maxlength="1"></ion-input>
+      <ion-input #input type="text" maxlength="1"></ion-input>
+      <ion-input #input type="text" maxlength="1"></ion-input>
+      <ion-input #input type="text" maxlength="1"></ion-input>
     </div>
 
-    <ion-button expand="block" class="verify-btn" (click)="navigate('/login')">Verify</ion-button>
+    <ion-button expand="block" class="verify-btn" (click)="verifyOtp()">Verify</ion-button>
 
     <div class="resend">
       Didn’t receive the code? <span class="resend-link">Resend</span>
