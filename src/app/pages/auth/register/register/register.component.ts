@@ -18,6 +18,8 @@ import { LoadingController, ToastController } from '@ionic/angular';
 })
 export class RegisterComponent  implements OnInit {
 
+  showPassword = false;
+
   constructor(
     private router: Router,
     private registerService:RegisterService,
@@ -74,6 +76,9 @@ export class RegisterComponent  implements OnInit {
       }
     });
   }
-  
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+  
 }

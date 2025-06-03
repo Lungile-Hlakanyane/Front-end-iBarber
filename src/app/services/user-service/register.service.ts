@@ -37,6 +37,10 @@ export class RegisterService {
   getAllBarbers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/barbers`);
   }
+
+  getUserById(id: number) {
+    return this.http.get<any>(`http://localhost:8080/api/users/${id}`);
+  }
   
   
 }

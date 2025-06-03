@@ -24,7 +24,9 @@
       <div *ngIf="email.invalid && email.touched" class="error">Valid email is required</div>
     
       <ion-item lines="none" class="input-item">
-        <ion-input formControlName="password" placeholder="Your password" type="password"></ion-input>
+        <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Your password"></ion-input>
+         <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'" slot="end"
+          (click)="togglePasswordVisibility()" class="password-toggle-icon"></ion-icon>
       </ion-item>
       <div *ngIf="password.invalid && password.touched" class="error">Password is required</div>
     

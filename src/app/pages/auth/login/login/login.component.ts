@@ -8,6 +8,7 @@ import { ToastController } from '@ionic/angular';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { LoginRequest } from 'src/app/models/LoginRequest';
 import { RegisterService } from 'src/app/services/user-service/register.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -19,13 +20,15 @@ import { RegisterService } from 'src/app/services/user-service/register.service'
 export class LoginComponent  implements OnInit {
   loginForm!: FormGroup;
   role: string = '';
+  showPassword = false;
 
   constructor(
     private router: Router,
     private fb:FormBuilder,
     private toastController: ToastController,
     private loginService:LoginService,
-    private userService:RegisterService
+    private userService:RegisterService,
+    private loadingController:LoadingController
   ) { }
 
   ngOnInit() {
@@ -52,8 +55,17 @@ export class LoginComponent  implements OnInit {
   
     const credentials = this.loginForm.value;
   
+    const loading = await this.loadingController.create({
+      message: 'Logging in...',
+      spinner: 'circular', 
+      duration: 0, 
+      backdropDismiss: true
+    });
+    await loading.present();
+  
     this.loginService.login(credentials).subscribe({
       next: async (response) => {
+        await loading.dismiss();
         const toast = await this.toastController.create({
           message: response.message || 'Login successful',
           duration: 2000,
@@ -66,9 +78,9 @@ export class LoginComponent  implements OnInit {
         localStorage.setItem('userRole', response.role);
   
         this.userService.getUserByEmail(response.email).subscribe({
-          next: (userData) => {
+          next: async (userData) => {
             localStorage.setItem('userId', userData.id);
-            this.router.navigate(['/home']);
+            await this.router.navigate(['/home']);
           },
           error: async (err) => {
             const toast = await this.toastController.create({
@@ -82,6 +94,8 @@ export class LoginComponent  implements OnInit {
         });
       },
       error: async (err) => {
+        await loading.dismiss();
+
         const toast = await this.toastController.create({
           message: err.error.message || 'Invalid credentials',
           duration: 2000,
@@ -92,8 +106,10 @@ export class LoginComponent  implements OnInit {
       }
     });
   }
-  
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
   
-
+  
 }
