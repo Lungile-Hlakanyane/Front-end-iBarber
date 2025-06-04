@@ -32,7 +32,7 @@ const routes: Routes = [
   { path: 'register', component:RegisterComponent},
   { path: 'otp', component:OtpComponent },
   { path: 'feed',component:FeedComponent},
-  { path: 'chat', component:ChatComponent},
+  { path: 'chat/:receiverId', component: ChatComponent },
   { path: 'select-barber', component: SelectBarberComponent},
   { path: 'view-barber-profile', component:ViewBarberProfileComponent},
   { path: 'book-appointment/:barberId', component:BookAppointmentComponent},

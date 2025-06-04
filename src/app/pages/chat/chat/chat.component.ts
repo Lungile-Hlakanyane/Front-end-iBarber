@@ -1,8 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule,ActionSheetController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
+import { ChatService } from 'src/app/services/chat-service/chat.service';
+import { ChatMessageDTO } from 'src/app/models/ChatMessageDTO';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/models/User';
+import { RegisterService } from 'src/app/services/user-service/register.service';
+import * as SockJS from 'sockjs-client';
+import { Client, Message } from '@stomp/stompjs';
+
 
 @Component({
   selector: 'app-chat',
@@ -13,28 +22,118 @@ import { FormsModule } from '@angular/forms';
 })
 export class ChatComponent  implements OnInit {
 
-  messages = [
-    { from: 'me', text: 'Hey, how are you?' },
-    { from: 'other', text: 'I am great, thank you!' },
-  ];
-
+  stompClient!: Client;
+  messages: ChatMessageDTO[] = [];
   messageText: string = '';
+  receiverUser?: User;
 
-  sendMessage() {
-    if (this.messageText.trim() !== '') {
-      this.messages.push({ from: 'me', text: this.messageText });
-      this.messageText = '';
-    }
-  }
+  //client
+  senderId!: number;
+  
+  //barber
+  receiverId!: number;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private http:HttpClient,
+    private chatService: ChatService,
+    private route: ActivatedRoute,
+    private registerService: RegisterService,
+    private actionSheetController: ActionSheetController
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const storedId = localStorage.getItem('userId');
+    this.senderId = storedId ? Number(storedId) : 0;
+  
+    this.route.paramMap.subscribe(params => {
+      const receiver = params.get('receiverId');
+      this.receiverId = receiver ? Number(receiver) : 0;
+  
+      this.loadChatMessages();
+      this.loadReceiverDetails();
+    });
+
+    this.connectToWebSocket();
+  }
+  
 
   navigate(link:string) {
     this.router.navigate([link]); 
   }
 
+  loadChatMessages() {
+    this.chatService.getChatMessages(this.senderId, this.receiverId).subscribe({
+      next: (data) => (this.messages = data),
+      error: (err) => console.error('Failed to load messages:', err),
+    });
+  }
+
+  sendMessage() {
+    const trimmed = this.messageText.trim();
+    if (!trimmed) return;
+    const newMessage: ChatMessageDTO = {
+      senderId: this.senderId,
+      receiverId: this.receiverId,
+      content: trimmed,
+      timestamp: new Date().toISOString(),
+    };
+    this.stompClient.publish({
+      destination: '/app/chat.send',
+      body: JSON.stringify(newMessage),
+    });
+    this.messages.push(newMessage);
+    this.messageText = '';
+  }
+
+  loadReceiverDetails() {
+    this.registerService.getUserById(this.receiverId).subscribe({
+      next: (data) => this.receiverUser = data,
+      error: (err) => console.error('Failed to load receiver user:', err),
+    });
+  }
+
+  connectToWebSocket() {
+    this.stompClient = new Client({
+      brokerURL: 'ws://localhost:8080/ws', // this is fine
+      webSocketFactory: () => new SockJS('http://localhost:8080/ws'), // SockJS fallback
+      reconnectDelay: 5000,
+      onConnect: () => {
+        this.stompClient.subscribe(`/topic/messages/${this.senderId}`, (message: Message) => {
+          const chatMessage = JSON.parse(message.body);
+          this.messages.push(chatMessage);
+        });
+      },
+    });
+    this.stompClient.activate();
+  }
+
+  async openOptions(message: ChatMessageDTO) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Message Options',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.deleteMessage(message);
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+        },
+      ],
+    });
+  
+    await actionSheet.present();
+  }
+
+  deleteMessage(message: ChatMessageDTO) {
+    this.messages = this.messages.filter(m => m !== message);
+  }
+  
+  
 }

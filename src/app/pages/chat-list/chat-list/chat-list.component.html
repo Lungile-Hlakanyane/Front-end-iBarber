@@ -1,5 +1,4 @@
 <ion-content class="ion-padding chat-list-page">
-
   <div class="header-row">
     <h2 class="title">Chats</h2>
     <ion-icon name="create-outline" class="new-chat-icon"></ion-icon>
@@ -17,18 +16,17 @@
   <ion-searchbar placeholder="Search chats"></ion-searchbar>
 
   <ion-list lines="none">
-    <ion-item *ngFor="let chat of chatList" class="chat-item" (click)="navigate('/chat')">
+    <ion-item *ngFor="let chat of chatList" class="chat-item" (click)="navigateToChat(chat)">
       <ion-avatar slot="start">
-        <img [src]="chat.avatar" />
+        <img src="assets/profile-pic-image.jpg" />
       </ion-avatar>
       <ion-label>
-        <h3>{{ chat.name }}</h3>
-        <p class="last-message">{{ chat.lastMessage }}</p>
+        <h3>{{ chat.username }}</h3>
+        <p class="last-message">{{ chat.email }}</p>
       </ion-label>
       <div class="meta-info" slot="end">
-        <p class="timestamp">{{ chat.time }}</p>
+        <p class="timestamp">{{ chat.role }}</p>
       </div>
     </ion-item>
   </ion-list>
-
 </ion-content>

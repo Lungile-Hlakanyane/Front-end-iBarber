@@ -6,19 +6,35 @@
     </p>
   </div>
 
-  <div class="chat-header">
-    <img class="chat-avatar" src="../../../../assets/profile-pic-image.jpg" alt="User Avatar" />
-    <h2 class="chat-name">Lungile Hlakanyane</h2>
-    <p class="chat-subtitle">Online</p>
+  <div class="chat-header" *ngIf="receiverUser">
+    <img class="chat-avatar"  src="../../../../assets/profile-pic-image.jpg" 
+         alt="User Avatar" />
+    <h2 class="chat-name">{{ receiverUser.username }}</h2>
+    <p class="chat-subtitle">{{ receiverUser.role }}</p>
+    <p class="chat-subtitle">{{ receiverUser.email }}</p>
   </div>
-
+  
   <div class="chat-messages">
-    <div *ngFor="let msg of messages" [ngClass]="msg.from === 'me' ? 'my-message' : 'other-message'">
-      <p>{{ msg.text }}</p>
+    <div 
+      *ngFor="let msg of messages" 
+      [ngClass]="msg.senderId === senderId ? 'my-message' : 'other-message'"
+      class="chat-message">
+      <div class="message-content">
+        <p>{{ msg.content }}</p>
+        <small class="timestamp">
+          {{ msg.timestamp ? (msg.timestamp | date: 'shortTime') : '' }}
+        </small>
+      </div>
+      <ion-icon 
+      name="ellipsis-vertical-outline" 
+      class="options-icon"
+      (click)="openOptions(msg)">
+    </ion-icon>
     </div>
   </div>
+  
 
-  <div class="chat-input-container">
+  <div class="chat-input-container" style="margin-top:20px;">
     <ion-input [(ngModel)]="messageText" placeholder="Type your message..."></ion-input>
     <ion-button (click)="sendMessage()" fill="clear">
       <ion-icon name="send-outline"></ion-icon>
