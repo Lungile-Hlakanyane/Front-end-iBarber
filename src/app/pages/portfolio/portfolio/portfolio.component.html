@@ -6,12 +6,13 @@
     </p>
   </div>
 
-  <div class="profile-header">
+  <div class="profile-header" *ngIf="userDetails">
     <img class="avatar" src="../../../../assets/profile-pic-image.jpg" alt="Profile Image" />
-    <h2 class="name">Lungile Hlakanyane</h2>
-    <p class="email">lungilehlakasgmail.com</p>
-    <p class="email">+27 65 635 2578</p>
+    <h2 class="name">{{ userDetails.username }}</h2>
+    <p class="email">{{ userDetails.email }}</p>
+    <p class="email">{{ userDetails.phone }}</p>
   </div>
+  
 
   <!-- Tabs -->
   <ion-segment [(ngModel)]="currentTab" color="primary">
@@ -35,9 +36,17 @@
       </ion-row>
     </ion-grid>
 
-    <div class="action-btn-container">
-      <ion-button expand="block" class="custom-btn">Upload Images</ion-button>
-    </div>
+  <input #imageInput type="file" accept="image/*" multiple style="display: none"
+  (change)="handleMultipleImageUpload($event)" />
+
+  <div class="action-btn-container"  style="display:flex; gap:10px;">
+    <ion-grid>
+      <ion-row>
+        <ion-col><ion-button expand="block" class="custom-btn" (click)="uploadImages()">Select Images</ion-button></ion-col>
+        <ion-col><ion-button expand="block" class="custom-btn" (click)="uploadToServer()">Upload</ion-button></ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
   </div>
 
   <!-- Videos Tab -->

@@ -5,5 +5,6 @@ export interface Booking {
     date: string;
     time: string;
     status: 'pending' | 'approved' | 'declined';
+    barberId?: number;
     showChatButton: boolean;
 }

@@ -39,5 +39,13 @@ export class SlotService {
   getSlotByClientId(clientId: number): Observable<SlotDTO[]> {
     return this.http.get<SlotDTO[]>(`${this.apiUrl}/client/${clientId}`);
   }
+
+  approveAppointment(slotId: number): Observable<SlotDTO> {
+   return this.http.post<SlotDTO>(`${this.apiUrl}/${slotId}/approve`, {});
+  }
+
+  getBookedSlotsByBarber(barberId: number): Observable<SlotDTO[]> {
+   return this.http.get<SlotDTO[]>(`${this.apiUrl}/slots/booked/barber/${barberId}`);
+  }
   
 }

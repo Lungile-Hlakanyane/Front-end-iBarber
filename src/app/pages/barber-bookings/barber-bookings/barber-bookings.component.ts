@@ -9,6 +9,7 @@ import { SlotService } from 'src/app/services/slot-service/slot.service';
 import { SlotDTO } from 'src/app/models/SlotDTO';
 import { RegisterService } from 'src/app/services/user-service/register.service';
 
+
 @Component({
   selector: 'app-barber-bookings',
   templateUrl: './barber-bookings.component.html',
@@ -37,7 +38,8 @@ export class BarberBookingsComponent  implements OnInit {
 
   ngOnInit(): void {
     this.loadBookings();
-    this.loadUnbookedSlots();
+    // this.loadUnbookedSlots();
+    this.loadBookedSlots();
   }
 
   toggleSearch() {
@@ -48,23 +50,16 @@ export class BarberBookingsComponent  implements OnInit {
     this.searchCreatedBookings = !this.searchCreatedBookings;
   } 
 
-  loadBookings(): void {
-    this.bookingService.getBookings().subscribe(data => this.bookings = data);
+loadBookings(): void {
+  const userId = localStorage.getItem('userId');
+  if (!userId) return;
+  this.bookingService.getBookings().subscribe((data) => {
+    this.bookings = data.filter(booking => booking.barberId === Number(userId));
+    this.bookings.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    this.filteredBookings = [...this.bookings]; 
+  });
+}
 
-    this.createdBookings = [
-      {
-        id: 1,
-        clientName: 'Not Assigned',
-        service: 'Haircut',
-        date: '2025-05-15',
-        time: '10:00 AM',
-        status: 'not-booked'
-      }
-    ];
-  
-    // Optionally sort by date if needed
-    this.createdBookings.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  }
 
   async handleAction(id: number, action: 'approved' | 'declined') {
     this.bookingService.updateBookingStatus(id, action).subscribe(() => {
@@ -99,6 +94,12 @@ export class BarberBookingsComponent  implements OnInit {
 
   navigate(route: string) {
     this.router.navigate([route]);
+  }
+
+  navigateToChat(clientId:number){
+    if (clientId) {
+    this.router.navigate(['/chat', clientId]);
+   }
   }
 
   filterBookings() {
@@ -138,5 +139,71 @@ export class BarberBookingsComponent  implements OnInit {
       }
     });
   }
+
+loadBookedSlots(): void {
+  const barberId = localStorage.getItem('userId');
+  if (!barberId) return;
+
+  this.slotService.getBookedSlotsByBarber(Number(barberId)).subscribe({
+    next: (slots) => {
+      this.createdBookings = [];
+
+      slots.forEach(slot => {
+        this.userService.getUserById(slot.clientId).subscribe({
+          next: (user) => {
+            this.createdBookings.push({
+              id: slot.id,
+              clientId: slot.clientId, 
+              clientName: user.username,
+              service: 'Booked',
+              date: slot.date,
+              time: `${slot.startTime} - ${slot.endTime}`,
+              status: 'booked',
+              approveAppointment: slot.approveAppointment
+            });
+
+            // Sort after all users fetched
+            this.createdBookings.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+          },
+          error: (err) => {
+            console.error('Error fetching client info:', err);
+            this.createdBookings.push({
+              id: slot.id,
+              clientId: slot.clientId,
+              clientName: 'Unknown', // fallback
+              service: 'Booked',
+              date: slot.date,
+              time: `${slot.startTime} - ${slot.endTime}`,
+              status: 'booked',
+              approveAppointment: slot.approveAppointment
+            });
+          }
+        });
+      });
+    },
+    error: (err) => {
+      console.error('Error loading booked slots:', err);
+      this.showToast('Failed to load booked slots');
+    }
+  });
+}
+
+
+approveSlot(slotId: number) {
+  this.slotService.approveAppointment(slotId).subscribe({
+    next: (updatedSlot) => {
+      // Update the specific slot in the list
+      const index = this.createdBookings.findIndex(s => s.id === slotId);
+      if (index !== -1) {
+        this.createdBookings[index].status = 'Approved';
+        this.createdBookings[index].approveAppointment = true;
+      }
+    },
+    error: (err) => {
+      console.error('Failed to approve slot:', err);
+    }
+  });
+}
+
 
 }

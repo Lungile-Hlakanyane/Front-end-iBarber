@@ -22,6 +22,16 @@ export class LoginComponent  implements OnInit {
   role: string = '';
   showPassword = false;
 
+  sentences: string[] = [
+    "With iBarber, clients can discover skilled barbers.",
+    "Book sharp fades and clean cuts.",
+    "Stay fresh with the latest grooming trends.",
+    "Your style, your schedule — anytime, anywhere."
+  ];
+  
+  currentIndex = 0;
+  intervalId: any;
+
   constructor(
     private router: Router,
     private fb:FormBuilder,
@@ -36,6 +46,8 @@ export class LoginComponent  implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+
+    this.startTextAnimation();
   }
 
   navigate(link:string){
@@ -109,6 +121,31 @@ export class LoginComponent  implements OnInit {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
+  }
+
+
+  startTextAnimation() {
+    const textElement = document.getElementById('animated-text');
+    if (!textElement) return;
+  
+    const showSentence = () => {
+      textElement.classList.remove('show');
+      setTimeout(() => {
+        textElement.textContent = this.sentences[this.currentIndex];
+        textElement.classList.add('show');
+      }, 500); // Wait 500ms before fading in new text
+    };
+  
+    showSentence(); // Initial show
+  
+    this.intervalId = setInterval(() => {
+      this.currentIndex = (this.currentIndex + 1) % this.sentences.length;
+      showSentence();
+    }, 4000); // Total duration per sentence
+  }
+  
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
   }
   
   

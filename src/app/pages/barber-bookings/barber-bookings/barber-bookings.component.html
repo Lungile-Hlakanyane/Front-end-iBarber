@@ -1,5 +1,4 @@
 <ion-content class="ion-padding barber-bookings-page">
-
   <div class="bck-btn-container" style="display:flex; gap:10px;">
     <p style="font-size:30px;" (click)="navigate('/home')">
       <ion-icon name="chevron-back-outline"></ion-icon>
@@ -32,38 +31,35 @@
       </ion-searchbar>
     </div>
 
-    <div *ngIf="bookings.length === 0" class="no-bookings">
-      <p>No bookings found.</p>
+
+<ion-card *ngFor="let slot of createdBookings" class="booking-card">
+  <ion-card-header>
+    <ion-card-title>{{ slot.clientName }}</ion-card-title>
+    <ion-card-subtitle>{{ slot.service }}</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <div class="booking-details">
+      <p><strong>Date:</strong> {{ slot.date }}</p>
+      <p><strong>Time:</strong> {{ slot.time }}</p>
+      <p><strong>Status:</strong>
+        <ion-badge color="success"  [color]="slot.approveAppointment ? 'success' : 'warning'">
+           {{ slot.approveAppointment ? 'Approved' : 'Pending' }}
+        </ion-badge>
+      </p>
     </div>
+  </ion-card-content>
 
-    <ion-card *ngFor="let booking of filteredBookings.length > 0 ? filteredBookings : bookings" class="booking-card">
-      <ion-card-header>
-        <ion-card-title (click)="navigate('/view-client-profile')">{{ booking.clientName }}</ion-card-title>
-        <ion-card-subtitle>{{ booking.service }}</ion-card-subtitle>
-      </ion-card-header>
+  <div class="booking-actions" style="display:flex; gap:10px; padding: 10px;">
+      <ion-button size="small" color="success" (click)="approveSlot(slot.id)">Approve</ion-button>
+      <ion-button size="small" color="danger">Decline</ion-button>
+      <ion-button size="small" color="tertiary"  [disabled]="!slot.approveAppointment" (click)="navigateToChat(slot.clientId)">Chat</ion-button>
+  </div>
 
-      <ion-card-content>
-        <div class="booking-details">
-          <p><strong>Date:</strong> {{ booking.date }}</p>
-          <p><strong>Time:</strong> {{ booking.time }}</p>
-          <p><strong>Status:</strong> <ion-badge [color]="getStatusColor(booking.status)">
-            {{ booking.status }}
-          </ion-badge></p>
-        </div>
+</ion-card>
 
-        <div *ngIf="booking.status === 'pending'" class="booking-actions">
-          <ion-button size="small" color="success" (click)="handleAction(booking.id, 'approved')">
-            Approve
-          </ion-button>
-          <ion-button size="small" color="danger" (click)="handleAction(booking.id, 'declined')">
-            Decline
-          </ion-button>
-          <ion-button size="small" *ngIf="booking.showChatButton" color="tertiary" (click)="navigate('/chat')">
-            Chat
-          </ion-button>          
-        </div>
-      </ion-card-content>
-    </ion-card>
+
+
   </div>
 
   <!-- Created Bookings Tab -->

@@ -3,15 +3,16 @@
   <div class="header">
     <ion-icon name="globe-outline" class="icon"></ion-icon>
     <h2 style="color:#fff;">iBarber</h2>
-    <p>
-      With iBarber, clients can discover skilled barbers, book sharp fades and clean cuts, and stay fresh with the latest grooming trends.
-    </p>
     
+    <!-- Animated text container -->
+    <p id="animated-text" style="color: #fff;"></p>
+  
     <div class="dots">
-      <span></span><span></span><span></span>
+      <span *ngFor="let sentence of sentences; let i = index" 
+            [class.active]="i === currentIndex"></span>
     </div>
   </div>
-
+  
   <!-- Form Section -->
   <div class="form-section">
     <h3>Welcome to <strong>iBarber</strong></h3>

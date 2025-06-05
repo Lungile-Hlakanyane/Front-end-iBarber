@@ -42,5 +42,4 @@ export class RegisterService {
     return this.http.get<any>(`http://localhost:8080/api/users/${id}`);
   }
   
-  
 }

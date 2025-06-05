@@ -5,4 +5,5 @@ export interface SlotDTO {
     date: string;       
     barberId: number;  
     clientId?: any;
+    approveAppointment?:boolean;
 }
