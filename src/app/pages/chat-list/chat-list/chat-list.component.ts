@@ -16,6 +16,8 @@ import { RegisterService } from 'src/app/services/user-service/register.service'
 export class ChatListComponent  implements OnInit {
 
   chatList: User[] = [];
+  filteredChatList: User[] = [];
+  searchTerm: string = '';
   currentUserId: number | null = null;
 
   constructor(
@@ -31,10 +33,11 @@ export class ChatListComponent  implements OnInit {
     this.router.navigate([link]);
   }
 
-  loadUsers() {
+   loadUsers() {
     this.registerService.getAllUsers().subscribe({
       next: (users: User[]) => {
         this.chatList = users.filter(user => user.id !== this.currentUserId);
+        this.filteredChatList = [...this.chatList]; // Initialize filtered list
       },
       error: (err) => {
         console.error('Failed to load users:', err);
@@ -42,7 +45,7 @@ export class ChatListComponent  implements OnInit {
     });
   }
 
-  async loadAllUsers(){
+  async loadAllUsers() {
     const storedUserId = localStorage.getItem('userId');
     this.currentUserId = storedUserId ? Number(storedUserId) : null;
     if (this.currentUserId !== null) {
@@ -52,6 +55,15 @@ export class ChatListComponent  implements OnInit {
 
   navigateToChat(receiver: User) {
     this.router.navigate(['/chat', receiver.id]);
+  }
+
+  filterChats() {
+    const term = this.searchTerm.toLowerCase();
+    this.filteredChatList = this.chatList.filter(chat =>
+      chat.username.toLowerCase().includes(term) ||
+      chat.email.toLowerCase().includes(term) ||
+      chat.role.toLowerCase().includes(term)
+    );
   }
 
 }

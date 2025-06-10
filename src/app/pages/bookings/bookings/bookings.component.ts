@@ -119,7 +119,9 @@ export class BookingsComponent  implements OnInit {
           username: slot.barber?.username || 'Unknown Barber',
           date: slot.date,
           time: slot.startTime,
-          status: 'pending'
+          status: slot.approveAppointment ? 'approved' : 'waiting',
+          approveAppointment: slot.approveAppointment,
+          barberId: slot.barber?.id 
         }));
       },
       error: (err) => {
@@ -127,5 +129,25 @@ export class BookingsComponent  implements OnInit {
       }
     });
   }
+
+  async navigateToChat(booking: any) {
+  if (!booking.approveAppointment) {
+    const toast = await this.toastController.create({
+      message: 'Cannot chat until the barber approves this booking.',
+      duration: 3000,
+      color: 'warning',
+      position: 'top'
+    });
+    await toast.present();
+    return;
+  }
+  if (booking.barberId) {
+    this.router.navigate(['/chat', booking.barberId]);
+  } else {
+    console.warn('Barber ID is missing for this booking');
+  }
+}
+
+
 
 }

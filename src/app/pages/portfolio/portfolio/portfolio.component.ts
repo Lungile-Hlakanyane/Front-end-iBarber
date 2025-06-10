@@ -27,15 +27,7 @@ export class PortfolioComponent  implements OnInit {
   }
 
   portfolioImages: string[] = [
-    'assets/barbers/jay.jpg',
-    'assets/barbers/king.jpg',
-    'assets/barbers/mel.jpg',
-    'assets/barbers/jay.jpg',
-    'assets/barbers/king.jpg',
-    'assets/barbers/mel.jpg',
-    'assets/cuts/skinfade.jpg',
-    'assets/cuts/fade1.jpg',
-    'assets/cuts/taper.jpg',
+   
   ];
 
   uploadedFiles: File[] = [];
@@ -79,19 +71,24 @@ export class PortfolioComponent  implements OnInit {
     return await modal.present();
   }
 
-  async fetchUserDetails() {
-    const email = localStorage.getItem('userEmail');
-    if (email) {
-      this.registerService.getUserByEmail(email).subscribe({
-        next: (data) => {
-          this.userDetails = data;
-        },
-        error: (err) => {
-          console.error('Error fetching user:', err);
+
+async fetchUserDetails() {
+  const email = localStorage.getItem('userEmail');
+  if (email) {
+    this.registerService.getUserByEmail(email).subscribe({
+      next: (data) => {
+        this.userDetails = data;
+        // ✅ Fetch portfolio images only after userDetails is available
+        if (this.userDetails && this.userDetails.id !== undefined && this.userDetails.id !== null) {
+          this.fetchPortfolioImages(this.userDetails.id);
         }
-      });
-    }
+      },
+      error: (err) => {
+        console.error('Error fetching user:', err);
+      }
+    });
   }
+}
 
   uploadImages(): void {
     this.imageInput.nativeElement.click();
@@ -126,6 +123,18 @@ export class PortfolioComponent  implements OnInit {
     });
   }
   
-  
 
+fetchPortfolioImages(userId: number): void {
+  this.portfolioService.getPortfolioImagesByUserId(userId).subscribe({
+    next: (images) => {
+      this.portfolioImages = images.map(img => { const filename = img.split('\\').pop()?.split('/').pop(); // handles Windows or Unix paths
+        return `http://localhost:8080/portfolios-images/${filename}`;
+      });
+    },
+    error: (err) => {
+      console.error('Error fetching portfolio images:', err);
+    }
+  });
+ }
+  
 }

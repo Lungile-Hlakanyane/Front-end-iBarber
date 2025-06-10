@@ -11,7 +11,8 @@ import { User } from 'src/app/models/User';
 import { RegisterService } from 'src/app/services/user-service/register.service';
 import * as SockJS from 'sockjs-client';
 import { Client, Message } from '@stomp/stompjs';
-
+import { Announcement } from 'src/app/models/Announcement';
+import { BroadcastServiceService } from 'src/app/services/broadcast-announcement-service/broadcast-service.service';
 
 @Component({
   selector: 'app-chat',
@@ -26,6 +27,8 @@ export class ChatComponent  implements OnInit {
   messages: ChatMessageDTO[] = [];
   messageText: string = '';
   receiverUser?: User;
+  announcements: Announcement[] = [];
+  currentUser?: User;
 
   //client
   senderId!: number;
@@ -39,23 +42,32 @@ export class ChatComponent  implements OnInit {
     private chatService: ChatService,
     private route: ActivatedRoute,
     private registerService: RegisterService,
-    private actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private broadcastService: BroadcastServiceService,
   ) { }
 
-  ngOnInit() {
-    const storedId = localStorage.getItem('userId');
+ngOnInit() {
+   const storedId = localStorage.getItem('userId');
     this.senderId = storedId ? Number(storedId) : 0;
-  
-    this.route.paramMap.subscribe(params => {
-      const receiver = params.get('receiverId');
-      this.receiverId = receiver ? Number(receiver) : 0;
-  
-      this.loadChatMessages();
-      this.loadReceiverDetails();
-    });
 
-    this.connectToWebSocket();
-  }
+  // Get current user (to determine role)
+  this.registerService.getUserById(this.senderId).subscribe({
+    next: (user) => {
+      this.currentUser = user;
+      this.loadAnnouncements(); // Load announcements only after we know the role
+    },
+    error: (err) => console.error('Failed to load current user:', err),
+  });
+
+  this.route.paramMap.subscribe(params => {
+    const receiver = params.get('receiverId');
+    this.receiverId = receiver ? Number(receiver) : 0;
+    this.loadChatMessages();
+    this.loadReceiverDetails();
+  });
+
+  this.connectToWebSocket();
+}
   
 
   navigate(link:string) {
@@ -134,6 +146,21 @@ export class ChatComponent  implements OnInit {
   deleteMessage(message: ChatMessageDTO) {
     this.messages = this.messages.filter(m => m !== message);
   }
+
+   loadAnnouncements() {
+  if (!this.currentUser) return;
+  this.broadcastService.getAllAnnouncements().subscribe({
+    next: (data) => {
+      this.announcements = data.filter(a =>
+        a.targetGroup === 'all' ||
+        (a.targetGroup === 'barbers' && this.currentUser?.role === 'barber') ||
+        (a.targetGroup === 'customers' && this.currentUser?.role === 'client')
+      );
+    },
+    error: (err) => console.error('Failed to load announcements:', err),
+  });
+}
+
   
   
 }

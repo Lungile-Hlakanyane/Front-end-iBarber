@@ -41,5 +41,11 @@ export class RegisterService {
   getUserById(id: number) {
     return this.http.get<any>(`http://localhost:8080/api/users/${id}`);
   }
+
+  getUserCount(): Observable<number> {
+  return this.http.get<number>('http://localhost:8080/api/users/count');
+ }
+
+ 
   
 }

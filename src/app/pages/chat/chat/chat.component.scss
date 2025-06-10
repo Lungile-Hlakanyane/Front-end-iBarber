@@ -1,137 +1,126 @@
 .chat-page {
-    --background: #f4f5f8;
-  
-    .chat-header {
-      text-align: center;
-      margin-top: 20px;
-  
-      .chat-avatar {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid #ffffff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 10px;
-      }
-  
-      .chat-name {
-        font-size: 20px;
-        font-weight: 700;
-        color: #222;
-      }
-  
-      .chat-subtitle {
-        font-size: 14px;
-        color: #666;
-      }
-    }
-  
-    .chat-messages {
-      margin: 20px 0;
-      padding: 0 10px;
-      max-height: 60vh;
-      overflow-y: auto;
-  
-      .my-message,
-      .other-message {
-        max-width: 75%;
-        padding: 10px 14px;
-        border-radius: 18px;
-        margin: 10px 0;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        word-wrap: break-word;
-      }
-  
-      .my-message {
-        background: #007f5f;
-        color: white;
-        align-self: flex-end;
-        margin-left: auto;
-        border-bottom-right-radius: 0;
-      }
-  
-      .other-message {
-        background: #ffffff;
-        color: #333;
-        align-self: flex-start;
-        margin-right: auto;
-        border-bottom-left-radius: 0;
-      }
-    }
-  
-    .chat-input-container {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        background: #ffffff;
-        border-top: 1px solid #ddd;
-        z-index: 10;
-      
-        ion-input {
-          flex: 1;
-          margin-right: 10px;
-        }
-      
-        ion-button {
-          --color: #007f5f;
-        }
-      
-        ion-icon {
-          font-size: 24px;
-        }
-    }
-}
-
-
-.chat-messages {
-  padding: 10px;
-}
-
-.chat-message {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 12px;
-  margin-bottom: 10px;
-  border-radius: 12px;
-  max-width: 80%;
-  word-wrap: break-word;
-  position: relative;
-}
-
-.my-message {
-  background-color: #dcf8c6;
-  margin-left: auto;
-}
-
-.other-message {
-  background-color: #ffffff;
-  margin-right: auto;
-}
-
-.message-content {
+  --background: #f4f5f8;
   display: flex;
   flex-direction: column;
+  height: 100%;
+
+  .chat-body-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 80px; // space for fixed input
+  }
+
+  .chat-header {
+    text-align: center;
+    margin-top: 20px;
+
+    .chat-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 10px;
+    }
+
+    .chat-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #222;
+    }
+
+    .chat-subtitle {
+      font-size: 14px;
+      color: #666;
+    }
+  }
+
+  .chat-messages {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chat-message {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    max-width: 80%;
+    word-wrap: break-word;
+    position: relative;
+  }
+
+  .my-message {
+    background-color: #dcf8c6;
+    margin-left: auto;
+  }
+
+  .other-message {
+    background-color: #ffffff;
+    margin-right: auto;
+  }
+
+  .message-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timestamp {
+    font-size: 0.75rem;
+    color: rgb(150, 0, 0);
+    margin-top: 4px;
+    display: block;
+    font-weight: bold;
+  }
+
+  .options-icon {
+    font-size: 18px;
+    color: rgb(150, 0, 0);
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  .chat-input-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #ffffff;
+    border-top: 1px solid #ddd;
+    z-index: 10;
+
+    ion-input {
+      flex: 1;
+      margin-right: 10px;
+    }
+
+    ion-button {
+      --color: #007f5f;
+    }
+
+    ion-icon {
+      font-size: 24px;
+    }
+  }
 }
 
-.timestamp {
-  font-size: 0.75rem;
-  color: rgb(150, 0, 0);
-  margin-top: 4px;
-  display: block;
-  font-weight: bold;
-}
 
-.options-icon {
-  font-size: 18px;
-  color: rgb(150, 0, 0);
-  cursor: pointer;
-  margin-left: 10px;
-}
+.announcement-message {
+  background-color: #e0f7fa;
+  padding: 8px;
+  border-radius: 10px;
+  margin: 10px 0;
+  text-align: center;
 
-  
+  .admin-broadcast {
+    font-style: italic;
+    color: #00796b;
+  }
+}

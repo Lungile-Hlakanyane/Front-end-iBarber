@@ -24,7 +24,7 @@
        <div class="post-header">
          <img src="assets/barbers/king.jpg" class="avatar" />
          <div class="info" (click)="navigate('/view-barber-profile')">
-          <h3>{{ post.username || 'Loading...' }}</h3>
+          <h3>{{ post.username }}</h3>
            <p>{{ post.createdAt | date:'short' }}</p>
          </div>
        </div>

@@ -5,18 +5,19 @@
   </div>
 
   <ion-segment value="everyone">
-    <ion-segment-button value="contacts">
-      <ion-label>Contacts</ion-label>
-    </ion-segment-button>
     <ion-segment-button value="everyone">
       <ion-label>Everyone</ion-label>
     </ion-segment-button>
   </ion-segment>
 
-  <ion-searchbar placeholder="Search chats"></ion-searchbar>
+  <ion-searchbar 
+   [(ngModel)]="searchTerm" 
+     placeholder="Search chats"
+    (ionInput)="filterChats()">
+ </ion-searchbar>
 
   <ion-list lines="none">
-    <ion-item *ngFor="let chat of chatList" class="chat-item" (click)="navigateToChat(chat)">
+    <ion-item *ngFor="let chat of filteredChatList" class="chat-item" (click)="navigateToChat(chat)">
       <ion-avatar slot="start">
         <img src="assets/profile-pic-image.jpg" />
       </ion-avatar>

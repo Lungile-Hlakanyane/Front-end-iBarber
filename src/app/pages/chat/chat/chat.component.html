@@ -6,35 +6,41 @@
     </p>
   </div>
 
-  <div class="chat-header" *ngIf="receiverUser">
-    <img class="chat-avatar"  src="../../../../assets/profile-pic-image.jpg" 
-         alt="User Avatar" />
-    <h2 class="chat-name">{{ receiverUser.username }}</h2>
-    <p class="chat-subtitle">{{ receiverUser.role }}</p>
-    <p class="chat-subtitle">{{ receiverUser.email }}</p>
-  </div>
-  
-  <div class="chat-messages">
-    <div 
-      *ngFor="let msg of messages" 
-      [ngClass]="msg.senderId === senderId ? 'my-message' : 'other-message'"
-      class="chat-message">
-      <div class="message-content">
-        <p>{{ msg.content }}</p>
+  <div class="chat-body-wrapper">
+    <div class="chat-header" *ngIf="receiverUser">
+      <img class="chat-avatar" src="../../../../assets/profile-pic-image.jpg" alt="User Avatar" />
+      <h2 class="chat-name">{{ receiverUser.username }}</h2>
+      <p class="chat-subtitle">{{ receiverUser.role }}</p>
+      <p class="chat-subtitle">{{ receiverUser.email }}</p>
+    </div>
+
+    <div class="chat-messages">
+
+    <div *ngFor="let announcement of announcements" class="announcement-message">
+      <div class="message-content admin-broadcast">
+        <p><strong>iBarber Announcement:</strong> {{ announcement.message }}</p>
         <small class="timestamp">
-          {{ msg.timestamp ? (msg.timestamp | date: 'shortTime') : '' }}
+        {{ announcement.timestamp ? (announcement.timestamp | date: 'shortTime') : '' }}
         </small>
       </div>
-      <ion-icon 
-      name="ellipsis-vertical-outline" 
-      class="options-icon"
-      (click)="openOptions(msg)">
-    </ion-icon>
+    </div>
+    
+    <div *ngFor="let msg of messages"
+          [ngClass]="msg.senderId === senderId ? 'my-message' : 'other-message'"
+           class="chat-message">
+        <div class="message-content">
+          <p>{{ msg.content }}</p>
+          <small class="timestamp">
+            {{ msg.timestamp ? (msg.timestamp | date: 'shortTime') : '' }}
+          </small>
+        </div>
+        <ion-icon name="ellipsis-vertical-outline" class="options-icon" (click)="openOptions(msg)">
+        </ion-icon>
+      </div>
     </div>
   </div>
-  
 
-  <div class="chat-input-container" style="margin-top:20px;">
+  <div class="chat-input-container">
     <ion-input [(ngModel)]="messageText" placeholder="Type your message..."></ion-input>
     <ion-button (click)="sendMessage()" fill="clear">
       <ion-icon name="send-outline"></ion-icon>

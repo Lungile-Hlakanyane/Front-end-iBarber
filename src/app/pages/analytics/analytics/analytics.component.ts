@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Chart from 'chart.js/auto';
+import { RegisterService } from 'src/app/services/user-service/register.service';
+import { SlotService } from 'src/app/services/slot-service/slot.service';
 
 @Component({
   selector: 'app-analytics',
@@ -14,16 +16,20 @@ import Chart from 'chart.js/auto';
 })
 export class AnalyticsComponent  implements OnInit {
 
-  activeUsers = 124;
-  totalBookings = 345;
+  activeUsers:number = 0;
+  totalBookings:number = 0;
   totalRevenue = 11250.00;
 
   constructor(
-    private router:Router
+    private router:Router,
+    private userService:RegisterService,
+    private slotService:SlotService
   ) { }
 
-  ngOnInit() {
-    this.initRevenueChart();
+  async ngOnInit() {
+    await this.initRevenueChart();
+    await this.getActiveUsers();
+    await this.getTotalBookings();
   }
 
   initRevenueChart() {
@@ -57,5 +63,27 @@ export class AnalyticsComponent  implements OnInit {
 
   navigate(link:string){
     this.router.navigateByUrl(link);
+  }
+
+  async getActiveUsers() {
+      this.userService.getUserCount().subscribe(
+    (count) => {
+      this.activeUsers = count;
+    },
+    (error) => {
+      console.error('Failed to load user count', error);
+    }
+  );
+  }
+
+  async getTotalBookings() {
+     this.slotService.getTotalBookedSlots().subscribe(
+    (count) => {
+      this.totalBookings = count;
+    },
+    (error) => {
+      console.error('Failed to load booking count', error);
+    }
+  );
   }
 }

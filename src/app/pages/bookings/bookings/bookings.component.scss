@@ -153,3 +153,10 @@
   letter-spacing: 0.5px;
 }
   
+.booking-status.confirmed {
+  color: green;
+}
+
+.booking-status.waiting {
+  color: orange;
+}

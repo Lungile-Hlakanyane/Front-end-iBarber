@@ -23,5 +23,10 @@ export class PortfolioService {
   getUserPortfolio(userId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/user/${userId}`);
   }
+
+  getPortfolioImagesByUserId(userId: number): Observable<string[]> {
+  return this.http.get<string[]>(`http://localhost:8080/api/portfolios/user/${userId}/images`);
+}
+
   
 }

@@ -48,4 +48,8 @@ export class SlotService {
    return this.http.get<SlotDTO[]>(`${this.apiUrl}/slots/booked/barber/${barberId}`);
   }
   
+  getTotalBookedSlots(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/count/booked`);
+  }
+
 }
