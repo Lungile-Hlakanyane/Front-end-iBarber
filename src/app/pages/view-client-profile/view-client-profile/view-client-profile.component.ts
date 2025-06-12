@@ -2,10 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular'; 
+import { IonicModule, NavController } from '@ionic/angular'; 
 import { Client } from 'src/app/models/Client';
-import { AlertController,ToastController,LoadingController,ModalController } from '@ionic/angular';
+import { AlertController,ToastController,LoadingController,ModalController} from '@ionic/angular';
 import { ReportUserModalComponent } from 'src/app/reuseable-components/report-user-modal/report-user-modal/report-user-modal.component';
+import { ActivatedRoute } from '@angular/router';
+import { RegisterService } from 'src/app/services/user-service/register.service';
+import { User } from 'src/app/models/User';
+import { ReportUserService } from 'src/app/services/report-user-service/report-user.service';
+import { ReportUserDTO } from 'src/app/models/ReportUserDTO';
 
 @Component({
   selector: 'app-view-client-profile',
@@ -16,31 +21,44 @@ import { ReportUserModalComponent } from 'src/app/reuseable-components/report-us
 })
 export class ViewClientProfileComponent  implements OnInit {
   @Input() client!: Client;
+  userId!: string | null;
+  user: User | null = null;
+  warnings: ReportUserDTO[] = [];
 
   constructor(
     private router: Router,
     private alertController: AlertController,
     private toastController: ToastController,
     private loadingController: LoadingController,
-    private modalController: ModalController  
+    private modalController: ModalController,
+    private route:ActivatedRoute,
+    private registerService: RegisterService,
+    private navController:NavController,
+    private reportUserService: ReportUserService
   ) { }
 
+  goBack(){
+    this.navController.back();
+  }
+
   ngOnInit() {
-    if (!this.client) {
-      this.client = {
-        id: 1,
-        name: "John Doe",
-        email: "john.doe@example.com",
-        phone: "123-456-7890",
-        service: "Haircut",
-        bookingDate: "2025-05-12",
-        status: "active",
-        history: [
-          "Booking 1 - 2025-04-01",
-          "Booking 2 - 2025-04-15",
-          "Booking 3 - 2025-05-01",
-        ],
-      };
+    const storedId = localStorage.getItem('userId');
+    if (storedId !== null) {
+      const userId = Number(storedId);
+      if (!isNaN(userId)) {
+        this.loadWarnings(userId);
+      }
+    }
+    this.userId = this.route.snapshot.queryParamMap.get('userId');
+    if (this.userId) {
+      this.registerService.getUserById(Number(this.userId)).subscribe({
+        next: (data: User) => {
+          this.user = data;
+        },
+        error: err => {
+          console.error('Failed to fetch user by ID', err);
+        }
+      });
     }
   }
 
@@ -104,16 +122,25 @@ export class ViewClientProfileComponent  implements OnInit {
   async openReportModal() {
     const modal = await this.modalController.create({
       component: ReportUserModalComponent,
-      cssClass: 'bottom-modal'
+      cssClass: 'bottom-modal',
+      componentProps: {
+        userId: this.userId,
+      }
     });
-
     await modal.present();
-
     const { data } = await modal.onDidDismiss();
     if (data?.reason) {
       console.log('Selected reason:', data.reason);
-      // You can now call your block-user API or perform an action here.
     }
   }
+
+  async loadWarnings(userId: number) {
+  this.reportUserService.getWarningsByUserId(userId).subscribe({
+    next: (data) => {
+      this.warnings = data;
+    },
+    error: (err) => console.error('Failed to load warnings:', err),
+  });
+}
 
 }

@@ -23,7 +23,7 @@
     <ion-card *ngFor="let post of filteredPosts()" class="post-card">
        <div class="post-header">
          <img src="assets/barbers/king.jpg" class="avatar" />
-         <div class="info" (click)="navigate('/view-barber-profile')">
+      <div class="info" (click)="navigateToUserProfile(post.userId)">
           <h3>{{ post.username }}</h3>
            <p>{{ post.createdAt | date:'short' }}</p>
          </div>
@@ -31,36 +31,26 @@
        <img [src]="'http://localhost:8080' + post.imageUrl" class="post-image" />
        <div class="post-body">
         <p>{{ post.content }}</p>
-        <ion-icon
-  [name]="post.likedByCurrentUser ? 'heart' : 'heart-outline'"
-  color="danger"
-  (click)="toggleLike(post)">
-</ion-icon>
-<span class="likes-count" style="position:relative; bottom:8px; right:7px;">{{ post.likesCount || 0 }} Likes</span>
-
+        <ion-icon [name]="post.likedByCurrentUser ? 'heart' : 'heart-outline'" color="danger" (click)="toggleLike(post)"></ion-icon> <span class="likes-count" style="position:relative; bottom:8px; right:7px;">{{ post.likesCount || 0 }} Likes</span>
         <ion-icon name="chatbubble-outline" (click)="toggleComments(post)"></ion-icon>
       </div>
-      
-<!-- Comments Section -->
-<div *ngIf="post.showComments" class="comments-section">
-  <div *ngFor="let comment of post.comments" class="comment">
+        <!-- Comments Section -->
+    <div *ngIf="post.showComments" class="comments-section">
+     <div *ngFor="let comment of post.comments" class="comment">
     <strong>{{ comment.username || 'User' }}:</strong> {{ comment.content }}
-  </div>
+   </div>
 
-  <ion-item>
+    <ion-item>
     <ion-input
       [(ngModel)]="post.newComment"
       placeholder="Add a comment...">
     </ion-input>
     <ion-button (click)="addComment(post)" fill="clear">Post</ion-button>
-  </ion-item>
-</div>
-
-       
-     </ion-card>
+     </ion-item>
    </div>
 
-
+     </ion-card>
+   </div>
    <div *ngIf="filteredPosts().length === 0" style="text-align:center; padding:20px;">
    <p style="color:grey; font-style: italic;">No matching posts found!</p>
   </div>

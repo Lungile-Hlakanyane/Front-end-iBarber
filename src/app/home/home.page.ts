@@ -8,6 +8,7 @@ import { PostDTO } from '../models/PostDTO';
 import { CommentService } from '../services/comment-service/comment.service';
 import { CommentDTO } from '../models/Comment';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -165,6 +166,24 @@ export class HomePage {
       (post.content && post.content.toLowerCase().includes(lowerSearch))
     );
   }
+
+  navigateToUserProfile(userId: number) {
+  this.userService.getUserById(userId).subscribe({
+    next: (user) => {
+      if (user.role === 'barber') {
+        this.router.navigate(['/view-barber-profile'], { queryParams: { userId: user.id } });
+      } else if (user.role === 'client') {
+        this.router.navigate(['/view-client-profile'], { queryParams: { userId: user.id } });
+      } else {
+        console.warn('Unsupported user role:', user.role);
+      }
+    },
+    error: (err) => {
+      console.error('Failed to fetch user for profile navigation:', err);
+    }
+  });
+}
+
   
 
 }

@@ -13,6 +13,9 @@ import * as SockJS from 'sockjs-client';
 import { Client, Message } from '@stomp/stompjs';
 import { Announcement } from 'src/app/models/Announcement';
 import { BroadcastServiceService } from 'src/app/services/broadcast-announcement-service/broadcast-service.service';
+import { ReportUserDTO } from 'src/app/models/ReportUserDTO';
+import { ReportUserService } from 'src/app/services/report-user-service/report-user.service';
+
 
 @Component({
   selector: 'app-chat',
@@ -22,6 +25,8 @@ import { BroadcastServiceService } from 'src/app/services/broadcast-announcement
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ChatComponent  implements OnInit {
+
+  warnings: ReportUserDTO[] = [];
 
   stompClient!: Client;
   messages: ChatMessageDTO[] = [];
@@ -44,37 +49,34 @@ export class ChatComponent  implements OnInit {
     private registerService: RegisterService,
     private actionSheetController: ActionSheetController,
     private broadcastService: BroadcastServiceService,
+    private reportUserService: ReportUserService
   ) { }
 
-ngOnInit() {
-   const storedId = localStorage.getItem('userId');
-    this.senderId = storedId ? Number(storedId) : 0;
 
-  // Get current user (to determine role)
+ngOnInit() {
+  const storedId = localStorage.getItem('userId');
+  this.senderId = storedId ? Number(storedId) : 0;
   this.registerService.getUserById(this.senderId).subscribe({
     next: (user) => {
       this.currentUser = user;
-      this.loadAnnouncements(); // Load announcements only after we know the role
+      this.loadAnnouncements();
     },
     error: (err) => console.error('Failed to load current user:', err),
   });
-
   this.route.paramMap.subscribe(params => {
     const receiver = params.get('receiverId');
     this.receiverId = receiver ? Number(receiver) : 0;
     this.loadChatMessages();
     this.loadReceiverDetails();
   });
-
   this.connectToWebSocket();
 }
-  
 
-  navigate(link:string) {
+navigate(link:string) {
     this.router.navigate([link]); 
-  }
+}
 
-  loadChatMessages() {
+loadChatMessages() {
     this.chatService.getChatMessages(this.senderId, this.receiverId).subscribe({
       next: (data) => (this.messages = data),
       error: (err) => console.error('Failed to load messages:', err),
@@ -147,7 +149,7 @@ ngOnInit() {
     this.messages = this.messages.filter(m => m !== message);
   }
 
-   loadAnnouncements() {
+async loadAnnouncements() {
   if (!this.currentUser) return;
   this.broadcastService.getAllAnnouncements().subscribe({
     next: (data) => {
@@ -161,6 +163,14 @@ ngOnInit() {
   });
 }
 
-  
-  
+async loadWarnings(userId: number) {
+  this.reportUserService.getWarningsByUserId(userId).subscribe({
+    next: (data) => {
+      this.warnings = data;
+    },
+    error: (err) => console.error('Failed to load warnings:', err),
+  });
+}
+
+    
 }

@@ -10,6 +10,13 @@
     <p class="email">{{user?.email}}</p>
   </div>
 
+  <div *ngIf="warnings.length > 0" class="warning-messages">
+    <div *ngFor="let warning of warnings" class="warning-banner">
+     <ion-icon name="warning-outline" color="danger"></ion-icon>
+     <span><strong>Warning:</strong> {{ warning.reason }}</span>
+    </div>
+  </div>
+
   <div class="stats-card">
     <div class="stats">
       <div class="stat-item">

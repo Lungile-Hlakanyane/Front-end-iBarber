@@ -11,24 +11,22 @@
     </div>
   </div>
 
-  <ion-list class="report-list">
-    <ion-card *ngFor="let report of reports" class="report-card">
-      <ion-card-header>
-        <ion-card-title>{{ report.reportedUser }}</ion-card-title>
-        <ion-card-subtitle>Submitted by: {{ report.reportedBy }}</ion-card-subtitle>
-      </ion-card-header>
-
-      <ion-card-content>
-        <p><strong>Reason:</strong> {{ report.reason }}</p>
-        <p><strong>Description:</strong> {{ report.description }}</p>
-
-        <div class="actions">
-          <ion-button fill="outline" color="warning" (click)="warnUser(report)">Warn</ion-button>
-          <ion-button fill="outline" color="danger" (click)="banUser(report)">Ban</ion-button>
-          <ion-button fill="outline" color="medium" (click)="dismissReport(report)">Dismiss</ion-button>
-        </div>
-      </ion-card-content>
-    </ion-card>
+<ion-list class="report-list">
+<ion-card *ngFor="let report of reports" class="report-card">
+  <ion-card-header>
+    <ion-card-title>User: {{ report.reportedUserName }}</ion-card-title>
+    <ion-card-subtitle>Submitted by: {{ report.reporterUserName }}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <p><strong>Reason:</strong> {{ report.reason }}</p>
+    <div class="actions" style-="display: flex; ">
+      <ion-button fill="outline" color="warning" (click)="warnUser(report)" expand="block">Warn</ion-button>
+      <ion-button fill="outline" color="danger" (click)="banUser(report)" expand="block">Ban</ion-button>
+      <!-- This Dismiss user functionality will be enabled on version 2.0.0 -->
+      <!-- <ion-button fill="outline" color="medium" (click)="dismissReport(report)">Dismiss</ion-button> -->
+    </div>
+  </ion-card-content>
+</ion-card>
   </ion-list>
 
 </ion-content>

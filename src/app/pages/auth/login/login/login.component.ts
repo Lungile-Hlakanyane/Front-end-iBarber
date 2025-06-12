@@ -95,19 +95,20 @@ export class LoginComponent  implements OnInit {
             await this.router.navigate(['/home']);
           },
           error: async (err) => {
-            const toast = await this.toastController.create({
-              message: 'Failed to fetch user ID',
-              duration: 2000,
-              color: 'warning',
-              position: 'top'
-            });
-            await toast.present();
-          }
+          await loading.dismiss();
+          const errorMessage = err.error.message || 'Invalid credentials';
+          const toast = await this.toastController.create({
+          message: errorMessage,
+          duration: 3000,
+          color: errorMessage.includes('banned') ? 'warning' : 'danger',
+          position: 'top'
+       });
+         await toast.present();
+        }
         });
       },
       error: async (err) => {
         await loading.dismiss();
-
         const toast = await this.toastController.create({
           message: err.error.message || 'Invalid credentials',
           duration: 2000,

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular'; 
 import { ModalController,ToastController,LoadingController } from '@ionic/angular';
+import { ReportUserService } from 'src/app/services/report-user-service/report-user.service';
+import { ReportUserDTO } from 'src/app/models/ReportUserDTO';
 
 @Component({
   selector: 'app-report-user-modal',
@@ -13,6 +15,7 @@ import { ModalController,ToastController,LoadingController } from '@ionic/angula
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ReportUserModalComponent  implements OnInit {
+    @Input() userId!: number; 
 
   reasons: string[] = [
     'Inappropriate content',
@@ -25,39 +28,64 @@ export class ReportUserModalComponent  implements OnInit {
     'Other'
   ];
 
+  status: string = 'warned';
   selectedReason: string = '';
+  reporterUserId!: number;
 
   constructor(
     private router: Router,
     private modalController: ModalController,
     private toastController: ToastController,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private reportUserService: ReportUserService
   ) { }
+
+  ngOnInit() {
+    const userIdString = localStorage.getItem('userId');
+    this.reporterUserId = userIdString ? parseInt(userIdString) : 0;
+  }
+
 
   async submitReason() {
     const loading = await this.loadingController.create({
       message: 'Reporting...',
-      spinner: 'circular',
-      duration: 2000
+      spinner: 'circular'
     });
     await loading.present();
 
-    setTimeout(async () => {
-      await loading.dismiss();
+    const reportData: ReportUserDTO = {
+      reportedUserId: this.userId,
+      reporterUserId: this.reporterUserId,
+      reason: this.selectedReason,
+      status: this.status
+    };
 
-      const toast = await this.toastController.create({
-        message: 'You have successfully reported this user',
-        duration: 2000,
-        position: 'top',
-        color: 'success'
-      });
-      await toast.present();
-
-      this.modalController.dismiss({ reason: this.selectedReason });
-    }, 2000);
+    console.log('Reporter ID:', this.reporterUserId);
+    this.reportUserService.reportUser(reportData).subscribe({
+      next: async () => {
+        await loading.dismiss();
+        const toast = await this.toastController.create({
+          message: 'You have successfully reported this user',
+          duration: 2000,
+          position: 'top',
+          color: 'success'
+        });
+        await toast.present();
+        this.modalController.dismiss({ reason: this.selectedReason });
+      },
+      error: async (err) => {
+        await loading.dismiss();
+        const toast = await this.toastController.create({
+          message: 'Failed to report user. Try again.',
+          duration: 2000,
+          position: 'top',
+          color: 'danger'
+        });
+        await toast.present();
+      }
+    });
   }
 
-  ngOnInit() {}
 
   dismissModal(){
     this.modalController.dismiss();

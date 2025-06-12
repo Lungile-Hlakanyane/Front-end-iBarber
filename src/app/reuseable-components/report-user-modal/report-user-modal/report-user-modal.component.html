@@ -1,10 +1,8 @@
 <ion-content class="ion-padding">
-
   <div class="header-modal" style="display:flex; justify-content: space-between;">
     <p style="color:#000; font-weight: bold; font-size: 30px;">Report User</p>
     <p style="color:#000; font-weight: bold; font-size: 20px;" (click)="dismissModal()">X</p>
   </div>
-
   <ion-list>
     <ion-radio-group [(ngModel)]="selectedReason">
       <ion-item *ngFor="let reason of reasons">
@@ -13,7 +11,6 @@
       </ion-item>
     </ion-radio-group>
   </ion-list>
-
   <ion-button expand="block" class="custom-btn" (click)="submitReason()" [disabled]="!selectedReason">
     Submit
   </ion-button>

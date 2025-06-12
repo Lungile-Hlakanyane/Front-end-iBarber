@@ -6,6 +6,8 @@ import { RateModalComponent } from 'src/app/reuseable-components/rate-a-barber/r
 import { ModalController } from '@ionic/angular';
 import { ImagePreviewModalComponent } from 'src/app/reuseable-components/image-preview-modal/image-preview-modal/image-preview-modal.component';
 import { ReportUserModalComponent } from 'src/app/reuseable-components/report-user-modal/report-user-modal/report-user-modal.component';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-view-barber-profile',
@@ -19,7 +21,8 @@ export class ViewBarberProfileComponent  implements OnInit {
 
   constructor(
     private router: Router,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private route:ActivatedRoute
   ) { }
 
   barber = {

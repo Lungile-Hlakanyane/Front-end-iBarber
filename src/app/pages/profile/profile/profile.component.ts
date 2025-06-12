@@ -6,6 +6,8 @@ import { ActionSheetController, LoadingController,ToastController } from '@ionic
 import { ModalController } from '@ionic/angular';
 import { PersonalInfoModalComponent } from 'src/app/reuseable-components/personal-infor-modal/personal-info-modal/personal-info-modal.component';
 import { RegisterService } from 'src/app/services/user-service/register.service';
+import { ReportUserService } from '../../../services/report-user-service/report-user.service';
+import { ReportUserDTO } from 'src/app/models/ReportUserDTO';
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +20,7 @@ export class ProfileComponent  implements OnInit {
 
   role: string = '';
   user: any;
+  warnings: ReportUserDTO[] = [];
 
   constructor(
     private router: Router,
@@ -25,15 +28,23 @@ export class ProfileComponent  implements OnInit {
     private toastController: ToastController,
     private loadingController: LoadingController,
     private modalController: ModalController,
-    private userService:RegisterService
+    private userService:RegisterService,
+    private reportUserService: ReportUserService
   ) { }
 
   ngOnInit() {
+    const storedId = localStorage.getItem('userId');
+    if (storedId !== null) {
+      const userId = Number(storedId);
+      if (!isNaN(userId)) {
+        this.loadWarnings(userId);
+      }
+    }
+    
     const storedRole = localStorage.getItem('userRole');
     if (storedRole) {
       this.role = storedRole;
     }
-
     const email = localStorage.getItem('userEmail');
     if (email) {
       this.userService.getUserByEmail(email).subscribe({
@@ -111,6 +122,15 @@ export class ProfileComponent  implements OnInit {
     });
     await modal.present();
   }
+
+async loadWarnings(userId: number) {
+  this.reportUserService.getWarningsByUserId(userId).subscribe({
+    next: (data) => {
+      this.warnings = data;
+    },
+    error: (err) => console.error('Failed to load warnings:', err),
+  });
+}
 
 
 }

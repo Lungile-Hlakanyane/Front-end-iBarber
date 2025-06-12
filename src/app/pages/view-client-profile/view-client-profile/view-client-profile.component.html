@@ -1,15 +1,25 @@
 <ion-content class="ion-padding profile-page">
   <div class="bck-btn-container">
-    <p style="font-size:30px;" (click)="navigate('/barber-bookings')">
+    <p style="font-size:30px;" (click)="goBack()">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </p>
   </div>
 
-  <div class="profile-header">
-    <img class="avatar" src="../../../../assets/profile-pic-image.jpg" alt="Profile Image" />
-    <h2 class="name">Lungile Vincent Hlakanyane</h2>
-    <p class="email">lungile.co.za</p>
-  </div>
+<div class="profile-header" *ngIf="user">
+  <img class="avatar" src="../../../../assets/profile-pic-image.jpg" alt="Profile Image" />
+  <h2 class="name">{{ user.username }}</h2>
+  <p class="email">{{ user.email }}</p>
+</div>
+
+<div *ngIf="warnings.length > 0" class="warning-messages">
+    <div *ngFor="let warning of warnings" class="warning-banner">
+     <ion-icon name="warning-outline" color="danger"></ion-icon>
+     <span><strong>Warning:</strong> {{ warning.reason }}</span>
+    </div>
+</div>
+
+<ion-spinner *ngIf="!user"></ion-spinner>
+
 
   <div class="stats-card">
     <div class="stats">
