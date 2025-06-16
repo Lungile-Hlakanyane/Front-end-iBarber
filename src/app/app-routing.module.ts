@@ -25,6 +25,11 @@ import { AnalyticsComponent } from './pages/analytics/analytics/analytics.compon
 import { ReportHandlingComponent } from './pages/report-handling/report-handling/report-handling.component';
 import { FeedbackSupportComponent } from './pages/feedback-support/feedback-support/feedback-support.component';
 import { BroadcastAnnouncementsComponent } from './pages/broadcast-announcements/broadcast-announcements/broadcast-announcements.component';
+import { BannedUserComponent } from './pages/banned-user/banned-user/banned-user.component';
+import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-and-conditions/terms-and-conditions.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password/forgot-password.component';
+import { ForgotPasswordOtpComponent } from './pages/forgot-password-otp/forgot-password-otp/forgot-password-otp.component';
+import { NewPasswordComponent } from './pages/new-password/new-password/new-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -46,6 +51,11 @@ const routes: Routes = [
   { path: 'report-handling', component: ReportHandlingComponent},
   { path: 'feedback-support', component:FeedbackSupportComponent},
   { path: 'broadcast-announcement', component:BroadcastAnnouncementsComponent},
+  { path: 'banned-user', component:BannedUserComponent},
+  { path: 'terms-and-conditions', component:TermsAndConditionsComponent},
+  { path: 'forgot-password', component:ForgotPasswordComponent},
+  { path: 'forgot-password-otp', component:ForgotPasswordOtpComponent},
+  { path: 'new-password', component:NewPasswordComponent},
   {
     path: '',
     component: BottomNavigationComponent,

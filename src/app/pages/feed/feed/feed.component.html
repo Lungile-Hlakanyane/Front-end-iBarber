@@ -1,37 +1,55 @@
 <ion-content class="feed-page">
   <div class="heading-title" style="padding: 15px; display: flex; justify-content: space-between;">
-    <div style="display:flex; gap:10px;">
-     <div style="font-size: 25px; cursor: pointer;" (click)="openMenuModal()">
-       <ion-icon name="menu-outline"></ion-icon>
+   <div style="display:flex; gap:10px;">
+     <div>
+      <h1>iBarber</h1>
      </div>
-      <div>
-       <h1>iBarber</h1>
-      </div>
-    </div>
-  <div class="options" style="display: flex; gap: 10px;">
-    <ion-icon name="search-outline" style="font-size: 24px;"></ion-icon>
-    <ion-icon name="notifications-outline" style="font-size: 24px;"></ion-icon>
-    <ion-icon name="person-outline" style="font-size: 24px;"></ion-icon>
+   </div>
+   <div class="options" style="display: flex; gap: 10px; position: relative; top: 27px;">
+    <ion-icon name="search-outline" style="font-size: 24px;" (click)="toggleSearchBar()"></ion-icon>
+    <ion-icon name="exit-outline" style="font-size: 24px;" (click)="logout()"></ion-icon>
+   </div>
   </div>
- </div>
 
-  <div class="feed-wrapper">
-    <ion-card *ngFor="let post of posts" class="post-card">
-      <div class="post-header">
-        <img [src]="post.profileImage" class="avatar" />
-        <div class="info">
-          <h3>{{ post.barberName }}</h3>
-          <p>{{ post.timestamp }}</p>
-        </div>
-      </div>
-
-      <img [src]="post.imageUrl" class="post-image" />
-
-      <div class="post-body">
-        <p>{{ post.caption }}</p>
-        <ion-icon name="heart-outline"></ion-icon>
-        <ion-icon name="chatbubble-outline"></ion-icon>
-      </div>
-    </ion-card>
+  <div class="search-container" *ngIf="showSearchBar">
+    <ion-searchbar placeholder="Search..." [(ngModel)]="searchText"></ion-searchbar>
   </div>
-</ion-content>
+ 
+   <div class="feed-wrapper">
+    <ion-card *ngFor="let post of filteredPosts()" class="post-card">
+       <div class="post-header">
+         <img src="assets/barbers/king.jpg" class="avatar" />
+      <div class="info">
+          <h3>{{ post.username }}</h3>
+           <p>{{ post.createdAt | date:'short' }}</p>
+         </div>
+       </div>
+       <img [src]="'http://localhost:8080' + post.imageUrl" class="post-image" />
+       <div class="post-body">
+        <p>{{ post.content }}</p>
+        <ion-icon [name]="post.likedByCurrentUser ? 'heart' : 'heart-outline'" color="danger" (click)="toggleLike(post)"></ion-icon> <span class="likes-count" style="position:relative; bottom:8px; right:7px;">{{ post.likesCount || 0 }} Likes</span>
+        <ion-icon name="chatbubble-outline" (click)="toggleComments(post)"></ion-icon>
+      </div>
+        <!-- Comments Section -->
+    <div *ngIf="post.showComments" class="comments-section">
+     <div *ngFor="let comment of post.comments" class="comment">
+    <strong>{{ comment.username || 'User' }}:</strong> {{ comment.content }}
+   </div>
+
+    <ion-item>
+    <ion-input
+      [(ngModel)]="post.newComment"
+      placeholder="Add a comment...">
+    </ion-input>
+    <ion-button (click)="addComment(post)" fill="clear">Post</ion-button>
+     </ion-item>
+   </div>
+
+     </ion-card>
+   </div>
+   <div *ngIf="filteredPosts().length === 0" style="text-align:center; padding:20px;">
+   <p style="color:grey; font-style: italic;">No matching posts found!</p>
+  </div>
+
+ </ion-content>
+ 

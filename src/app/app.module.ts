@@ -36,6 +36,11 @@ import { AnalyticsComponent } from './pages/analytics/analytics/analytics.compon
 import { ReportHandlingComponent } from './pages/report-handling/report-handling/report-handling.component';
 import { FeedbackSupportComponent } from './pages/feedback-support/feedback-support/feedback-support.component';
 import { BroadcastAnnouncementsComponent } from './pages/broadcast-announcements/broadcast-announcements/broadcast-announcements.component';
+import { BannedUserComponent } from './pages/banned-user/banned-user/banned-user.component';
+import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-and-conditions/terms-and-conditions.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password/forgot-password.component';
+import { ForgotPasswordOtpComponent } from './pages/forgot-password-otp/forgot-password-otp/forgot-password-otp.component';
+import { NewPasswordComponent } from './pages/new-password/new-password/new-password.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -48,7 +53,8 @@ import { BroadcastAnnouncementsComponent } from './pages/broadcast-announcements
     BarberBookingsComponent,CreateSlotComponent,ViewClientProfileComponent,ReportUserModalComponent,
     FianceReportComponent,PortfolioComponent,ViewPortfolioImageComponent,ManageUsersComponent,
     AdminViewUserComponent,AnalyticsComponent,ReportHandlingComponent,FeedbackSupportComponent,
-    BroadcastAnnouncementsComponent
+    BroadcastAnnouncementsComponent,BannedUserComponent,TermsAndConditionsComponent,
+    ForgotPasswordComponent,ForgotPasswordOtpComponent, NewPasswordComponent
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

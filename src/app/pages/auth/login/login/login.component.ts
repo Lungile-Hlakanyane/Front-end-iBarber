@@ -6,9 +6,10 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { LoginService } from 'src/app/services/login-service/login.service';
-import { LoginRequest } from 'src/app/models/LoginRequest';
 import { RegisterService } from 'src/app/services/user-service/register.service';
 import { LoadingController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import { BannedUserComponent } from 'src/app/pages/banned-user/banned-user/banned-user.component';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +39,8 @@ export class LoginComponent  implements OnInit {
     private toastController: ToastController,
     private loginService:LoginService,
     private userService:RegisterService,
-    private loadingController:LoadingController
+    private loadingController:LoadingController,
+    private modalController:ModalController
   ) { }
 
   ngOnInit() {
@@ -63,62 +65,70 @@ export class LoginComponent  implements OnInit {
   }
 
   async onLogin() {
-    if (this.loginForm.invalid) return;
-  
-    const credentials = this.loginForm.value;
-  
-    const loading = await this.loadingController.create({
-      message: 'Logging in...',
-      spinner: 'circular', 
-      duration: 0, 
-      backdropDismiss: true
-    });
-    await loading.present();
-  
-    this.loginService.login(credentials).subscribe({
-      next: async (response) => {
-        await loading.dismiss();
-        const toast = await this.toastController.create({
-          message: response.message || 'Login successful',
-          duration: 2000,
-          color: 'success',
-          position: 'top'
-        });
-        await toast.present();
-  
-        localStorage.setItem('userEmail', response.email);
-        localStorage.setItem('userRole', response.role);
-  
-        this.userService.getUserByEmail(response.email).subscribe({
-          next: async (userData) => {
-            localStorage.setItem('userId', userData.id);
-            await this.router.navigate(['/home']);
-          },
-          error: async (err) => {
+  if (this.loginForm.invalid) return;
+
+  const credentials = this.loginForm.value;
+  const loading = await this.loadingController.create({
+    message: 'Logging in...',
+    spinner: 'circular',
+    duration: 0,
+    backdropDismiss: true
+  });
+
+  await loading.present();
+
+  this.loginService.login(credentials).subscribe({
+    next: async (response) => {
+      await loading.dismiss();
+
+      localStorage.setItem('userEmail', response.email);
+      localStorage.setItem('userRole', response.role);
+
+      this.userService.getUserByEmail(response.email).subscribe({
+        next: async (userData) => {
+          localStorage.setItem('userId', userData.id);
+          await this.router.navigate(['/home']);
+        },
+        error: async (err) => {
           await loading.dismiss();
+
           const errorMessage = err.error.message || 'Invalid credentials';
+
           const toast = await this.toastController.create({
-          message: errorMessage,
-          duration: 3000,
-          color: errorMessage.includes('banned') ? 'warning' : 'danger',
-          position: 'top'
-       });
-         await toast.present();
+            message: errorMessage,
+            duration: 3000,
+            color: 'danger',
+            position: 'top'
+          });
+          await toast.present();
         }
+      });
+    },
+    error: async (err) => {
+      await loading.dismiss();
+
+      const errorMessage = err.error.message || 'Invalid credentials';
+
+      if (errorMessage.toLowerCase().includes('banned')) {
+        const modal = await this.modalController.create({
+          component: BannedUserComponent,
+          backdropDismiss: false,
+          cssClass: 'banned-user-modal'
         });
-      },
-      error: async (err) => {
-        await loading.dismiss();
+        await modal.present();
+      } else {
         const toast = await this.toastController.create({
-          message: err.error.message || 'Invalid credentials',
+          message: errorMessage,
           duration: 2000,
           color: 'danger',
           position: 'top'
         });
         await toast.present();
       }
-    });
-  }
+    }
+  });
+}
+
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;

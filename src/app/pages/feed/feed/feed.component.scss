@@ -56,3 +56,33 @@
     }
   }
 }
+
+ion-searchbar {
+  --background: #fff;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.search-container {
+  margin-top: 10px;
+  padding: 0 16px;
+}
+
+.comments-section {
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.comment {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+ion-searchbar {
+  --border-radius: 12px;
+}
+
+.likes-count {
+  margin-right: 3px;
+  font-weight: bold;
+}
