@@ -55,7 +55,9 @@ export class OtpComponent  implements OnInit {
     await loading.present();
 
     this.otpService.verifyOtp({ otp: otpCode, email: this.email }).subscribe({
+      
       next: async (response) => {
+        console.log({ otp: otpCode, email: this.email });
         await loading.dismiss();
         const toast = await this.toastController.create({
           message: response,

@@ -6,6 +6,8 @@ import { FormBuilder, FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ForgotPasswordService } from 'src/app/services/forgot-password-service/forgot-password.service';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-forgot-password',
@@ -24,38 +26,66 @@ export class ForgotPasswordComponent  implements OnInit {
     private toastController: ToastController,
     private loadingController: LoadingController,
     private navController:NavController,
-    private router:Router
+    private router:Router,
+    private forgotPasswordService:ForgotPasswordService
   ) { }
 
+  user: User = {
+    password:'',
+    username:'',
+    email: '',
+    role: ''
+  };
+  
   ngOnInit() {}
 
   goBack(){
     this.navController.back();
   }
 
-  async onSubmit() {
+async onSubmit() {
+  if (!this.email || this.email.trim() === '') {
+    const errorToast = await this.toastController.create({
+      message: 'Please enter a valid email.',
+      duration: 3000,
+      color: 'danger',
+      position: 'top'
+    });
+    return errorToast.present();
+  }
+
   const loading = await this.loadingController.create({
-    message: 'Sending code...',
+    message: 'Sending reset link...',
     spinner: 'circular'
   });
   await loading.present();
 
-  // Simulated API call
-  setTimeout(async () => {
-    await loading.dismiss();
+  this.forgotPasswordService.sendForgotPasswordRequest(this.email).subscribe({
+    next: async () => {
+      await loading.dismiss();
+      const toast = await this.toastController.create({
+        message: 'A password reset link has been sent to your email.',
+        duration: 3000,
+        color: 'success',
+        position: 'top'
+      });
+      await toast.present();
 
-    const toast = await this.toastController.create({
-      message: 'A password reset link has been sent to your email.',
-      duration: 3000,
-      color: 'success',
-      position: 'top'
-    });
-    await toast.present().then(()=>{
-      this.router.navigateByUrl('/forgot-password-otp')
-    });
-
-    this.forgotPasswordForm.reset();
-  }, 2000);
+      // ✅ DO NOT NAVIGATE TO OTP SCREEN
+      // Optionally, you can navigate to a confirmation screen or just stay here.
+    },
+    error: async (err) => {
+      await loading.dismiss();
+      const toast = await this.toastController.create({
+        message: err.error || 'Failed to send reset link. Please try again.',
+        duration: 3000,
+        color: 'danger',
+        position: 'top'
+      });
+      await toast.present();
+    }
+  });
 }
+
 
 }

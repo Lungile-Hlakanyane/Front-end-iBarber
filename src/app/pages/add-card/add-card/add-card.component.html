@@ -1,0 +1,47 @@
+<ion-content class="ion-padding profile-page">
+
+  <div class="bck-btn-container">
+    <p style="font-size: 30px;" (click)="goBack()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+  </div>
+
+  <div class="profile-header">
+    <h1 style="font-size:100px;"><ion-icon name="card-outline"></ion-icon></h1>
+    <h2 class="name">Add Your Card</h2>
+    <p class="email">Secure your premium subscription</p>
+  </div>
+
+  <div class="card-form">
+    <ion-item>
+      <ion-label position="stacked">Cardholder Name</ion-label>
+      <ion-input [(ngModel)]="cardHolderName" placeholder="John Doe"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Card Number</ion-label>
+      <ion-input [(ngModel)]="cardNumber" type="number" placeholder="1234 5678 9012 3456"></ion-input>
+    </ion-item>
+
+   <ion-item>
+    <ion-label position="stacked">Expiry Date</ion-label>
+      <ion-datetime
+       presentation="month-year"
+       [(ngModel)]="expiry"
+       placeholder="Select expiry month"
+       displayFormat="MM/YY"
+       pickerFormat="MM/YYYY">
+    </ion-datetime>
+   </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">CVV</ion-label>
+      <ion-input [(ngModel)]="cvv" type="password" placeholder="123"></ion-input>
+    </ion-item>
+  </div>
+
+  <div class="subscribe-button">
+    <ion-button expand="block" color="success" (click)="submitPayment()">Pay R80</ion-button>
+  </div>
+
+</ion-content>

@@ -5,7 +5,11 @@
   </div>
 
   <div class="profile-header">
-    <img class="avatar" src="../../../../assets/profile-pic-image.jpg" alt="Profile Image" />
+  <img class="avatar" 
+     [src]="selectedImage || defaultImage" 
+     alt="Profile Image"  
+     (click)="openImageOptions()" />
+   <input type="file" #fileInput accept="image/*" hidden (change)="onFileSelected($event)" />
     <h2 class="name">{{user?.username}}</h2>
     <p class="email">{{user?.email}}</p>
   </div>

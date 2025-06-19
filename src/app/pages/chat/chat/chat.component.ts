@@ -35,10 +35,8 @@ export class ChatComponent  implements OnInit {
   announcements: Announcement[] = [];
   currentUser?: User;
 
-  //client
   senderId!: number;
   
-  //barber
   receiverId!: number;
 
   constructor(
@@ -145,9 +143,18 @@ loadChatMessages() {
     await actionSheet.present();
   }
 
-  deleteMessage(message: ChatMessageDTO) {
-    this.messages = this.messages.filter(m => m !== message);
-  }
+deleteMessage(message: ChatMessageDTO) {
+  if (!message.id) return;
+  this.chatService.deleteMessage(message.id).subscribe({
+    next: () => {
+      this.messages = this.messages.filter(m => m.id !== message.id);
+    },
+    error: (err) => {
+      console.error('Failed to delete message:', err);
+    }
+  });
+}
+
 
 async loadAnnouncements() {
   if (!this.currentUser) return;

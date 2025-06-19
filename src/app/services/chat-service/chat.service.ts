@@ -20,4 +20,10 @@ export class ChatService {
     return this.http.get<ChatMessageDTO[]>(`${this.baseUrl}/messages?senderId=${senderId}&receiverId=${receiverId}`);
   }
 
+  deleteMessage(id:number):Observable<any>{
+     return this.http.delete(`http://localhost:8080/api/chats/delete/${id}`, {
+      responseType: 'text',
+   });
+  }
+
 }

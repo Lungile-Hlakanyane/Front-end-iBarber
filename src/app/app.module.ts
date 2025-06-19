@@ -41,6 +41,9 @@ import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password/forgot-password.component';
 import { ForgotPasswordOtpComponent } from './pages/forgot-password-otp/forgot-password-otp/forgot-password-otp.component';
 import { NewPasswordComponent } from './pages/new-password/new-password/new-password.component';
+import { PremiumSubscriptionComponent } from './pages/my-subscriptions/premium-subscription/premium-subscription.component';
+import { AddCardComponent } from './pages/add-card/add-card/add-card.component';
+import { SuccessSubscribeComponent } from './reuseable-components/success-subscribe/success-subscribe/success-subscribe.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -54,7 +57,8 @@ import { NewPasswordComponent } from './pages/new-password/new-password/new-pass
     FianceReportComponent,PortfolioComponent,ViewPortfolioImageComponent,ManageUsersComponent,
     AdminViewUserComponent,AnalyticsComponent,ReportHandlingComponent,FeedbackSupportComponent,
     BroadcastAnnouncementsComponent,BannedUserComponent,TermsAndConditionsComponent,
-    ForgotPasswordComponent,ForgotPasswordOtpComponent, NewPasswordComponent
+    ForgotPasswordComponent,ForgotPasswordOtpComponent,NewPasswordComponent,PremiumSubscriptionComponent,
+    AddCardComponent,SuccessSubscribeComponent
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

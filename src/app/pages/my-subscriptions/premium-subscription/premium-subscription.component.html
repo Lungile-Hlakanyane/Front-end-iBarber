@@ -1,0 +1,63 @@
+<ion-content class="ion-padding profile-page">
+
+  <div class="bck-btn-container">
+    <p style="font-size: 30px;" (click)="navigate('/home')">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+  </div>
+
+  <div class="profile-header">
+    <img class="avatar" src="../../../../assets/profile-pic-image.jpg" alt="Premium Icon" />
+    <h2 class="name">Premium Membership</h2>
+    <p class="email">Only R80 / month</p>
+  </div>
+
+  <div class="stats-card">
+    <div class="stats">
+      <div class="stat-item">
+        <ion-icon name="star-outline"></ion-icon>
+        <p>Priority</p>
+        <small>Top in search</small>
+      </div>
+      <div class="stat-item">
+        <ion-icon name="image-outline"></ion-icon>
+        <p>10+</p>
+        <small>Portfolio Images</small>
+      </div>
+      <div class="stat-item">
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+        <p>Verified</p>
+        <small>Premium Badge</small>
+      </div>
+    </div>
+  </div>
+
+  <ion-list lines="none" class="menu-list">
+    <ion-item>
+      <ion-icon name="chatbubbles-outline" slot="start"></ion-icon>
+      <ion-label>Direct chat with clients</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="analytics-outline" slot="start"></ion-icon>
+      <ion-label>Business Insights & Stats</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="calendar-outline" slot="start"></ion-icon>
+      <ion-label>Advanced Booking System</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="medal-outline" slot="start"></ion-icon>
+      <ion-label>Exclusive iBarber features</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div class="subscribe-button">
+    <ion-button expand="block" color="success" (click)="navigate('/add-card')" [disabled]="isSubscribed">
+      {{ isSubscribed ? 'Subscribed' : 'Subscribe Now - R80/month' }}
+    </ion-button>
+  </div>
+
+</ion-content>

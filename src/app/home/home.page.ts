@@ -7,7 +7,7 @@ import { PostService } from '../services/post-service/post.service';
 import { PostDTO } from '../models/PostDTO';
 import { CommentService } from '../services/comment-service/comment.service';
 import { CommentDTO } from '../models/Comment';
-
+import { ProfileImageService } from '../services/profile-image-service/profile-image.service';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +27,8 @@ export class HomePage {
     private modalController: ModalController,
     private userService:RegisterService,
     private postService:PostService,
-    private commentService:CommentService
+    private commentService:CommentService,
+    private profileImageService:ProfileImageService
   ) { }
 
   toggleSearchBar() {
@@ -58,11 +59,16 @@ export class HomePage {
   
         this.posts.forEach(post => {
           // Fetch username
-          this.userService.getUserById(post.userId).subscribe({
-            next: (user) => post.username = user.username,
-            error: () => post.username = 'Unknown'
-          });
-        
+         this.userService.getUserById(post.userId).subscribe({
+         next: (user) => {
+          post.username = user.username;
+          post.profileImage = user.profileImage; // <== Add this line
+        },
+         error: () => {
+          post.username = 'Unknown';
+          post.profileImage = null;
+        }
+       }); 
           // Fetch likes
           this.postService.getLikes(post.id).subscribe({
             next: (count) => post.likesCount = count,

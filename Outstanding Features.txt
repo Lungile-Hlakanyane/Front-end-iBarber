@@ -1,0 +1,8 @@
+1. Forgot Password --Done
+2. Delete Messages on the chats --Done
+3. Upload profile images --Done
+4. Payment Gateway
+5. Update Profile
+6. Notifications - Recieves Notifications even when the user is not active on the app
+7. Feedback support
+8. Portfolio creation 

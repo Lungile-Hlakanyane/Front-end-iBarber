@@ -30,6 +30,8 @@ import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password/forgot-password.component';
 import { ForgotPasswordOtpComponent } from './pages/forgot-password-otp/forgot-password-otp/forgot-password-otp.component';
 import { NewPasswordComponent } from './pages/new-password/new-password/new-password.component';
+import { PremiumSubscriptionComponent } from './pages/my-subscriptions/premium-subscription/premium-subscription.component';
+import { AddCardComponent } from './pages/add-card/add-card/add-card.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -56,6 +58,8 @@ const routes: Routes = [
   { path: 'forgot-password', component:ForgotPasswordComponent},
   { path: 'forgot-password-otp', component:ForgotPasswordOtpComponent},
   { path: 'new-password', component:NewPasswordComponent},
+  { path: 'preminum-subscription', component:PremiumSubscriptionComponent},
+  { path: 'add-card', component:AddCardComponent},
   {
     path: '',
     component: BottomNavigationComponent,

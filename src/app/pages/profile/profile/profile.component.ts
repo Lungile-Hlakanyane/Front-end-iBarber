@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { PersonalInfoModalComponent } from 'src/app/reuseable-components/persona
 import { RegisterService } from 'src/app/services/user-service/register.service';
 import { ReportUserService } from '../../../services/report-user-service/report-user.service';
 import { ReportUserDTO } from 'src/app/models/ReportUserDTO';
+import { ProfileImageService } from 'src/app/services/profile-image-service/profile-image.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,6 +18,10 @@ import { ReportUserDTO } from 'src/app/models/ReportUserDTO';
   imports: [IonicModule, CommonModule]
 })
 export class ProfileComponent  implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  defaultImage = '../../../../assets/profile-pic-image.jpg';
+  selectedImage: string | ArrayBuffer | null = null;
 
   role: string = '';
   user: any;
@@ -29,7 +34,8 @@ export class ProfileComponent  implements OnInit {
     private loadingController: LoadingController,
     private modalController: ModalController,
     private userService:RegisterService,
-    private reportUserService: ReportUserService
+    private reportUserService: ReportUserService,
+    private profileImageService:ProfileImageService
   ) { }
 
   ngOnInit() {
@@ -47,16 +53,23 @@ export class ProfileComponent  implements OnInit {
     }
     const email = localStorage.getItem('userEmail');
     if (email) {
-      this.userService.getUserByEmail(email).subscribe({
-        next: (res) => {
-          this.user = res;
-          console.log('Fetched user:', this.user);
-        },
-        error: (err) => {
-          console.error('Failed to fetch user:', err);
-        }
-      });
+     this.userService.getUserByEmail(email).subscribe({
+  next: (res) => {
+    this.user = res;
+    console.log('Fetched user:', this.user);
+
+    if (this.user.profileImage) {
+      this.loadProfileImageFromServer(this.user.profileImage);
     }
+  },
+  error: (err) => {
+    console.error('Failed to fetch user:', err);
+  }
+});
+
+    }
+
+   
   }
 
   navigate(link:string){
@@ -129,6 +142,86 @@ async loadWarnings(userId: number) {
       this.warnings = data;
     },
     error: (err) => console.error('Failed to load warnings:', err),
+  });
+}
+
+async openImageOptions() {
+  const actionSheet = await this.actionSheetController.create({
+    header: 'Profile Image Options',
+    buttons: [
+      {
+        text: 'Upload Profile Image',
+        icon: 'cloud-upload-outline',
+        handler: () => {
+          this.uploadProfileImage();
+        }
+      },
+      {
+        text: 'Delete Image',
+        handler: ()=>{
+          this.deleteImage();
+        },
+        icon: 'trash-outline',
+      },
+    ]
+  });
+
+  await actionSheet.present();
+}
+
+deleteImage(){
+    
+}
+
+uploadProfileImage() {
+    this.fileInput.nativeElement.click(); 
+}
+
+onFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.selectedImage = reader.result;
+    };
+    reader.readAsDataURL(file);
+   if (this.user?.id) {
+  this.profileImageService.uploadProfileImage(this.user.id, file).subscribe({
+    next: (res) => {
+      this.toastController.create({
+        message: res, // This will now be "Profile image uploaded successfully."
+        duration: 2000,
+        color: 'success',
+        position: 'top'
+      }).then(toast => toast.present());
+    },
+    error: (err) => {
+      console.error('Upload error:', err);
+      this.toastController.create({
+        message: 'Failed to upload image.',
+        duration: 2000,
+        color: 'danger',
+        position: 'top'
+      }).then(toast => toast.present());
+    }
+   });
+  }
+ }
+}
+
+loadProfileImageFromServer(filename: string) {
+  this.profileImageService.getProfileImage(filename).subscribe({
+    next: (blob) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.selectedImage = reader.result;
+      };
+      reader.readAsDataURL(blob);
+    },
+    error: (err) => {
+      console.error('Failed to load profile image:', err);
+    }
   });
 }
 

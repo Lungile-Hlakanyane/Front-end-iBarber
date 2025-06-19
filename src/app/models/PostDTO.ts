@@ -1,6 +1,7 @@
 import { CommentDTO } from "./Comment";
 
 export interface PostDTO {
+    profileImage?: any;
     id?:any;
     content: string;
     audience: string;

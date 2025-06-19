@@ -22,7 +22,7 @@
    <div class="feed-wrapper">
     <ion-card *ngFor="let post of filteredPosts()" class="post-card">
        <div class="post-header">
-         <img src="assets/barbers/king.jpg" class="avatar" />
+        <img [src]="post.profileImage ? 'http://localhost:8080/api/users/profile-image/' + post.profileImage : 'assets/profile-pic-image.jpg'" class="avatar" />
       <div class="info" (click)="navigateToUserProfile(post.userId)">
           <h3>{{ post.username }}</h3>
            <p>{{ post.createdAt | date:'short' }}</p>
