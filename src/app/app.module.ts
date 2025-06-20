@@ -44,6 +44,8 @@ import { NewPasswordComponent } from './pages/new-password/new-password/new-pass
 import { PremiumSubscriptionComponent } from './pages/my-subscriptions/premium-subscription/premium-subscription.component';
 import { AddCardComponent } from './pages/add-card/add-card/add-card.component';
 import { SuccessSubscribeComponent } from './reuseable-components/success-subscribe/success-subscribe/success-subscribe.component';
+import { SupportTicketComponent } from './pages/support-ticket/support-ticket/support-ticket.component';
+import { SuccessSubmitTicketComponent } from './reuseable-components/success-submit-ticket/success-submit-ticket/success-submit-ticket.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -58,7 +60,7 @@ import { SuccessSubscribeComponent } from './reuseable-components/success-subscr
     AdminViewUserComponent,AnalyticsComponent,ReportHandlingComponent,FeedbackSupportComponent,
     BroadcastAnnouncementsComponent,BannedUserComponent,TermsAndConditionsComponent,
     ForgotPasswordComponent,ForgotPasswordOtpComponent,NewPasswordComponent,PremiumSubscriptionComponent,
-    AddCardComponent,SuccessSubscribeComponent
+    AddCardComponent,SuccessSubscribeComponent,SupportTicketComponent,SuccessSubmitTicketComponent
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

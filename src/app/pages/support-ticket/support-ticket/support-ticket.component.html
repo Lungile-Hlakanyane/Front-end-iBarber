@@ -1,0 +1,31 @@
+<ion-content class="ion-padding support-page">
+  <div class="bck-btn-container">
+    <p style="font-size: 30px;" (click)="back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+  </div>
+
+  <div class="support-header">
+    <ion-icon name="help-circle-outline"></ion-icon>
+    <h2>Support & Feedback</h2>
+    <p>Tell us what went wrong or how we can improve your experience.</p>
+  </div>
+
+  <form [formGroup]="ticketForm" (ngSubmit)="submitTicket()">
+    <ion-list lines="none" class="form-list">
+      <ion-item>
+        <ion-label position="stacked">Subject</ion-label>
+        <ion-input formControlName="subject" placeholder="Enter subject"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Message</ion-label>
+        <ion-textarea formControlName="message" placeholder="Describe your issue"></ion-textarea>
+      </ion-item>
+    </ion-list>
+
+    <ion-button expand="block" class="submit-btn" type="submit" [disabled]="ticketForm.invalid">
+      Submit Ticket
+    </ion-button>
+  </form>
+</ion-content>

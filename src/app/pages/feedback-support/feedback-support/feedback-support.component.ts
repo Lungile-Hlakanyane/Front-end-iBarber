@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
+import { SupportTicketDTO } from 'src/app/models/SupportTicketDTO';
+import { SupportTicketService } from 'src/app/services/support-ticket-service/support-ticket.service';
 
 @Component({
   selector: 'app-feedback-support',
@@ -14,38 +16,33 @@ import { ToastController } from '@ionic/angular';
 })
 export class FeedbackSupportComponent  implements OnInit {
 
-  supportTickets = [
-    {
-      id: 1,
-      username: 'john_doe',
-      subject: 'App not loading',
-      message: 'When I open the app, it gets stuck on the splash screen.',
-      status: 'Pending'
-    },
-    {
-      id: 2,
-      username: 'alice_j',
-      subject: 'Appointment cancellation issue',
-      message: 'I was unable to cancel an appointment. Please assist.',
-      status: 'Resolved'
-    }
-  ];
+ supportTickets: SupportTicketDTO[] = [];
 
   constructor(
     private router:Router,
-    private toastController:ToastController
+    private toastController:ToastController,
+    private supportTicketService:SupportTicketService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadTickets();
+  }
 
   navigate(link:string){
     this.router.navigateByUrl(link);
   }
 
-  async markAsResolved(ticket: any) {
-    ticket.status = 'Resolved';
-    await this.presentToast(`Ticket from ${ticket.username} marked as resolved.`, 'success');
-  }
+async markAsResolved(ticket: SupportTicketDTO) {
+  this.supportTicketService.updateTicketStatus(ticket.id, 'Resolved').subscribe({
+    next: async () => {
+      ticket.status = 'Resolved';
+      await this.presentToast(`Ticket from ${ticket.username} marked as resolved.`, 'success');
+    },
+    error: async () => {
+      await this.presentToast('Failed to update ticket.', 'danger');
+    }
+  });
+}
 
   async viewTicket(ticket: any) {
     console.log('Viewing ticket:', ticket);
@@ -62,5 +59,18 @@ export class FeedbackSupportComponent  implements OnInit {
     });
     toast.present();
   }
+
+   loadTickets() {
+    this.supportTicketService.getAllTickets().subscribe({
+      next: (tickets) => {
+        this.supportTickets = tickets;
+      },
+      error: (err) => {
+        console.error('Failed to fetch support tickets:', err);
+      }
+    });
+  }
+
+
 
 }
