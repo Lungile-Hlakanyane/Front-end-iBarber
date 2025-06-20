@@ -6,9 +6,10 @@ import { ActionSheetController, LoadingController,ToastController } from '@ionic
 import { ModalController } from '@ionic/angular';
 import { PersonalInfoModalComponent } from 'src/app/reuseable-components/personal-infor-modal/personal-info-modal/personal-info-modal.component';
 import { RegisterService } from 'src/app/services/user-service/register.service';
-import { ReportUserService } from '../../../services/report-user-service/report-user.service';
 import { ReportUserDTO } from 'src/app/models/ReportUserDTO';
 import { ProfileImageService } from 'src/app/services/profile-image-service/profile-image.service';
+import { SlotService } from 'src/app/services/slot-service/slot.service';
+import { ReportUserService } from '../../../services/report-user-service/report-user.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,13 +20,15 @@ import { ProfileImageService } from 'src/app/services/profile-image-service/prof
 })
 export class ProfileComponent  implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
-
+  lastVisitDate: string = '';
+  warningsCount: number = 0;
   defaultImage = '../../../../assets/profile-pic-image.jpg';
   selectedImage: string | ArrayBuffer | null = null;
 
   role: string = '';
   user: any;
   warnings: ReportUserDTO[] = [];
+  bookingsCount: number = 0;
 
   constructor(
     private router: Router,
@@ -35,7 +38,8 @@ export class ProfileComponent  implements OnInit {
     private modalController: ModalController,
     private userService:RegisterService,
     private reportUserService: ReportUserService,
-    private profileImageService:ProfileImageService
+    private profileImageService:ProfileImageService,
+    private slotService:SlotService,
   ) { }
 
   ngOnInit() {
@@ -44,6 +48,7 @@ export class ProfileComponent  implements OnInit {
       const userId = Number(storedId);
       if (!isNaN(userId)) {
         this.loadWarnings(userId);
+        this.loadBookingCount(userId);
       }
     }
     
@@ -54,23 +59,38 @@ export class ProfileComponent  implements OnInit {
     const email = localStorage.getItem('userEmail');
     if (email) {
      this.userService.getUserByEmail(email).subscribe({
-  next: (res) => {
-    this.user = res;
-    console.log('Fetched user:', this.user);
+      next: (res) => {
+      this.user = res;
+      console.log('Fetched user:', this.user);
 
     if (this.user.profileImage) {
       this.loadProfileImageFromServer(this.user.profileImage);
     }
+
+    this.slotService.getLastVisitDate(this.user.id).subscribe({
+      next: (date) => {
+          this.lastVisitDate = date;
+      },
+        error: (err) => {
+          console.error('Failed to load last visit date', err);
+        }
+    });
+
+    this.reportUserService.countWarnings(this.user.id).subscribe({
+    next: (count) => {
+    this.warningsCount = count;
+    },
+    error: (err) => {
+    console.error('Failed to count warnings:', err);
+    }
+    });
   },
   error: (err) => {
     console.error('Failed to fetch user:', err);
   }
-});
-
-    }
-
-   
-  }
+ });
+ }
+}
 
   navigate(link:string){
     this.router.navigate([link]); 
@@ -113,28 +133,22 @@ export class ProfileComponent  implements OnInit {
     await toast.present();
   }
 
-  async openEditUserModal() {
-    const modal = await this.modalController.create({
-      component: PersonalInfoModalComponent,
-      cssClass: 'bottom-modal',
-      backdropDismiss: true,
-      componentProps: {
-        userData: {
-          username: 'JohnDoe',
-          email: 'john@example.com',
-          password: '********'
-        }
-      }
-    });
-  
-    modal.onDidDismiss().then((result) => {
-      if (result.data) {
-        console.log('Updated user data:', result.data);
-        // Save it to API or state
-      }
-    });
-    await modal.present();
-  }
+ async openEditUserModal() {
+  const modal = await this.modalController.create({
+    component: PersonalInfoModalComponent,
+    cssClass: 'bottom-modal',
+    backdropDismiss: true,
+    componentProps: {
+      userData: { ...this.user }
+    }
+  });
+  modal.onDidDismiss().then((result) => {
+    if (result.data) {
+      this.user = result.data;
+    }
+  });
+  await modal.present();
+}
 
 async loadWarnings(userId: number) {
   this.reportUserService.getWarningsByUserId(userId).subscribe({
@@ -224,6 +238,18 @@ loadProfileImageFromServer(filename: string) {
     }
   });
 }
+
+loadBookingCount(userId: number) {
+    this.slotService.countBookingsByClientId(userId).subscribe({
+      next: (count) => {
+        this.bookingsCount = count;
+      },
+      error: (err) => {
+        console.error('Failed to load bookings count', err);
+      }
+  });
+}
+
 
 
 }

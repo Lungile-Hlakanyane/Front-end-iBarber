@@ -52,4 +52,12 @@ export class SlotService {
     return this.http.get<number>(`${this.apiUrl}/count/booked`);
   }
 
+  countBookingsByClientId(clientId: number) {
+    return this.http.get<number>(`${this.apiUrl}/bookings/count/${clientId}`);
+  }
+
+ getLastVisitDate(clientId: number): Observable<any> {
+   return this.http.get(`${this.apiUrl}/last-visit/${clientId}`);
+ }
+
 }

@@ -25,17 +25,17 @@
     <div class="stats">
       <div class="stat-item">
         <ion-icon name="calendar-outline"></ion-icon>
-        <p style="font-size:13px;">12</p>
-        <small>Appointments</small>
+        <p style="font-size:13px;">{{bookingsCount}}</p>
+        <small>Bookings</small>
       </div>
-      <div class="stat-item">
-        <ion-icon name="cut-outline"></ion-icon>
-        <p style="font-size:13px;">Fade</p>
-        <small>Preferred Style</small>
-      </div>
+     <div class="stat-item">
+  <ion-icon name="warning-outline"></ion-icon>
+  <p style="font-size:13px;">{{ warningsCount }}</p>
+  <small>Warnings</small>
+</div>
       <div class="stat-item">
         <ion-icon name="time-outline"></ion-icon>
-        <p style="font-size:13px;">12 Apr 2025</p>
+       <p style="font-size:13px;">{{ lastVisitDate | date:'dd MMM yyyy' }}</p>
         <small>Last Visit</small>
       </div>
     </div>

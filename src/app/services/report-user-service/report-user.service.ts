@@ -35,5 +35,10 @@ dismissReport(reportId: number) {
 getWarningsByUserId(userId: number): Observable<ReportUserDTO[]> {
   return this.http.get<ReportUserDTO[]>(`${this.baseUrl}/warnings/${userId}`);
 }
+
+countWarnings(userId: number) {
+  return this.http.get<number>(`http://localhost:8080/api/report-user/warnings/count/${userId}`);
+}
+
   
 }
