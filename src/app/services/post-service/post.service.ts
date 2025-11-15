@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PostDTO } from 'src/app/models/PostDTO';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
-  private apiUrl = 'http://localhost:8080/api/posts'; 
+  private apiUrl = `${environment.apiBaseUrl}/posts`
 
   constructor(private http:HttpClient) { }
 
@@ -34,19 +35,19 @@ export class PostService {
   }
 
   likePost(postId: number, userId: number) {
-    return this.http.post(`http://localhost:8080/api/likes/${postId}/${userId}`, {});
+    return this.http.post(`http://13.49.76.153:8080/api/likes/${postId}/${userId}`, {});
   }
   
   unlikePost(postId: number, userId: number) {
-    return this.http.delete(`http://localhost:8080/api/likes/${postId}/${userId}`);
+    return this.http.delete(`http://13.49.76.153:8080/api/likes/${postId}/${userId}`);
   }
   
   getLikes(postId: number) {
-    return this.http.get<number>(`http://localhost:8080/api/likes/count/${postId}`);
+    return this.http.get<number>(`http://13.49.76.153:8080/api/likes/count/${postId}`);
   }
   
   isPostLikedByUser(postId: number, userId: number) {
-    return this.http.get<boolean>(`http://localhost:8080/api/likes/${postId}/${userId}`);
+    return this.http.get<boolean>(`http://13.49.76.153:8080/api/likes/${postId}/${userId}`);
   }
 
 }

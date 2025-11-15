@@ -2,30 +2,31 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SupportTicketDTO } from 'src/app/models/SupportTicketDTO';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SupportTicketService {
 
-  private baseUrl = 'http://localhost:8080/api/support';
+  private apiUrl = `${environment.apiBaseUrl}/support`;
 
   constructor(private http: HttpClient) {}
 
   createTicket(ticket: SupportTicketDTO): Observable<SupportTicketDTO> {
-    return this.http.post<SupportTicketDTO>(this.baseUrl, ticket);
+    return this.http.post<SupportTicketDTO>(this.apiUrl, ticket);
   }
 
   getTicketsByUsername(username: string): Observable<SupportTicketDTO[]> {
-    return this.http.get<SupportTicketDTO[]>(`${this.baseUrl}/user/${username}`);
+    return this.http.get<SupportTicketDTO[]>(`${this.apiUrl}/user/${username}`);
   }
 
   getAllTickets(): Observable<SupportTicketDTO[]> {
-    return this.http.get<SupportTicketDTO[]>(this.baseUrl);
+    return this.http.get<SupportTicketDTO[]>(this.apiUrl);
   }
 
   updateTicketStatus(id: number, status: string): Observable<SupportTicketDTO> {
-    return this.http.put<SupportTicketDTO>(`${this.baseUrl}/${id}/status?status=${status}`, {});
+    return this.http.put<SupportTicketDTO>(`${this.apiUrl}/${id}/status?status=${status}`, {});
   }
 
 }

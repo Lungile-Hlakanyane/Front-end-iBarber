@@ -20,16 +20,16 @@ export class ManageUsersComponent  implements OnInit {
   searchTerm: string = '';
 
   users: User[] = [
-    { username: 'Lungile Hlakanyane', phone: '+27 65 635 2578', email: 'lungilehlakas@gmail.com', role: 'Client' },
-    { username: 'Jay Barber', phone: '+27 71 123 4567', email: 'jaybarber@gmail.com', role: 'Barber' },
-    { username: 'Mel Admin', phone: '+27 82 987 6543', email: 'admin@ibarber.com', role: 'Admin' },
-    { username: 'Thabo Mokoena', phone: '+27 78 456 7890', email: 'thabo.mokoena@example.com', role: 'Client' },
-    { username: 'Zinhle Dlamini', phone: '+27 66 222 3344', email: 'zinhled@example.com', role: 'Barber' },
-    { username: 'Nomvula Sithole', phone: '+27 72 111 2233', email: 'nomvula.sithole@example.com', role: 'Client' },
-    { username: 'Kabelo Khumalo', phone: '+27 60 555 6666', email: 'kabelo.k@example.com', role: 'Admin' },
-    { username: 'Nandi Cele', phone: '+27 79 888 9900', email: 'nandi.cele@example.com', role: 'Barber' },
-    { username: 'Simphiwe Nxumalo', phone: '+27 64 777 8888', email: 'simphiwe.nx@example.com', role: 'Client' },
-    { username: 'Tshepo Radebe', phone: '+27 83 123 9876', email: 'tshepo.radebe@example.com', role: 'Admin' },
+    { username: 'Lungile Hlakanyane', phoneNumber: '+27 65 635 2578', email: 'lungilehlakas@gmail.com', role: 'Client' },
+    { username: 'Jay Barber', phoneNumber: '+27 71 123 4567', email: 'jaybarber@gmail.com', role: 'Barber' },
+    { username: 'Mel Admin', phoneNumber: '+27 82 987 6543', email: 'admin@ibarber.com', role: 'Admin' },
+    { username: 'Thabo Mokoena', phoneNumber: '+27 78 456 7890', email: 'thabo.mokoena@example.com', role: 'Client' },
+    { username: 'Zinhle Dlamini', phoneNumber: '+27 66 222 3344', email: 'zinhled@example.com', role: 'Barber' },
+    { username: 'Nomvula Sithole', phoneNumber: '+27 72 111 2233', email: 'nomvula.sithole@example.com', role: 'Client' },
+    { username: 'Kabelo Khumalo', phoneNumber: '+27 60 555 6666', email: 'kabelo.k@example.com', role: 'Admin' },
+    { username: 'Nandi Cele', phoneNumber: '+27 79 888 9900', email: 'nandi.cele@example.com', role: 'Barber' },
+    { username: 'Simphiwe Nxumalo', phoneNumber: '+27 64 777 8888', email: 'simphiwe.nx@example.com', role: 'Client' },
+    { username: 'Tshepo Radebe', phoneNumber: '+27 83 123 9876', email: 'tshepo.radebe@example.com', role: 'Admin' },
   ];
   
 
@@ -59,7 +59,7 @@ export class ManageUsersComponent  implements OnInit {
     const term = this.searchTerm.toLowerCase();
     this.filteredUsers = this.users.filter(user =>
       user.username.toLowerCase().includes(term) ||
-      user.phone?.toLowerCase().includes(term) ||
+      user.phoneNumber?.toLowerCase().includes(term) ||
       user.email.toLowerCase().includes(term)
     );
   }

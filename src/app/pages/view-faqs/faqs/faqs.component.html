@@ -1,0 +1,38 @@
+<ion-content class="ion-padding profile-page">
+
+  <!-- Back Button -->
+  <div class="bck-btn-container">
+    <p style="font-size: 30px;" (click)=" goBack()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+  </div>
+
+  <!-- Header -->
+  <div class="profile-header">
+    <h2 class="name">User Questions</h2>
+    <p class="email">View and manage all submitted FAQs</p>
+  </div>
+
+  <!-- FAQ Cards -->
+  <div *ngFor="let question of userQuestions" class="faq-card">
+    <ion-item lines="none">
+      <ion-icon name="help-circle-outline" slot="start" color="success"></ion-icon>
+      <ion-label>
+        <h3>{{ question.name || 'Anonymous' }}</h3>
+        <p class="question-text">{{ question.question }}</p>
+        <p class="submitted-date">Submitted: {{ question.createdAt }}</p>
+      </ion-label>
+    </ion-item>
+
+    <div *ngIf="question.answered" class="answer-box">
+      <ion-text color="medium"><strong>Answer:</strong> {{ question.answer }}</ion-text>
+    </div>
+
+    <div *ngIf="!question.answered" class="answer-action">
+      <ion-button size="small" fill="outline" (click)="openAnswerPrompt(question)">
+        Answer
+      </ion-button>
+    </div>
+  </div>
+
+</ion-content>

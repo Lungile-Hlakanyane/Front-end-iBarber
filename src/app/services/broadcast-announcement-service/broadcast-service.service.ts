@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Announcement } from 'src/app/models/Announcement';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BroadcastServiceService {
 
- private apiUrl = 'http://localhost:8080/api/announcements';
+  private apiUrl = `${environment.apiBaseUrl}/announcements`
 
   constructor(private http: HttpClient) { }
 

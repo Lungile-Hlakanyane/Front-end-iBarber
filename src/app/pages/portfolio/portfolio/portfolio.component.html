@@ -10,17 +10,14 @@
     <img class="avatar" src="../../../../assets/profile-pic-image.jpg" alt="Profile Image" />
     <h2 class="name">{{ userDetails.username }}</h2>
     <p class="email">{{ userDetails.email }}</p>
-    <p class="email">{{ userDetails.phone }}</p>
+    <p class="email">{{ userDetails.phoneNumber }}</p>
   </div>
   
 
   <!-- Tabs -->
   <ion-segment [(ngModel)]="currentTab" color="primary">
     <ion-segment-button value="images">
-      <ion-label>Images</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="videos">
-      <ion-label>Videos</ion-label>
+      <ion-label>Porfolio</ion-label>
     </ion-segment-button>
   </ion-segment>
 

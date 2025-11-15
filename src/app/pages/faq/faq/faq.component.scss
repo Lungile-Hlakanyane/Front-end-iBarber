@@ -1,0 +1,63 @@
+.profile-page {
+  --background: #f4f5f8;
+
+  .bck-btn-container {
+    margin-bottom: 10px;
+  }
+
+  .profile-header {
+    text-align: center;
+    margin-top: 20px;
+
+    .name {
+      font-size: 24px;
+      font-weight: 700;
+      color: #222;
+    }
+
+    .email {
+      font-size: 14px;
+      color: #666;
+    }
+  }
+
+  .menu-list {
+    background: transparent;
+
+    ion-item {
+      margin: 10px 16px;
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --padding-start: 16px;
+
+      ion-icon {
+        color: #007f5f;
+        font-size: 22px;
+      }
+
+      ion-label {
+        font-weight: 500;
+        color: #333;
+      }
+    }
+
+    .faq-answer {
+      margin: 0 32px 16px 32px;
+      background: #ffffff;
+      padding: 12px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+.ask-question-btn {
+  margin: 24px 16px 40px 16px;
+  ion-button {
+    --border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+}
+

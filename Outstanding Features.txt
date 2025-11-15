@@ -4,7 +4,9 @@
 4. Payment Gateway
 5. Update Profile -- Done
 6. Notifications - Recieves Notifications even when the user is not active on the app
-7. Feedback support
-8. Portfolio creation --
+7. Feedback support --Done
+8. Portfolio creation --Done
 9. Bookings data on the client profile - done
+10. Rate a barber by a client - In progress
+
  

@@ -7,36 +7,46 @@
   </div>
 
   <div class="profile-header">
-    <img class="avatar" [src]="barber.imageUrl || 'assets/default-barber.jpg'" alt="Barber Image" />
+    <img [src]="barber.profileImage ? 'http://localhost:8080/api/users/profile-image/' + barber.profileImage : 'assets/profile-pic-image.jpg'" class="avatar" />
     <h2 class="name">{{ barber.name }}</h2>
     <p class="email">{{ barber.email }}</p>
   </div>
 
   <div class="stats-card">
     <div class="stats">
+
       <div class="stat-item">
         <ion-icon name="calendar-outline"></ion-icon>
-        <p>{{ barber.experience }} yrs</p>
-        <small>Experience</small>
+        <p>{{ bookingCount }}</p>
+        <small>Bookings</small>
       </div>
+
       <div class="stat-item">
-        <ion-icon name="cut-outline"></ion-icon>
-        <p>{{ barber.specialty }}</p>
-        <small>Specialty</small>
+        <ion-icon name="person-add-outline"></ion-icon>
+        <p>{{clientCount}}</p>
+        <small>Clients</small>
       </div>
-      <div class="stat-item">
-        <ion-icon name="star-outline"></ion-icon>
-        <p>{{ barber.rating }}/5</p>
-        <small>Rating</small>
-      </div>
+
+     <div class="stat-item">
+       <ion-icon name="star-outline"></ion-icon>
+       <p>{{ barber.rating }}/5</p>
+       <small>Rating</small>
+     </div>
+
     </div>
   </div>
 
   <div class="portfolio-section">
     <h3>Portfolio</h3>
-    <div class="portfolio-grid">
-      <img *ngFor="let img of barber.portfolio" [src]="img" alt="Haircut" (click)="openImagePreview(img)" />
-    </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" sizeMd="4" *ngFor="let image of portfolioImages">
+        <ion-card (click)="openImageViewer(image)">
+          <img [src]="image" />
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   </div>
 
   <div class="action-btn-container">

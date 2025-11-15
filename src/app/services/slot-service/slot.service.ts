@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SlotDTO } from 'src/app/models/SlotDTO';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SlotService {
 
-  private apiUrl = 'http://localhost:8080/api/slots';
+  private apiUrl = `${environment.apiBaseUrl}/slots`
 
   constructor(private http:HttpClient) { }
 
@@ -59,5 +60,15 @@ export class SlotService {
  getLastVisitDate(clientId: number): Observable<any> {
    return this.http.get(`${this.apiUrl}/last-visit/${clientId}`);
  }
+
+ getBookingCountByBarber(barberId: number): Observable<number> {
+  return this.http.get<number>(`http://13.49.76.153:8080/api/slots/count-by-barber/${barberId}`);
+}
+
+getClientCountByBarber(barberId: number): Observable<number> {
+  return this.http.get<number>(`${this.apiUrl}/barber/${barberId}/clients/count`);
+}
+
+
 
 }

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PortfolioService {
 
-  private baseUrl = 'http://localhost:8080/api/portfolios';
+  private apiUrl = `${environment.apiBaseUrl}/portfolios`;
 
   constructor( private http: HttpClient ) { }
 
@@ -17,15 +18,15 @@ export class PortfolioService {
     images.forEach((image, index) => {
       formData.append('images', image);
     });
-    return this.http.post(`${this.baseUrl}/upload`, formData);
+    return this.http.post(`${this.apiUrl}/upload`, formData);
   }
 
   getUserPortfolio(userId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/user/${userId}`);
+    return this.http.get<any[]>(`${this.apiUrl}/user/${userId}`);
   }
 
   getPortfolioImagesByUserId(userId: number): Observable<string[]> {
-  return this.http.get<string[]>(`http://localhost:8080/api/portfolios/user/${userId}/images`);
+  return this.http.get<string[]>(`http://13.49.76.153:8080/api/portfolios/user/${userId}/images`);
 }
 
   

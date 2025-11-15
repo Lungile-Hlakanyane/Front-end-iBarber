@@ -94,7 +94,7 @@ async submitTicket() {
 }
 
 back() {
-  this.router.navigate(['/profile']);
+  this.router.navigate(['/home']);
 }
 
 async getUsername(){

@@ -33,6 +33,8 @@ import { NewPasswordComponent } from './pages/new-password/new-password/new-pass
 import { PremiumSubscriptionComponent } from './pages/my-subscriptions/premium-subscription/premium-subscription.component';
 import { AddCardComponent } from './pages/add-card/add-card/add-card.component';
 import { SupportTicketComponent } from './pages/support-ticket/support-ticket/support-ticket.component';
+import { FaqComponent } from './pages/faq/faq/faq.component';
+import { FaqsComponent } from './pages/view-faqs/faqs/faqs.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -42,7 +44,7 @@ const routes: Routes = [
   { path: 'feed',component:FeedComponent},
   { path: 'chat/:receiverId', component: ChatComponent },
   { path: 'select-barber', component: SelectBarberComponent},
-  { path: 'view-barber-profile', component:ViewBarberProfileComponent},
+  { path: 'view-barber-profile/:id', component:ViewBarberProfileComponent},
   { path: 'book-appointment/:barberId', component:BookAppointmentComponent},
   { path: 'payment-methods', component:PaymentMethodsComponent},
   { path: 'create-slots', component:CreateSlotComponent},
@@ -62,6 +64,8 @@ const routes: Routes = [
   { path: 'preminum-subscription', component:PremiumSubscriptionComponent},
   { path: 'add-card', component:AddCardComponent},
   { path: 'support-ticket', component:SupportTicketComponent},
+  { path: 'faq', component:FaqComponent},
+  { path: 'view-faqs', component:FaqsComponent},
   {
     path: '',
     component: BottomNavigationComponent,

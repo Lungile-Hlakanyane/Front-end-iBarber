@@ -177,7 +177,7 @@ export class HomePage {
   this.userService.getUserById(userId).subscribe({
     next: (user) => {
       if (user.role === 'barber') {
-        this.router.navigate(['/view-barber-profile'], { queryParams: { userId: user.id } });
+        this.router.navigate(['/view-barber-profile', userId], { queryParams: { userId: user.id } });
       } else if (user.role === 'client') {
         this.router.navigate(['/view-client-profile'], { queryParams: { userId: user.id } });
       } else {

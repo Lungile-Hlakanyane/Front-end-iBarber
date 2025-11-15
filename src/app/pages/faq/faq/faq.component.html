@@ -1,0 +1,54 @@
+<ion-content class="ion-padding profile-page">
+
+  <!-- Back Button -->
+  <div class="bck-btn-container">
+    <p style="font-size: 30px;" (click)="navigateBack()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </p>
+  </div>
+
+  <!-- Header -->
+  <div class="profile-header">
+    <h2 class="name">Help & FAQs</h2>
+    <p class="email">Find answers to your common questions</p>
+  </div>
+
+  <!-- Hardcoded FAQs -->
+  <ion-list lines="none" class="menu-list">
+    <ng-container *ngFor="let faq of faqs">
+      <ion-item button detail="false" (click)="toggleAnswer(faq)">
+        <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+        <ion-label>{{ faq.question }}</ion-label>
+      </ion-item>
+      <div *ngIf="faq.showAnswer" class="faq-answer">
+        <ion-text color="medium">{{ faq.answer }}</ion-text>
+      </div>
+    </ng-container>
+  </ion-list>
+
+  <!-- Divider -->
+  <ion-text color="dark" class="ion-padding-horizontal">
+    <h4 style="margin-top: 20px;">User Submitted Questions</h4>
+  </ion-text>
+
+  <!-- Dynamic FAQs from backend -->
+  <ion-list lines="none" class="menu-list">
+    <ng-container *ngFor="let faq of fetchedFaqs">
+      <ion-item button detail="false" (click)="toggleAnswer(faq)">
+        <ion-icon name="chatbox-ellipses-outline" slot="start"></ion-icon>
+        <ion-label>{{ faq.question }}</ion-label>
+      </ion-item>
+      <div *ngIf="faq.showAnswer" class="faq-answer">
+        <ion-text color="medium">{{ faq.answer }}</ion-text>
+      </div>
+    </ng-container>
+  </ion-list>
+
+  <!-- Ask a Question Button -->
+  <div class="ask-question-btn ion-padding">
+    <ion-button expand="block" color="success" (click)="openQuestionModal()">
+      Ask a Question?
+    </ion-button>
+  </div>
+
+</ion-content>

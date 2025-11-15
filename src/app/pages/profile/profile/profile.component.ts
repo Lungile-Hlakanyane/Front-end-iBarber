@@ -250,6 +250,41 @@ loadBookingCount(userId: number) {
   });
 }
 
+async presentHelpActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Need Help?',
+      buttons: [
+        {
+          text: 'View FAQs',
+          icon: 'book-outline',
+          handler: () => {
+            console.log('View FAQs clicked');
+            this.router.navigateByUrl('/faq');
+          }
+        },
+        {
+          text: 'Email Support',
+          icon: 'mail-outline',
+          handler: () => {
+            window.open('mailto:support@ibarber.com', '_system');
+          }
+        },
+        {
+          text: 'Call Support',
+          icon: 'call-outline',
+          handler: () => {
+            window.open('tel:+1234567890', '_system');
+          }
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel'
+        }
+      ]
+    });
+  await actionSheet.present();
+}
 
 
 }

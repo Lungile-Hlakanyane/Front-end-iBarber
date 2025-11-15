@@ -1,0 +1,24 @@
+<div class="action-btn-contan" style="display:flex; justify-content: space-between;">
+  <p style="color:#000; font-weight:bold; font-size:25px;">Ask a Question</p>
+  <p style="color:#000; font-size:30px; font-weight:bold" (click)="closeModal()">X</p>
+</div>
+<ion-content class="ion-padding">
+  <form [formGroup]="questionForm" (ngSubmit)="submitQuestion()">
+    <ion-item lines="full">
+      <ion-label position="floating">Your Name (optional)</ion-label>
+      <ion-input formControlName="name"></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label position="floating">Your Question</ion-label>
+      <ion-textarea formControlName="question" autoGrow="true"></ion-textarea>
+    </ion-item>
+    <div class="button-group">
+      <ion-button expand="block" color="success" type="submit" [disabled]="questionForm.invalid">
+        Submit
+      </ion-button>
+      <ion-button expand="block" color="medium" (click)="closeModal()" fill="outline">
+        Cancel
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

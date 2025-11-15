@@ -8,12 +8,14 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+
   <div class="star-rating">
     <ion-icon
       *ngFor="let star of stars; let i = index"
       [name]="i < selectedRating ? 'star' : 'star-outline'"
       class="star"
-    ></ion-icon>
+      (click)="selectRating(i + 1)">
+    </ion-icon>
   </div>
 
   <ion-button expand="block" (click)="submitRating()" class="custom-btn">Submit</ion-button>

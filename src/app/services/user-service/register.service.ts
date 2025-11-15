@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/models/User';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterService {
 
-  private baseUrl = 'http://localhost:8080/api/users';
-  private apiUrl = 'http://localhost:8080/api/users/user';
+  private baseUrl =  `${environment.apiBaseUrl}/users`
+  private apiUrl = `${environment.apiBaseUrl}/users/user`;
 
   constructor(private http:HttpClient) { }
 
@@ -23,7 +24,7 @@ export class RegisterService {
   }
 
   getBarberIdByEmail(email: string): Observable<number> {
-    return this.http.get<number>(`http://localhost:8080/api/slots/barber-id?email=${email}`);
+    return this.http.get<number>(`http://13.49.76.153:8080/api/slots/barber-id?email=${email}`);
   }
 
   getAllUsers(): Observable<User[]> {
@@ -39,13 +40,11 @@ export class RegisterService {
   }
 
   getUserById(id: number) {
-    return this.http.get<any>(`http://localhost:8080/api/users/${id}`);
+    return this.http.get<any>(`http://13.49.76.153:8080/api/users/${id}`);
   }
 
   getUserCount(): Observable<number> {
-   return this.http.get<number>('http://localhost:8080/api/users/count');
+   return this.http.get<number>('http://13.49.76.153:8080/api/users/count');
  }
-
  
-  
 }

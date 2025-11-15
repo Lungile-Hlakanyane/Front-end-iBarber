@@ -110,4 +110,53 @@
   border: 2px solid #ccc;
 }
 
-  
+  .animated-welcome-card {
+  background: linear-gradient(135deg, #fdf4ff, #fae8ff);
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+  color:#007f5f;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.pulse-icon {
+  font-size: 32px;
+  color:#007f5f;
+  animation: pulse 2s infinite;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 14px;
+  font-style: italic;
+  color:#007f5f;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+}
+
+/* Fade-in Up Animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
