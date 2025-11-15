@@ -47,11 +47,9 @@ export class RegisterComponent  implements OnInit {
       duration: 3000,
     });
     await loading.present();
-  
     this.registerService.registerUser(this.user).subscribe({
       next: async (response) => {
         await loading.dismiss();
-  
         const toast = await this.toastController.create({
           message: 'You have successfully registered in the application...',
           duration: 3000,
@@ -59,13 +57,11 @@ export class RegisterComponent  implements OnInit {
           color: 'success'
         });
         await toast.present();
-  
-        this.router.navigate(['/otp'], { queryParams: { email: this.user.email } });
+        this.router.navigate(['/login']);
       },
       error: async (err) => {
         console.error('Registration failed:', err);
         await loading.dismiss();
-  
         const toast = await this.toastController.create({
           message: 'Registration failed. Please try again.',
           duration: 3000,
