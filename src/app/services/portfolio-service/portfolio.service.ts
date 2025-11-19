@@ -26,7 +26,7 @@ export class PortfolioService {
   }
 
   getPortfolioImagesByUserId(userId: number): Observable<string[]> {
-  return this.http.get<string[]>(`http://13.49.76.153:8080/api/portfolios/user/${userId}/images`);
+  return this.http.get<string[]>(`http://116.171.33.44:8080/api/portfolios/user/${userId}/images`);
 }
 
   

@@ -62,7 +62,7 @@ export class SlotService {
  }
 
  getBookingCountByBarber(barberId: number): Observable<number> {
-  return this.http.get<number>(`http://13.49.76.153:8080/api/slots/count-by-barber/${barberId}`);
+  return this.http.get<number>(`http://16.171.33.44:8080/api/slots/count-by-barber/${barberId}`);
 }
 
 getClientCountByBarber(barberId: number): Observable<number> {

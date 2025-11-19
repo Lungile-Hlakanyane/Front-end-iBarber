@@ -24,7 +24,7 @@ export class RegisterService {
   }
 
   getBarberIdByEmail(email: string): Observable<number> {
-    return this.http.get<number>(`http://13.49.76.153:8080/api/slots/barber-id?email=${email}`);
+    return this.http.get<number>(`http://16.171.33.44:8080/api/slots/barber-id?email=${email}`);
   }
 
   getAllUsers(): Observable<User[]> {
@@ -40,11 +40,11 @@ export class RegisterService {
   }
 
   getUserById(id: number) {
-    return this.http.get<any>(`http://13.49.76.153:8080/api/users/${id}`);
+    return this.http.get<any>(`http://16.171.33.44:8080/api/users/${id}`);
   }
 
   getUserCount(): Observable<number> {
-   return this.http.get<number>('http://13.49.76.153:8080/api/users/count');
+   return this.http.get<number>('http://16.171.33.44:8080/api/users/count');
  }
  
 }

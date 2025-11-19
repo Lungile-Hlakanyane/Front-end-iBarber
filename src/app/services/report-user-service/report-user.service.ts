@@ -38,7 +38,7 @@ getWarningsByUserId(userId: number): Observable<ReportUserDTO[]> {
 }
 
 countWarnings(userId: number) {
-  return this.http.get<number>(`http://13.49.76.153:8080/api/report-user/warnings/count/${userId}`);
+  return this.http.get<number>(`http://116.171.33.44:8080/api/report-user/warnings/count/${userId}`);
 }
   
 }

@@ -88,6 +88,7 @@ export class LoginComponent  implements OnInit {
         next: async (userData) => {
           localStorage.setItem('userId', userData.id);
           await this.router.navigate(['/home']);
+          console.log('Login Response: ', response);
         },
         error: async (err) => {
           await loading.dismiss();
