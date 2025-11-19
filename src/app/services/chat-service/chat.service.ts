@@ -22,7 +22,7 @@ export class ChatService {
   }
 
   deleteMessage(id:number):Observable<any>{
-     return this.http.delete(`http://16.171.33.44:8080/api/chats/delete/${id}`, {
+     return this.http.delete(`https://ibarber.duckdns.org/api/chats/delete/${id}`, {
       responseType: 'text',
    });
   }

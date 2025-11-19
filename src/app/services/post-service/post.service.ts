@@ -35,19 +35,19 @@ export class PostService {
   }
 
   likePost(postId: number, userId: number) {
-    return this.http.post(`http://16.171.33.44:8080/api/likes/${postId}/${userId}`, {});
+    return this.http.post(`https://ibarber.duckdns.org/api/likes/${postId}/${userId}`, {});
   }
   
   unlikePost(postId: number, userId: number) {
-    return this.http.delete(`http://16.171.33.44:8080/api/likes/${postId}/${userId}`);
+    return this.http.delete(`https://ibarber.duckdns.org/api/likes/${postId}/${userId}`);
   }
   
   getLikes(postId: number) {
-    return this.http.get<number>(`http://16.171.33.44:8080/api/likes/count/${postId}`);
+    return this.http.get<number>(`https://ibarber.duckdns.org/api/likes/count/${postId}`);
   }
   
   isPostLikedByUser(postId: number, userId: number) {
-    return this.http.get<boolean>(`http://16.171.33.44:8080/api/likes/${postId}/${userId}`);
+    return this.http.get<boolean>(`https://ibarber.duckdns.org/api/likes/${postId}/${userId}`);
   }
 
 }
