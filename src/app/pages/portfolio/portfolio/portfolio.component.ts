@@ -127,14 +127,16 @@ async fetchUserDetails() {
 fetchPortfolioImages(userId: number): void {
   this.portfolioService.getPortfolioImagesByUserId(userId).subscribe({
     next: (images) => {
-      this.portfolioImages = images.map(img => { const filename = img.split('\\').pop()?.split('/').pop(); // handles Windows or Unix paths
-        return `http://localhost:8080/portfolios-images/${filename}`;
+      this.portfolioImages = images.map(img => {
+        const filename = img.split('\\').pop()?.split('/').pop();
+        return `https://ibarber.duckdns.org/uploads/${filename}`;
       });
     },
     error: (err) => {
       console.error('Error fetching portfolio images:', err);
     }
   });
- }
+}
+
   
 }

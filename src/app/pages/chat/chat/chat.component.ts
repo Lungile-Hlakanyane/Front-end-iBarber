@@ -107,8 +107,8 @@ loadChatMessages() {
 
   connectToWebSocket() {
     this.stompClient = new Client({
-      brokerURL: 'ws://localhost:8080/ws', // this is fine
-      webSocketFactory: () => new SockJS('http://localhost:8080/ws'), // SockJS fallback
+      brokerURL: 'https://ibarber.duckdns.org/ws', // this is fine
+      webSocketFactory: () => new SockJS('https://ibarber.duckdns.org/ws'), // SockJS fallback
       reconnectDelay: 5000,
       onConnect: () => {
         this.stompClient.subscribe(`/topic/messages/${this.senderId}`, (message: Message) => {

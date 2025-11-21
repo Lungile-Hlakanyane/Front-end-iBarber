@@ -23,12 +23,12 @@
     <ion-card *ngFor="let post of filteredPosts()" class="post-card">
        <div class="post-header">
         <img [src]="post.profileImage ? 'http://localhost:8080/api/users/profile-image/' + post.profileImage : 'assets/profile-pic-image.jpg'" class="avatar" />
-      <div class="info" (click)="navigateToUserProfile(post.userId)">
-          <h3>{{ post.username }}</h3>
+        <div class="info" (click)="navigateToUserProfile(post.userId)">
+           <h3>{{ post.username }}</h3>
            <p>{{ post.createdAt | date:'short' }}</p>
          </div>
        </div>
-       <img [src]="'http://localhost:8080' + post.imageUrl" class="post-image" />
+       <img [src]="environment.apiBaseUrl.replace('/api', '') + post.imageUrl" class="post-image" />
        <div class="post-body">
         <p>{{ post.content }}</p>
         <ion-icon [name]="post.likedByCurrentUser ? 'heart' : 'heart-outline'" color="danger" (click)="toggleLike(post)"></ion-icon> <span class="likes-count" style="position:relative; bottom:8px; right:7px;">{{ post.likesCount || 0 }} Likes</span>

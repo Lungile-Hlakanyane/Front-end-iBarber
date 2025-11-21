@@ -24,4 +24,5 @@ export class UserService {
   getUserById(id: number): Observable<UserDTO> {
     return this.http.get<UserDTO>(`${this.apiUrl}/${id}`);
   }
+  
 }

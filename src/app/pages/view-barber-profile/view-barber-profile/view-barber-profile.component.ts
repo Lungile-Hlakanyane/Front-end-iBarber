@@ -146,7 +146,7 @@ fetchPortfolioImages(userId: number): void {
   this.portfolioService.getPortfolioImagesByUserId(userId).subscribe({
     next: (images) => {
       this.portfolioImages = images.map(img => { const filename = img.split('\\').pop()?.split('/').pop(); 
-        return `http://localhost:8080/portfolios-images/${filename}`;
+        return `https://ibarber.duckdns.org/uploads/${filename}`;
       });
     },
     error: (err) => {

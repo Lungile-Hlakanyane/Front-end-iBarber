@@ -204,7 +204,7 @@ onFileSelected(event: Event) {
   this.profileImageService.uploadProfileImage(this.user.id, file).subscribe({
     next: (res) => {
       this.toastController.create({
-        message: res, // This will now be "Profile image uploaded successfully."
+        message: res,
         duration: 2000,
         color: 'success',
         position: 'top'
@@ -266,7 +266,7 @@ async presentHelpActionSheet() {
           text: 'Email Support',
           icon: 'mail-outline',
           handler: () => {
-            window.open('mailto:support@ibarber.com', '_system');
+            window.open('mailto:https://ibarber.duckdns.org/api', '_system');
           }
         },
         {

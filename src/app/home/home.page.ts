@@ -8,6 +8,7 @@ import { PostDTO } from '../models/PostDTO';
 import { CommentService } from '../services/comment-service/comment.service';
 import { CommentDTO } from '../models/Comment';
 import { ProfileImageService } from '../services/profile-image-service/profile-image.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ import { ProfileImageService } from '../services/profile-image-service/profile-i
   standalone: false,
 })
 export class HomePage {
+  environment = environment;
   showSearchBar = false;
   searchText = '';
   userDetails: any;

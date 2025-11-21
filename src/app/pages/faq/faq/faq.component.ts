@@ -69,7 +69,6 @@ export class FaqComponent  implements OnInit {
   loadSubmittedFaqs() {
     this.faqService.getAllQuestions().subscribe({
       next: (data) => {
-        // Only show questions that have answers
         this.fetchedFaqs = data
           .filter(q => q.answered && q.answer)
           .map(q => ({
