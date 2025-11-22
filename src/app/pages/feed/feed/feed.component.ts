@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-feed',
@@ -22,7 +23,7 @@ import { LoadingController } from '@ionic/angular';
   imports: [IonicModule, CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class FeedComponent  implements OnInit {
-
+    environment = environment;
     showSearchBar = false;
     searchText = '';
     userDetails: any;
