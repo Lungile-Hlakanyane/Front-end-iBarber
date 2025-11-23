@@ -1,0 +1,11 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "iBarber",
+	"webDir": "www",
+	"packageClassList": [
+		"AppPlugin",
+		"HapticsPlugin",
+		"KeyboardPlugin",
+		"StatusBarPlugin"
+	]
+}
