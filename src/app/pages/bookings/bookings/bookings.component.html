@@ -42,7 +42,6 @@
       <ion-card-content>
         <p><ion-icon name="calendar-outline"></ion-icon> {{ booking.date }} at {{ booking.time }}</p>
         <div class="booking-actions">
-          <ion-button fill="clear" size="small" color="medium" (click)="reschedule(booking)">Reschedule</ion-button>
           <ion-button fill="clear" size="small" color="success" (click)="navigateToChat(booking)">Chat</ion-button>
           <ion-button fill="clear" size="small" color="danger" (click)="cancel(booking)">Cancel</ion-button>
         </div>

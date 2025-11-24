@@ -58,6 +58,15 @@ export class ViewBarberProfileComponent  implements OnInit {
     this.router.navigate([link]);
   }
 
+goToBookAppointment() {
+  const userId = this.route.snapshot.queryParamMap.get('userId') || this.route.snapshot.paramMap.get('id');
+  if (userId) {
+    this.router.navigate(['/book-appointment', userId]);
+  } else {
+    console.error('User ID not found for booking navigation');
+  }
+}
+
   close(){
     this.modalController.dismiss();
   }

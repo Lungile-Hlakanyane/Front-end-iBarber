@@ -98,21 +98,25 @@ export class BookAppointmentComponent  implements OnInit {
             this.navCtrl.navigateForward('/payment-methods');
           }, 1500);
         },
-        error: async () => {
-          await loading.dismiss();
-          const toast = await this.toastController.create({
-            message: 'Failed to book appointment.',
-            duration: 2000,
-            color: 'danger',
-            position: 'top'
-          });
-          await toast.present();
-        }
+       error: async (err) => {
+        await loading.dismiss();
+         let errorMessage = 'Failed to book appointment.';
+         if (err.status === 409) {
+         errorMessage = 'This slot has already been booked. Please choose another one.';
+        } else if (err.status === 404) {
+        errorMessage = 'Slot not found. Please refresh and try again.';
+       }
+        const toast = await this.toastController.create({
+        message: errorMessage,
+        duration: 3000,
+        color: 'danger',
+        position: 'top'
+       });
+       await toast.present();
+       }
       });
     });
   }
-  
-  
 
   ngOnInit() {
     this.barberId = this.route.snapshot.paramMap.get('barberId');
@@ -124,27 +128,25 @@ export class BookAppointmentComponent  implements OnInit {
   slotsByDate: { [date: string]: string[] } = {};
 
 
-  fetchSlots(barberId: string) {
-    this.slotService.getSlotsByBarberId(barberId).subscribe((slots: any[]) => {
-      const dateSet = new Set<string>();
-      this.slotsByDate = {};
-  
-      slots.forEach(slot => {
+ fetchSlots(barberId: string) {
+  this.slotService.getSlotsByBarberId(barberId).subscribe((slots: any[]) => {
+    const dateSet = new Set<string>();
+    this.slotsByDate = {};
+    slots.forEach(slot => {
+      if (!slot.booked) { // ✅ only include unbooked slots
         const date = new Date(slot.date).toDateString();
         const time = slot.startTime.substring(0, 5) + ' - ' + slot.endTime.substring(0, 5);
-  
         dateSet.add(date);
-  
         if (!this.slotsByDate[date]) {
           this.slotsByDate[date] = [];
         }
         this.slotsByDate[date].push(time);
-      });
-  
-      this.availableDates = Array.from(dateSet);
-      this.updateAvailableTimes(); // Initialize times for the first date (optional)
+      }
     });
-  }
+    this.availableDates = Array.from(dateSet);
+    this.updateAvailableTimes();
+  });
+}
   
   updateAvailableTimes() {
     if (this.selectedDate && this.slotsByDate[this.selectedDate]) {

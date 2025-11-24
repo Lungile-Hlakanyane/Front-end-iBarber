@@ -69,6 +69,11 @@ getClientCountByBarber(barberId: number): Observable<number> {
   return this.http.get<number>(`${this.apiUrl}/barber/${barberId}/clients/count`);
 }
 
+cancelSlot(slotId: number) {
+  return this.http.put(`${this.apiUrl}/cancel/${slotId}`, {});
+}
+
+
 
 
 }

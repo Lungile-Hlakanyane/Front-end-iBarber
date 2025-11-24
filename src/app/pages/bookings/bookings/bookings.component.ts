@@ -46,51 +46,61 @@ export class BookingsComponent  implements OnInit {
     this.selectedSegment = event.detail.value;
   }
 
-  reschedule(booking: any) {
-   this.router.navigate(['/book-appointment']);
-  }
 
   async cancel(booking: any) {
-    const alert = await this.alertController.create({
-      header: 'Cancel Appointment',
-      message: 'Are you sure you want to cancel this appointment?',
-      buttons: [
-        {
-          text: 'No',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancellation aborted');
-          }
-        },
-        {
-          text: 'Yes',
-          handler: async () => {
-            const loading = await this.loadingController.create({
-              message: 'Cancelling...',
-              spinner: 'circular',
-              duration: 2000 // Simulates the cancellation time
-            });
-            await loading.present();
-  
-            setTimeout(async () => {
+  const alert = await this.alertController.create({
+    header: 'Cancel Appointment',
+    message: 'Are you sure you want to cancel this appointment?',
+    buttons: [
+      {
+        text: 'No',
+        role: 'cancel'
+      },
+      {
+        text: 'Yes',
+        handler: async () => {
+          const loading = await this.loadingController.create({
+            message: 'Cancelling appointment...',
+            spinner: 'circular'
+          });
+          await loading.present();
+
+          this.slotService.cancelSlot(booking.id).subscribe({
+            next: async () => {
               await loading.dismiss();
-  
+
               const toast = await this.toastController.create({
-                message: 'You have successfully cancelled this appointment.',
+                message: 'Appointment cancelled successfully.',
                 duration: 3000,
                 color: 'success',
                 position: 'top'
               });
               await toast.present();
-              booking.status = 'cancelled';
-            }, 2000);
-          }
+
+              // Remove from current view or mark as cancelled
+              this.upcomingBookings = this.upcomingBookings.filter(
+                (b: any) => b.id !== booking.id
+              );
+            },
+            error: async (err) => {
+              await loading.dismiss();
+              const toast = await this.toastController.create({
+                message: 'Failed to cancel appointment. Please try again.',
+                duration: 3000,
+                color: 'danger',
+                position: 'top'
+              });
+              await toast.present();
+              console.error(err);
+            }
+          });
         }
-      ]
-    });
-  
-    await alert.present();
-  }
+      }
+    ]
+  });
+  await alert.present();
+}
+
   
 
   rebook(booking: any) {
@@ -116,6 +126,7 @@ export class BookingsComponent  implements OnInit {
     this.slotService.getSlotByClientId(clientId).subscribe({
       next: (data) => {
         this.upcomingBookings = data.map((slot: any) => ({
+          id: slot.id,
           username: slot.barber?.username || 'Unknown Barber',
           date: slot.date,
           time: slot.startTime,
