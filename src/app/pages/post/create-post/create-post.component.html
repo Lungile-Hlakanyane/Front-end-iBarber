@@ -14,9 +14,7 @@
       [(ngModel)]="selectedAudience"
       class="audience-select"
       style="margin-left: 12px;">
-      <ion-select-option value="anyone">Anyone</ion-select-option>
-      <ion-select-option value="connections">Connections</ion-select-option>
-      <ion-select-option value="private">Only Me</ion-select-option>
+      <ion-select-option value="anyone">Public</ion-select-option>
     </ion-select>
 
     </ion-buttons>
@@ -38,8 +36,14 @@
     [(ngModel)]="postText"
     placeholder="What do you want to talk about?"
     autoGrow="true"
-    class="post-textarea"
-  ></ion-textarea>
+    class="post-textarea">
+  </ion-textarea>
+
+   <!-- Image Preview -->
+  <div *ngIf="imagePreviewUrl" class="image-preview-container">
+    <img [src]="imagePreviewUrl" alt="Selected Image" class="image-preview"/>
+  </div>
+
 </ion-content>
 
 <ion-footer>

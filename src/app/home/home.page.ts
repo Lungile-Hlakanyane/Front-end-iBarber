@@ -9,6 +9,7 @@ import { CommentService } from '../services/comment-service/comment.service';
 import { CommentDTO } from '../models/Comment';
 import { ProfileImageService } from '../services/profile-image-service/profile-image.service';
 import { environment } from 'src/environments/environment';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ import { environment } from 'src/environments/environment';
   standalone: false,
 })
 export class HomePage {
+  refreshSub?: Subscription;
   environment = environment;
   showSearchBar = false;
   searchText = '';
@@ -37,22 +39,34 @@ export class HomePage {
     this.showSearchBar = !this.showSearchBar;
   }
 
-  ngOnInit() {
-    const email = localStorage.getItem('userEmail');
-    if (email) {
-      this.userService.getUserByEmail(email).subscribe({
-        next: (user) => {
-          this.userDetails = user;
-          console.log('Logged-in user details:', this.userDetails);
-        },
-        error: (err) => {
-          console.error('Failed to fetch user:', err);
-        }
-      });
-    }
-    // load all data posted by all users - client, barbers and admin
-    this.loadPosts();
+ngOnInit() {
+  const email = localStorage.getItem('userEmail');
+  if (email) {
+    this.userService.getUserByEmail(email).subscribe({
+      next: (user) => {
+        this.userDetails = user;
+        console.log('Logged-in user details:', this.userDetails);
+      },
+      error: (err) => console.error('Failed to fetch user:', err)
+    });
   }
+}
+
+ionViewWillEnter() {
+  this.loadPosts();
+}
+
+ionViewDidEnter() {
+  // Auto-refresh every 30 seconds
+  this.refreshSub = interval(30000).subscribe(() => {
+    this.loadPosts();
+  });
+}
+
+ionViewWillLeave() {
+  // Stop refreshing when leaving the page
+  this.refreshSub?.unsubscribe();
+}
 
   loadPosts() {
     this.postService.getAllPosts().subscribe({
@@ -128,19 +142,35 @@ export class HomePage {
   
 
   toggleComments(post: any) {
-    post.showComments = !post.showComments;
-    if (post.showComments && !post.comments) {
-      this.commentService.getCommentsByPostId(post.id).subscribe({
-        next: (comments) => {
-          post.comments = comments;
-        },
-        error: (err) => {
-          console.error(`Failed to fetch comments for post ${post.id}:`, err);
-          post.comments = [];
-        }
-      });
-    }
+  post.showComments = !post.showComments;
+
+  if (post.showComments && !post.comments) {
+    this.commentService.getCommentsByPostId(post.id).subscribe({
+      next: (comments) => {
+        // Assign the comments first
+        post.comments = comments;
+
+        // For each comment, fetch and attach the username using userId
+        post.comments.forEach((comment: { userId: number; username: string; id: any; }) => {
+          this.userService.getUserById(comment.userId).subscribe({
+            next: (user) => {
+              comment.username = user.username;
+            },
+            error: (err) => {
+              console.error(`Failed to fetch user for comment ${comment.id}:`, err);
+              comment.username = 'User';
+            }
+          });
+        });
+      },
+      error: (err) => {
+        console.error(`Failed to fetch comments for post ${post.id}:`, err);
+        post.comments = [];
+      }
+    });
   }
+}
+
   
   addComment(post: any) {
     const content = post.newComment?.trim();

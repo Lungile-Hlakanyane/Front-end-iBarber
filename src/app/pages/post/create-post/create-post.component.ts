@@ -19,6 +19,7 @@ export class CreatePostComponent  implements OnInit {
   postText = '';
   selectedAudience = 'anyone';
   selectedImage?: File; 
+  imagePreviewUrl: string | ArrayBuffer | null = null;
 
   constructor(
     private router: Router,
@@ -30,11 +31,17 @@ export class CreatePostComponent  implements OnInit {
   ngOnInit() {}
 
   onImageSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedImage = input.files[0];
+   const input = event.target as HTMLInputElement;
+   if (input.files && input.files.length > 0) {
+     this.selectedImage = input.files[0];
+     const reader = new FileReader();
+     reader.onload = () => {
+       this.imagePreviewUrl = reader.result;
+     };
+     reader.readAsDataURL(this.selectedImage);
     }
   }
+
 
   triggerImageSelection() {
     this.fileInput.nativeElement.click();
