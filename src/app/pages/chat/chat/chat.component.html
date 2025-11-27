@@ -7,10 +7,14 @@
   </div>
 
   <div class="chat-body-wrapper">
+
     <div class="chat-header" *ngIf="receiverUser">
       <img class="chat-avatar" src="../../../../assets/profile-pic-image.jpg" alt="User Avatar" />
       <h2 class="chat-name">{{ receiverUser.username }}</h2>
       <p class="chat-subtitle">{{ receiverUser.role }}</p>
+      <!-- TODO -->
+      <!-- <p [style.color]="isReceiverOnline ? 'green' : 'red'" style="font-weight: bold;">
+         {{ isReceiverOnline ? 'Online' : 'Offline' }}</p> -->
       <p class="chat-subtitle">{{ receiverUser.email }}</p>
     </div>
 

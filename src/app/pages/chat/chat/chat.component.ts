@@ -27,6 +27,7 @@ import { ReportUserService } from 'src/app/services/report-user-service/report-u
 export class ChatComponent  implements OnInit {
 
   warnings: ReportUserDTO[] = [];
+  isReceiverOnline: boolean = false;
 
   stompClient!: Client;
   messages: ChatMessageDTO[] = [];
@@ -106,19 +107,27 @@ loadChatMessages() {
   }
 
   connectToWebSocket() {
-    this.stompClient = new Client({
-      brokerURL: 'https://ibarber.duckdns.org/ws', // this is fine
-      webSocketFactory: () => new SockJS('https://ibarber.duckdns.org/ws'), // SockJS fallback
-      reconnectDelay: 5000,
-      onConnect: () => {
-        this.stompClient.subscribe(`/topic/messages/${this.senderId}`, (message: Message) => {
-          const chatMessage = JSON.parse(message.body);
-          this.messages.push(chatMessage);
-        });
-      },
-    });
-    this.stompClient.activate();
-  }
+  this.stompClient = new Client({
+    brokerURL: 'https://ibarber.duckdns.org/ws',
+    webSocketFactory: () => new SockJS('https://ibarber.duckdns.org/ws'),
+    connectHeaders: {
+      userId: this.senderId.toString()
+    },
+    reconnectDelay: 5000,
+    onConnect: () => {
+      this.stompClient.subscribe(`/topic/messages/${this.senderId}`, (message: Message) => {
+        const chatMessage = JSON.parse(message.body);
+        this.messages.push(chatMessage);
+      });
+      this.stompClient.subscribe('/topic/online-status', (message: Message) => {
+        const onlineUsers: number[] = JSON.parse(message.body);
+        this.isReceiverOnline = onlineUsers.includes(this.receiverId);
+      });
+    }
+  });
+  this.stompClient.activate();
+}
+
 
   async openOptions(message: ChatMessageDTO) {
     const actionSheet = await this.actionSheetController.create({
