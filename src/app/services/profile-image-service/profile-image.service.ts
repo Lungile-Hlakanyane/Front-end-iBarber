@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 })
 export class ProfileImageService {
 
-
   private apiUrl = `${environment.apiBaseUrl}/users`;
 
   constructor( private http:HttpClient) { }

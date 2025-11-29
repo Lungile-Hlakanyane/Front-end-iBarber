@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicModule,ActionSheetController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
@@ -24,20 +24,18 @@ import { ReportUserService } from 'src/app/services/report-user-service/report-u
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class ChatComponent  implements OnInit {
+export class ChatComponent  implements OnInit, OnDestroy {
 
   warnings: ReportUserDTO[] = [];
   isReceiverOnline: boolean = false;
-
+  isOnline: boolean = navigator.onLine;
   stompClient!: Client;
   messages: ChatMessageDTO[] = [];
   messageText: string = '';
   receiverUser?: User;
   announcements: Announcement[] = [];
   currentUser?: User;
-
   senderId!: number;
-  
   receiverId!: number;
 
   constructor(
@@ -51,7 +49,7 @@ export class ChatComponent  implements OnInit {
     private reportUserService: ReportUserService
   ) { }
 
-
+  
 ngOnInit() {
   const storedId = localStorage.getItem('userId');
   this.senderId = storedId ? Number(storedId) : 0;
@@ -69,6 +67,19 @@ ngOnInit() {
     this.loadReceiverDetails();
   });
   this.connectToWebSocket();
+  //online user status
+  window.addEventListener('online', () => this.updateOnlineStatus(true));
+  window.addEventListener('offline', () => this.updateOnlineStatus(false));
+}
+
+
+updateOnlineStatus(status: boolean) {
+  this.isOnline = status;
+}
+
+ngOnDestroy(): void {
+  window.removeEventListener('online', () => this.updateOnlineStatus(true));
+  window.removeEventListener('offline', () => this.updateOnlineStatus(false));
 }
 
 navigate(link:string) {
@@ -99,12 +110,15 @@ loadChatMessages() {
     this.messageText = '';
   }
 
-  loadReceiverDetails() {
-    this.registerService.getUserById(this.receiverId).subscribe({
-      next: (data) => this.receiverUser = data,
-      error: (err) => console.error('Failed to load receiver user:', err),
-    });
-  }
+ loadReceiverDetails() {
+  this.registerService.getUserById(this.receiverId).subscribe({
+    next: (data) => {
+      this.receiverUser = data;
+      this.isReceiverOnline = data.onlineStatus;
+    },
+    error: (err) => console.error('Failed to load receiver user:', err),
+  });
+}
 
   connectToWebSocket() {
   this.stompClient = new Client({

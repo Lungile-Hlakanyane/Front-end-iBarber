@@ -10,6 +10,7 @@ import { ReportUserDTO } from 'src/app/models/ReportUserDTO';
 import { ProfileImageService } from 'src/app/services/profile-image-service/profile-image.service';
 import { SlotService } from 'src/app/services/slot-service/slot.service';
 import { ReportUserService } from '../../../services/report-user-service/report-user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -29,6 +30,7 @@ export class ProfileComponent  implements OnInit {
   user: any;
   warnings: ReportUserDTO[] = [];
   bookingsCount: number = 0;
+  environment = environment;
 
   constructor(
     private router: Router,
@@ -202,42 +204,52 @@ onFileSelected(event: Event) {
     reader.readAsDataURL(file);
    if (this.user?.id) {
   this.profileImageService.uploadProfileImage(this.user.id, file).subscribe({
-    next: (res) => {
-      this.toastController.create({
-        message: res,
-        duration: 2000,
-        color: 'success',
-        position: 'top'
-      }).then(toast => toast.present());
-    },
-    error: (err) => {
-      console.error('Upload error:', err);
-      this.toastController.create({
-        message: 'Failed to upload image.',
-        duration: 2000,
-        color: 'danger',
-        position: 'top'
-      }).then(toast => toast.present());
-    }
-   });
+  next: (res) => {
+    this.toastController.create({
+      message: 'Profile image uploaded successfully!',
+      duration: 2000,
+      color: 'success',
+      position: 'top'
+    }).then(toast => toast.present());
+
+    // Force refresh
+    const filename = res.split(': ')[1];
+    this.user.profileImage = `/uploads/${filename}`;
+    this.loadProfileImageFromServer(this.user.profileImage);
+  },
+  error: (err) => {
+    console.error('Upload error:', err);
+    this.toastController.create({
+      message: 'Failed to upload image.',
+      duration: 2000,
+      color: 'danger',
+      position: 'top'
+    }).then(toast => toast.present());
+  }
+});
   }
  }
 }
 
-loadProfileImageFromServer(filename: string) {
-  this.profileImageService.getProfileImage(filename).subscribe({
-    next: (blob) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.selectedImage = reader.result;
-      };
-      reader.readAsDataURL(blob);
-    },
-    error: (err) => {
-      console.error('Failed to load profile image:', err);
-    }
-  });
+loadProfileImageFromServer(profileImagePath: string) {
+  if (!profileImagePath || profileImagePath === 'undefined') {
+    this.selectedImage = this.defaultImage;
+    return;
+  }
+
+  // If the backend stored just the filename instead of full /uploads/... path
+  if (!profileImagePath.startsWith('/uploads') && !profileImagePath.startsWith('http')) {
+    profileImagePath = `/uploads/${profileImagePath}`;
+  }
+
+  // Construct the full URL safely
+  const baseUrl = environment.apiBaseUrl.replace('/api', '');
+  this.selectedImage = profileImagePath.startsWith('http')
+    ? profileImagePath
+    : `${baseUrl}${profileImagePath}`;
 }
+
+
 
 loadBookingCount(userId: number) {
     this.slotService.countBookingsByClientId(userId).subscribe({

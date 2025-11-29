@@ -7,7 +7,7 @@
   </div>
 
   <div class="profile-header">
-    <img [src]="barber.profileImage ? 'http://localhost:8080/api/users/profile-image/' + barber.profileImage : 'assets/profile-pic-image.jpg'" class="avatar" />
+    <img [src]="getProfileImageUrl(barber.profileImage)" class="avatar" />
     <h2 class="name">{{ barber.name }}</h2>
     <p class="email">{{ barber.email }}</p>
   </div>

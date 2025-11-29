@@ -222,6 +222,25 @@ ionViewWillLeave() {
   });
 }
 
+getProfileImageUrl(profileImagePath: string | null | undefined): string {
+  const defaultImage = 'assets/profile-pic-image.jpg';
+
+  if (!profileImagePath || profileImagePath === 'undefined') {
+    return defaultImage;
+  }
+
+  // If the backend only saved the filename
+  if (!profileImagePath.startsWith('/uploads') && !profileImagePath.startsWith('http')) {
+    profileImagePath = `/uploads/${profileImagePath}`;
+  }
+
+  const baseUrl = environment.apiBaseUrl.replace('/api', '');
+  return profileImagePath.startsWith('http')
+    ? profileImagePath
+    : `${baseUrl}${profileImagePath}`;
+}
+
+
   
 
 }

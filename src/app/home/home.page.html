@@ -5,7 +5,7 @@
       <ion-icon name="menu-outline"></ion-icon>
     </div>
      <div>
-      <h1>iBarber</h1>
+      <h1 style="position: relative; top:5px;">iBarber</h1>
      </div>
    </div>
    <div class="options" style="display: flex; gap: 10px; position: relative; top: 27px;">
@@ -20,9 +20,10 @@
   </div>
  
    <div class="feed-wrapper">
+
     <ion-card *ngFor="let post of filteredPosts()" class="post-card">
        <div class="post-header">
-        <img [src]="post.profileImage ? 'http://localhost:8080/api/users/profile-image/' + post.profileImage : 'assets/profile-pic-image.jpg'" class="avatar" />
+       <img [src]="getProfileImageUrl(post.profileImage)" class="avatar" />
         <div class="info" (click)="navigateToUserProfile(post.userId)">
            <h3>{{ post.username }}</h3>
            <p>{{ post.createdAt | date:'short' }}</p>

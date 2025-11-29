@@ -120,7 +120,7 @@ goToBookAppointment() {
       this.barber = {
         name: data.username,
         email: data.email,
-        profileImage: data.profileImageUrl || null,
+        profileImage: data.profileImage || null,
         experience: data.experience || 0,
         specialty: data.specialty || 'N/A',
         rating: data.rating || 0,
@@ -208,6 +208,25 @@ getClientCount(barberId: number): void {
     }
   });
 }
+
+getProfileImageUrl(profileImagePath: string | null | undefined): string {
+  const defaultImage = 'assets/profile-pic-image.jpg';
+
+  if (!profileImagePath || profileImagePath === 'undefined') {
+    return defaultImage;
+  }
+
+  // If backend only stored the filename
+  if (!profileImagePath.startsWith('/uploads') && !profileImagePath.startsWith('http')) {
+    profileImagePath = `/uploads/${profileImagePath}`;
+  }
+
+  const baseUrl = 'https://ibarber.duckdns.org';
+  return profileImagePath.startsWith('http')
+    ? profileImagePath
+    : `${baseUrl}${profileImagePath}`;
+}
+
 
  
 
